@@ -1,0 +1,356 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>سفارشات | فروشگاه موبایل</title>
+</head>
+<body>
+
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="whole-card text-right">
+            <div class="row">
+                <div class="col-12">
+                    <div class="dashboard-item-title orders-title">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-long-arrow-right"></i>
+                        </a>
+                        <h4>
+                            سفارشات
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-right">
+                    <div class="orders-by-status">
+                        <ul class="nav nav-tabs" id="orders-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">همه <span>(2)</span></a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">در انتظار پرداخت <span>(1)</span></a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="false">در حال پردازش <span>(0)</span></a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab" aria-controls="delivered" aria-selected="false">تحویل داده شده <span>(1)</span></a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="declined" aria-selected="false">لغو شده <span>(0)</span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="orders-tab-panel">
+                            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                                <h5>
+                                    همه
+                                </h5>
+                                <div class="orders-list">
+                                    <!-- if there is -->
+                                    <div class="single-order">
+                                        <div class="row align-items-center">
+                                            <div class="col-xl-10 col-lg-9 col-12">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex">
+                                                        <div class="order-des order-id">
+                                                            DKC-301863866
+                                                        </div>
+                                                        <div class="order-des order-date">
+                                                            25 فروردین 1399
+                                                        </div>
+                                                        <div class="order-des order-price">
+                                                            مبلغ کل : 239,000 تومان
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                <div class="btn btn-success">
+                                                    تحویل داده شده
+                                                </div>
+                                                <div class="order-detail-link">
+                                                    <a href="{% url 'order' %}">
+                                                        جزئیات سفارش
+                                                        <i class="far fa-angle-left"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="single-order">
+                                        <div class="row align-items-center">
+                                            <div class="col-xl-10 col-lg-9 col-12">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex">
+                                                        <div class="order-des order-id">
+                                                            DKC-301863866
+                                                        </div>
+                                                        <div class="order-des order-date">
+                                                            25 فروردین 1399
+                                                        </div>
+                                                        <div class="order-des order-price">
+                                                            مبلغ کل : 239,000 تومان
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-3">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                <div class="btn btn-info">
+                                                    در انتظار پرداخت
+                                                </div>
+                                                <div class="order-detail-link">
+                                                    <a href="{% url 'order' %}">
+                                                        جزئیات سفارش
+                                                        <i class="far fa-angle-left"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- else -->
+                                    <!-- <div class="no-order">
+                                        <div class="warning-message">
+                                            <p>
+                                                سفارش فعالی در این بخش وجود ندارد!
+                                            </p>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                                <h5>
+                                    در انتظار پرداخت
+                                </h5>
+                                <div class="orders-list">
+                                    <!-- if there is -->
+                                    <div class="single-order">
+                                        <div class="row align-items-center">
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex">
+                                                        <div class="order-des order-id">
+                                                            DKC-301863866
+                                                        </div>
+                                                        <div class="order-des order-date">
+                                                            25 فروردین 1399
+                                                        </div>
+                                                        <div class="order-des order-price">
+                                                            مبلغ کل : 239,000 تومان
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                <div class="btn btn-info">
+                                                    در انتظار پرداخت
+                                                </div>
+                                                <div class="order-detail-link">
+                                                    <a href="{% url 'order' %}">
+                                                        جزئیات سفارش
+                                                        <i class="far fa-angle-left"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- else -->
+                                    <!-- <div class="no-order">
+                                        <div class="warning-message">
+                                            <p>
+                                                سفارش فعالی در این بخش وجود ندارد!
+                                            </p>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="progress" role="tabpanel" aria-labelledby="progress-tab">
+                                <h5>
+                                    در حال پردازش
+                                </h5>
+                                <div class="orders-list">
+                                    <div class="no-order">
+                                        <div class="warning-message">
+                                            <p>
+                                                سفارش فعالی در این بخش وجود ندارد!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
+                                <h5>
+                                    تحویل داده شده
+                                </h5>
+                                <div class="orders-list">
+                                    <div class="single-order">
+                                        <div class="row align-items-center">
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    <div class="col-12 d-flex">
+                                                        <div class="order-des order-id">
+                                                            DKC-301863866
+                                                        </div>
+                                                        <div class="order-des order-date">
+                                                            25 فروردین 1399
+                                                        </div>
+                                                        <div class="order-des order-price">
+                                                            مبلغ کل : 239,000 تومان
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="product-img">
+                                                            <a href="{% url 'product' %}">
+                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 text-center">
+                                                <div class="btn btn-success">
+                                                    تحویل داده شده
+                                                </div>
+                                                <div class="order-detail-link">
+                                                    <a href="{% url 'order' %}">
+                                                        جزئیات سفارش
+                                                        <i class="far fa-angle-left"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="declined" role="tabpanel" aria-labelledby="declined-tab">
+                                <h5>
+                                    لغو شده
+                                </h5>
+                                <div class="orders-list">
+                                    <div class="no-order">
+                                        <div class="warning-message">
+                                            <p>
+                                                سفارش فعالی در این بخش وجود ندارد!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

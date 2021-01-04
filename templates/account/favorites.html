@@ -1,0 +1,153 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>لیست علاقه مندی ها | فروشگاه موبایل</title>
+</head>
+<body>
+
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="whole-card text-right">
+            <div class="row">
+                <div class="col-12">
+                    <div class="dashboard-item-title favorites-title">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-long-arrow-right"></i>
+                        </a>
+                        <h4>
+                            لیست علاقه مندی ها
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="favorite-products">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="favorite-product">
+                            <div class="row">
+                                <div class="col-lg-3 col-5">
+                                    <a href="{% url 'product' %}">
+                                        <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                    </a>
+                                </div>
+                                <div class="col-lg-9 col-12">
+                                    <div class="product-details">
+                                        <div class="product-detail product-title">
+                                            گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="product-detail product-price">
+                                                <span class="title">
+                                                    قیمت: 
+                                                </span>
+                                                <span>
+                                                    4,800,000 تومان
+                                                </span>
+                                            </div>
+                                            <div class="product-links">
+                                                <a href="{% url 'product' %}">
+                                                    مشاهده محصول
+                                                    <i class="far fa-angle-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="remove-favorite mr-2">
+                                <i class="far fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="favorite-product">
+                            <div class="row">
+                                <div class="col-lg-3 col-5">
+                                    <a href="{% url 'product' %}">
+                                        <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                    </a>
+                                </div>
+                                <div class="col-lg-9 col-12">
+                                    <div class="product-details">
+                                        <div class="product-detail product-title">
+                                            گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="product-detail product-price">
+                                                <span class="title">
+                                                    قیمت: 
+                                                </span>
+                                                <span>
+                                                    4,800,000 تومان
+                                                </span>
+                                            </div>
+                                            <div class="product-links">
+                                                <a href="{% url 'product' %}">
+                                                    مشاهده محصول
+                                                    <i class="far fa-angle-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="remove-favorite mr-2">
+                                <i class="far fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="favorite-product">
+                            <div class="row">
+                                <div class="col-lg-3 col-5">
+                                    <a href="{% url 'product' %}">
+                                        <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                    </a>
+                                </div>
+                                <div class="col-lg-9 col-12">
+                                    <div class="product-details">
+                                        <div class="product-detail product-title">
+                                            گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="product-detail product-price">
+                                                <span class="title">
+                                                    قیمت: 
+                                                </span>
+                                                <span>
+                                                    4,800,000 تومان
+                                                </span>
+                                            </div>
+                                            <div class="product-links">
+                                                <a href="{% url 'product' %}">
+                                                    مشاهده محصول
+                                                    <i class="far fa-angle-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="remove-favorite mr-2">
+                                <i class="far fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

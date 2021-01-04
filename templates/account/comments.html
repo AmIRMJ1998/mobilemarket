@@ -1,0 +1,129 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+    <title>نظرات | فروشگاه موبایل</title>
+    </head>
+    <body>
+
+        {% block header %}
+        {% include "base/header.html" %}
+        {% endblock %}
+
+        <div class="container">
+            <div class="whole-card">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="dashboard-item-title orders-title">
+                            <a href="{% url 'dashboard' %}">
+                                <i class="fas fa-long-arrow-right"></i>
+                            </a>
+                            <h4>
+                                نظرات
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="factor-table overflow-x-scroll">
+                            <div class="card-titles">
+                                <div class="row flex-nowrap">
+                                    <div class="col-1">#</div>
+                                    <div class="col-md-3 col-sm-4 col-4">پست</div>
+                                    <div class="col-lg-4 col-md-3 col-sm-4 col-4">متن</div>
+                                    <div class="col-sm-2 col-3">تاریخ و ساعت</div>
+                                    <div class="col-lg-2 col-md-3 col-sm-3 col-3">وضعیت</div>
+                                </div>
+                            </div>
+                            <div class="card-product-detail">
+                                <div class="card-product-detail-item">
+                                    <div class="single-message">
+                                        <div class="row align-items-center flex-nowrap">
+                                            <div class="col-1">
+                                                <div class="factor-table-col">
+                                                    1
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-4 col-4">
+                                                <div class="factor-table-col title">
+                                                    <a href="{% url 'product' %}">
+                                                        معرفی گوشی موبایل سامسونگ گلکسی A51 ...
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3 col-sm-4 col-4">
+                                                <div class="factor-table-col text-right">
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ...
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 col-3">
+                                                1399/09/23
+                                                &nbsp;
+                                                12:25
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-3 col-3">
+                                                <div class="btn btn-info comment-status">
+                                                    در انتظار تایید
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-1">
+                                                <button class="btn btn-danger">
+                                                    حذف
+                                                </button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="single-message">
+                                        <div class="row align-items-center flex-nowrap">
+                                            <div class="col-1">
+                                                <div class="factor-table-col">
+                                                    2
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-4 col-4">
+                                                <div class="factor-table-col title">
+                                                    <a href="{% url 'product' %}">
+                                                        معرفی گوشی موبایل سامسونگ گلکسی A51 ...
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3 col-sm-4 col-4">
+                                                <div class="factor-table-col text-right">
+                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم ، ...
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 col-3">
+                                                1399/09/23
+                                                &nbsp;
+                                                12:25
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-3 col-3">
+                                                <div class="btn btn-success comment-status">
+                                                    تایید شده
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-1">
+                                                <button class="btn btn-danger">
+                                                    حذف
+                                                </button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% block footer %}
+        {% include "base/footer.html" %}
+        {% endblock %}
+
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

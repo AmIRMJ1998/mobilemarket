@@ -1,0 +1,454 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>سبد خرید | فروشگاه موبایل</title>
+</head>
+<body>
+
+    
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="whole-card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-title">
+                                <h5>
+                                    سبد خرید
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-table">
+                        <div class="card-titles">
+                            <div class="row flex-nowrap">
+                                <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">محصول</div>
+                                <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">توضیحات</div>
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">قیمت واحد</div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">تعداد</div>
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">قیمت مجموع</div>
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                            </div>
+                        </div>
+                        <div class="card-product-detail">
+                            <div class="card-product-detail-item">
+                                <div class="row flex-nowrap align-items-center">
+                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
+                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        4,800,000 تومان
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                        <div class="count-part">
+                                            <div class="add-sub add">
+                                                <i class="far fa-plus"></i>
+                                            </div>
+                                            <div class="main-count">
+                                                2
+                                            </div>
+                                            <div class="add-sub sub">
+                                                <i class="far fa-minus"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        9,600,000 تومان
+                                    </div>
+                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                        <button class="btn btn-danger">
+                                            حذف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-product-detail-item">
+                                <div class="row flex-nowrap align-items-center">
+                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
+                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        4,800,000 تومان
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                        <div class="count-part">
+                                            <div class="add-sub add">
+                                                <i class="far fa-plus"></i>
+                                            </div>
+                                            <div class="main-count">
+                                                2
+                                            </div>
+                                            <div class="add-sub sub">
+                                                <i class="far fa-minus"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        9,600,000 تومان
+                                    </div>
+                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                        <button class="btn btn-danger">
+                                            حذف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-product-detail-item">
+                                <div class="row flex-nowrap align-items-center">
+                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
+                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        4,800,000 تومان
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                        <div class="count-part">
+                                            <div class="add-sub add">
+                                                <i class="far fa-plus"></i>
+                                            </div>
+                                            <div class="main-count">
+                                                2
+                                            </div>
+                                            <div class="add-sub sub">
+                                                <i class="far fa-minus"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        9,600,000 تومان
+                                    </div>
+                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                        <button class="btn btn-danger">
+                                            حذف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-product-detail-item">
+                                <div class="row flex-nowrap align-items-center">
+                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
+                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        4,800,000 تومان
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                        <div class="count-part">
+                                            <div class="add-sub add">
+                                                <i class="far fa-plus"></i>
+                                            </div>
+                                            <div class="main-count">
+                                                2
+                                            </div>
+                                            <div class="add-sub sub">
+                                                <i class="far fa-minus"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                        9,600,000 تومان
+                                    </div>
+                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                        <button class="btn btn-danger">
+                                            حذف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="off-code total-price">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="off-code-title">
+                                    <span>
+                                        در صورت در اختیار داشتن کد تخفیف در کادر مقابل وارد نموده و اعمال کنید:
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-5 col-md-8 col-sm-12 col-12">
+                                <div class="d-flex off-code-input-form justify-content-center">
+                                    <input type="text" class="form-control" name="off-code" placeholder="کد تخفیف">
+                                    <button class="btn btn-info">اعمال کد تخفیف</button>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                                <div class="total-price-div">
+                                    <p>
+                                        جمع کل :
+                                    </p>
+                                    <p>
+                                        38,400,000 تومان
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-order">
+                        <div class="row justify-content-end text-left align-items-center">
+                            <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12">
+                                <div class="warning-message">
+                                    <i class="fas fa-info-circle"></i>
+                                    کاربر گرامی لطفاً توجه داشته باشید : 
+                                    ثبت سفارش در هر زمان به معنی پذیرفتن کامل کلیه شرایط و قوانین از سوی کاربر است. برای مطالعه
+                                <a href="#">شرایط و قوانین</a>
+                                    کلیک کنید.
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
+                                <button class="btn btn-success w-100">
+                                    ثبت سفارش
+                                    <i class="fal fa-angle-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="whole-card information-card text-right">
+                    <div class="information-card-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-title text-center">
+                                    <h5>
+                                        مشخصات
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="information-item first">
+                                    <label for="fname">نام</label>
+                                    <input id="fname" class="form-control" type="text" placeholder="نام">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="information-item last">
+                                    <label for="lname">نام خانوادگی</label>
+                                    <input id="lname" class="form-control" type="text" placeholder="نام خانوادگی">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="information-item first">
+                                    <label for="lname">استان</label>
+                                    <input id="state" class="form-control" type="text" placeholder="استان">
+                                </div>
+                            </div>
+                            <!-- <div class="col-6">
+                                <label for="township">شهرستان</label>
+                                <input id="township" class="form-control" type="text" placeholder="شهرستان">
+                            </div> -->
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="information-item last">
+                                    <label for="city">شهر</label>
+                                    <input id="city" class="form-control" type="text" placeholder="شهر">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="information-item first">
+                                    <label for="cell-number">شماره همراه</label>
+                                    <input id="cell-number" class="form-control" type="number" placeholder="شماره همراه">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-8 col-8">
+                                <div class="information-item last">
+                                    <label for="phone-number">شماره ثابت</label>
+                                    <input id="phone-number" class="form-control" type="number" placeholder="شماره ثابت">
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 col-4">
+                                <div class="information-item last">
+                                    <label for="pre-phone">پیش شماره</label>
+                                    <input id="pre-phone" class="form-control" type="number" placeholder="پیش شماره">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-12">
+                                <div class="information-item">
+                                    <label for="address">آدرس</label>
+                                    <input id="address" class="form-control" type="text" placeholder="آدرس">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-between align-items-end">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="information-item first">
+                                    <label for="postal-code">کد پستی</label>
+                                    <input id="postal-code" class="form-control" type="number" placeholder="کد پستی">
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 text-left">
+                                <button class="btn btn-success w-100">
+                                    مرحله بعد
+                                    <i class="fal fa-angle-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="whole-card">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-title">
+                                <h5>
+                                    پرداخت نهایی
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="final-factor">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="factor-table">
+                                    <div class="card-titles">
+                                        <div class="row">
+                                            <div class="col-4">مجموع کالا</div>
+                                            <div class="col-4">هزینه ارسال</div>
+                                            <div class="col-4">جمع کل</div>
+                                        </div>
+                                    </div>
+                                    <div class="card-product-detail">
+                                        <div class="card-product-detail-item">
+                                            <div class="row align-items-center">
+                                                <div class="col-4">
+                                                    <div class="factor-table-col">
+                                                        4,800,000 تومان
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="factor-table-col">
+                                                        29,000 تومان
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="factor-table-col total-price-col">
+                                                        4,829,000 تومان
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-right">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="pay-post">
+                                    <div class="pay-post-title">
+                                        پست
+                                    </div>
+                                    <div class="pay-post-options">
+                                        <div class="radio pay-post-option">
+                                            <label>
+                                                <input type="radio" name="postradio" checked>
+                                                <span>
+                                                    پست پیشتاز : تحویل 2 الی 3 روزه
+                                                    <br>
+                                                    هزینه ارسال : 29,000 تومان
+                                                </span>
+                                            </label>
+                                            <i class="fal fa-plane"></i>
+                                        </div>
+                                        <div class="radio pay-post-option">
+                                            <label>
+                                                <input type="radio" name="postradio">
+                                                <span>
+                                                    پست معمولی : تحویل طی 5 روز کاری
+                                                    <br>
+                                                    هزینه ارسال : 12,000 تومان
+                                                </span>
+                                            </label>
+                                            <i class="fal fa-truck-moving"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="pay-post">
+                                    <div class="pay-post-title">
+                                        پرداخت
+                                    </div>
+                                    <div class="pay-post-options">
+                                        <div class="radio pay-post-option">
+                                            <label>
+                                                <input type="radio" name="payradio" checked>
+                                                <span>
+                                                    پرداخت از طریق درگاه بانک ملت
+                                                </span>
+                                            </label>
+                                            <div class="bank-logo">
+                                                <img src="{% static "images/Bank-Mellat.png" %}" alt="لوگو بانک">
+                                            </div>
+                                        </div>
+                                        <div class="radio pay-post-option">
+                                            <label>
+                                                <input type="radio" name="payradio">
+                                                <span>
+                                                    پرداخت از طریق درگاه بانک رسالت
+                                                </span>
+                                            </label>
+                                            <div class="bank-logo">
+                                                <img src="{% static "images/Bank-Resalat.png" %}" alt="لوگو بانک">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="final-price">
+                                    <p>
+                                        جمع کل با احتساب هزینه ارسال : 4,829,000 تومان
+                                    </p>
+                                    <button id="pay-btn" class="btn btn-success">
+                                        پرداخت
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

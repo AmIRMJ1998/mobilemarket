@@ -1,0 +1,379 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>تبلت | فروشگاه موبایل</title>
+</head>
+<body>
+
+    
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <section class="product-section">
+        <div class="container text-right">
+            <div class="row">
+                <div class="col-3">
+                    <div class="product-sidebar">
+                        <div class="product-types">
+                            <!-- <div class="product-type phone collapse-link">
+                                <div class="product-type-title phone collpase-link-toggle">
+                                    موبایل
+                                    <i class="far fa-angle-down"></i>
+                                </div>
+                                <div class="collapse brands">
+                                    <div class="collapse-link">
+                                        <div class="collpase-link-toggle">
+                                            برند
+                                            <i class="far fa-angle-down"></i>
+                                        </div>
+                                        <a href="#">سامسونگ</a>
+                                        <a href="#">هوآوی</a>
+                                        <a href="#">سونی</a>
+                                        <a href="#">اپل</a>
+                                        <a href="#">ال جی</a>
+                                        <a href="#">اچ تی سی</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-type collapse-link">
+                                <div class="product-type-title teblet collpase-link-toggle">
+                                    تبلت
+                                    <i class="far fa-angle-down"></i>
+                                </div>
+                                <div class="collapse brands">
+                                    <a href="#">سامسونگ</a>
+                                    <a href="#">هوآوی</a>
+                                    <a href="#">سونی</a>
+                                    <a href="#">اپل</a>
+                                    <a href="#">ال جی</a>
+                                    <a href="#">اچ تی سی</a>
+                                </div>
+                            </div>
+                        </div> -->
+
+                            <div id="left" class="span3">
+                                <ul id="menu-group-1" class="nav menu">  
+                                    <li class="item-1 deeper parent active">
+                                        <a class="" href="#">
+                                            <span class="lbl">موبایل</span>                      
+                                        </a>
+                                        <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-1" class="sign collapsed"><i class="far fa-angle-down"></i></span>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-1">
+                                            <li class="item-2 deeper parent active">
+                                                <a class="" href="#">
+                                                    <span class="lbl">برند</span> 
+                                                </a>
+                                                <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-2" class="sign collapsed"><i class="far fa-angle-down"></i></span>
+                                                <ul class="children nav-child unstyled small collapse" id="sub-item-2">
+                                                    <li class="item-3 current active">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">سامسونگ</span>
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>
+                                                    <li class="item-4">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">سونی</span> 
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>                                
+                                                </ul>
+                                            </li>
+                                            <li class="item-6 deeper parent">
+                                                <a class="" href="#">
+                                                    <span class="lbl">بر اساس سیستم عامل</span> 
+                                                </a>
+                                                <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-6" class="sign collapsed"><i class="far fa-angle-down"></i></span>
+                                                <ul class="children nav-child unstyled small collapse" id="sub-item-6">
+                                                    <li class="item-6">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">اندروید</span>                                    
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>
+                                                    <li class="item-7">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">ios</span>                                    
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                    
+                                    <li class="item-8 deeper parent">
+                                        <a class="" href="#">
+                                            <span class="lbl">تبلت</span>                      
+                                        </a>
+                                        <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-8" class="sign collapsed"><i class="far fa-angle-down"></i></span>
+                                        <ul class="children nav-child unstyled small collapse" id="sub-item-8">
+                                            <li class="item-9 deeper parent">
+                                                <a class="" href="#">
+                                                    <span class="lbl">برند</span> 
+                                                </a>
+                                                <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-9" class="sign collapsed"><i class="far fa-angle-down"></i></span>
+                                                <ul class="children nav-child unstyled small collapse" id="sub-item-9">
+                                                    <li class="item-10">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">سامسونگ</span>
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>
+                                                    <li class="item-11">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">سونی</span> 
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>                                
+                                                </ul>
+                                            </li>
+                                            <li class="item-12 deeper parent">
+                                                <a class="" href="#">
+                                                    <span class="lbl">بر اساس سیستم عامل</span> 
+                                                </a>
+                                                <span data-toggle="collapse" data-parent="#menu-group-1" href="#sub-item-12" class="sign collapsed"><i class="far fa-angle-down"></i></span>
+                                                <ul class="children nav-child unstyled small collapse" id="sub-item-12">
+                                                    <li class="item-13">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">اندروید</span>                                    
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>
+                                                    <li class="item-14">
+                                                        <a class="" href="#">
+                                                            <span class="lbl">ios</span>                                    
+                                                        </a>
+                                                        <!-- <span class="sign collapsed"><i class="far fa-angle-down"></i></span> -->
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>    			
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="product-main">
+                        <div class="product-section-title">
+                            <h5>
+                                محصولات
+                            </h5>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="product-main-filter">
+                                    <p>مرتب سازی بر اساس :</p>
+                                    <div class="filter-item active">پر بازدیدترین</div>
+                                    <div class="filter-item">پرفروش ترین</div>
+                                    <div class="filter-item">گران ترین</div>
+                                    <div class="filter-item">ارزان ترین</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+
+
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+    {% block foot %}
+    {% include "base/foot.html" %}
+    {% endblock %}

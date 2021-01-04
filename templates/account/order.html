@@ -1,0 +1,233 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>جزئیات سفارش {{orderID}} | فروشگاه موبایل</title>
+</head>
+<body>
+
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="whole-card text-right">
+            <div class="row">
+                <div class="col-12">
+                    <div class="dashboard-item-title orders-title justify-content-between">
+                        <div class="d-flex">
+                            <a href="{% url 'orders' %}">
+                                <i class="fas fa-long-arrow-right"></i>
+                            </a>
+                            <h4>
+                                جزئیات سفارش
+                            </h4>
+                        </div>
+                        <div class="btn btn-success">
+                            تحویل داده شده
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 d-flex">
+                    <div class="order-des order-id">
+                        DKC-301863866
+                    </div>
+                    <div class="order-des order-date">
+                        25 فروردین 1399
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 d-flex">
+                    <div class="order-detail-item">
+                        <span class="title">
+                            تحویل گیرنده:
+                        </span>
+                        <span class="value name">
+                            امیرحسین میراحمدی
+                        </span>
+                    </div>
+                    <div class="order-detail-item">
+                        <span class="title">
+                            شماره تماس:
+                        </span>
+                        <span class="value">
+                            09362857337
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="order-detail-item">
+                        <span class="title">
+                            آدرس:
+                        </span>
+                        <span class="value">
+                            کرمان، کرمان، بلوار جمهوری - بلوار رضوان - رضوان ۱۵ - انتهای کوچه سمت چپ - درب خاکستری رنگ
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="order-products m-3">
+                    <div class="col-12 order-product">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 col-4">
+                                <a href="{% url 'product' %}">
+                                    <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                </a>
+                                <span class="product-count">
+                                    <span>
+                                        1
+                                    </span>
+                                    &times;
+                                </span>
+                            </div>
+                            <div class="col-md-10 col-8">
+                                <div class="product-detail product-title">
+                                    گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                </div>
+                                <div class="product-detail product-color d-flex align-items-center">
+                                    <div class="color-square black-color-square"></div>
+                                    <div class="color-name">
+                                        مشکی
+                                    </div>
+                                </div>
+                                <div class="product-detail product-guarantee">
+                                    <i class="far fa-shield-check"></i>
+                                    18 ماهه شرکتی + کد رجیستری
+                                </div>
+                                <div class="product-detail product-price">
+                                    <span class="single-price">
+                                        قیمت واحد:
+                                    </span>
+                                    4,800,000 تومان
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 order-product">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 col-4">
+                                <a href="{% url 'product' %}">
+                                    <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                </a>
+                                <span class="product-count">
+                                    <span>
+                                        1
+                                    </span>
+                                    &times;
+                                </span>
+                            </div>
+                            <div class="col-md-10 col-8">
+                                <div class="product-detail product-title">
+                                    گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                </div>
+                                <div class="product-detail product-color d-flex align-items-center">
+                                    <div class="color-square black-color-square"></div>
+                                    <div class="color-name">
+                                        مشکی
+                                    </div>
+                                </div>
+                                <div class="product-detail product-guarantee">
+                                    <i class="far fa-shield-check"></i>
+                                    18 ماهه شرکتی + کد رجیستری
+                                </div>
+                                <div class="product-detail product-price">
+                                    <span class="single-price">
+                                        قیمت واحد:
+                                    </span>
+                                    4,800,000 تومان
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 order-product">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 col-4">
+                                <a href="{% url 'product' %}">
+                                    <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                </a>
+                                <span class="product-count">
+                                    <span>
+                                        1
+                                    </span>
+                                    &times;
+                                </span>
+                            </div>
+                            <div class="col-md-10 col-8">
+                                <div class="product-detail product-title">
+                                    گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
+                                </div>
+                                <div class="product-detail product-color d-flex align-items-center">
+                                    <div class="color-square black-color-square"></div>
+                                    <div class="color-name">
+                                        مشکی
+                                    </div>
+                                </div>
+                                <div class="product-detail product-guarantee">
+                                    <i class="far fa-shield-check"></i>
+                                    18 ماهه شرکتی + کد رجیستری
+                                </div>
+                                <div class="product-detail product-price">
+                                    <span class="single-price">
+                                        قیمت واحد:
+                                    </span>
+                                    4,800,000 تومان
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="final-factor text-center">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="factor-table">
+                            <div class="card-titles">
+                                <div class="row">
+                                    <div class="col-4">مجموع کالا</div>
+                                    <div class="col-4">هزینه ارسال</div>
+                                    <div class="col-4">جمع کل</div>
+                                </div>
+                            </div>
+                            <div class="card-product-detail">
+                                <div class="card-product-detail-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-4">
+                                            <div class="factor-table-col">
+                                                4,800,000 تومان
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="factor-table-col">
+                                                29,000 تومان
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="factor-table-col total-price-col">
+                                                4,829,000 تومان
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

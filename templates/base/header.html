@@ -1,0 +1,149 @@
+{% load static %}
+  <!-- Modal -->
+  <div class="modal fade login-register" id="login-register-modal" tabindex="-1" role="dialog" aria-labelledby="login-register-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="login-register-modal-title"> ورود / ثبت نام</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-right">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label for="username">نام کاربری</label>
+                    <input id="username" class="form-control" type="text" placeholder="نام کاربری">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label for="password">رمز عبور</label>
+                    <input id="password" class="form-control" type="password" placeholder="رمز عبور">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-primary w-100">ورود</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-start unregistered-text">
+            تا به حال ثبت نام نکرده اید؟
+            &nbsp;
+            <a class="" href="{% url 'register' %}">
+                ثبت نام
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<header>
+    <div class="container">
+        <div class="top-of-menu">
+            <div class="row align-items-center">
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 text-center">
+                    <div class="logo">
+                        <a href="{{BASE_URL}}/">
+                            <img src="{% static "/images/logo.png" %}" alt="logo" class="img-logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 text-center">
+                    <form action="">
+                        <div class="search-bar">
+                            <input type="text" class="form-control" name="searchbar" placeholder="جستجو ...">
+                            <button class="btn btn-primary searchbtn">
+                                <i class="fal fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-6 text-center">
+                    <div class="account">
+                        <!-- if logged in -->
+                        <div class="account-logged-in">
+                            <i class="fas fa-user"></i>
+                            <div class="logged-in">
+                                Username
+                                <i class="fal fa-angle-down"></i>
+                            </div>
+                            <div class="user-menu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'dashboard' %}">
+                                            حساب کاربری
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            خروج
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- else -->
+                        <div class="login-register" data-toggle="modal" data-target="#login-register-modal">
+                            ورود / ثبت نام
+                        </div>
+                        <!-- endif -->
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6 text-center">
+                    <!-- if logged-in -->
+                    <a href="{% url 'card' %}" class="cartbox btn btn-primary">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span> سبد خرید - </span> <span id="total-price"> 3,290,000 </span> <span> تومان </span>
+                    </a>
+                    <!-- else -->
+                    <a href="" class="btn btn-primary cartbox"  data-toggle="modal" data-target="#login-register-modal">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span> سبد خرید </span>
+                    </a>
+                    <!-- endif -->
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<menu>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{BASE_URL}}/">خانه <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'products' %}">
+                            محصولات
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'mobile' %}">موبایل</a>
+                            <a class="dropdown-item" href="{% url 'tablet' %}">تبلت</a>
+                        </div>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'mobile' %}">موبایل ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'compare' %}">مقایسه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blogIndex' %}">بلاگ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact-us' %}">تماس با ما</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</menu>

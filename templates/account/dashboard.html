@@ -1,0 +1,85 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>حساب کاربری | فروشگاه موبایل</title>
+</head>
+<body>
+
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="whole-card text-right dashboard-card">
+            <div class="row">
+                <div class="col-12">
+                    <h4>
+                        حساب کاربری
+                    </h4>
+                </div>
+            </div>
+            <div class="dashboard-items">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'orders' %}">
+                            <div class="dashboard-item">
+                                <i class="fal fa-shopping-cart"></i>
+                                سفارشات
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'information' %}">
+                            <div class="dashboard-item">
+                                <i class="fal fa-user"></i>
+                                مشخصات
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'favorites' %}">
+                            <div class="dashboard-item">
+                                <i class="fal fa-heart"></i>
+                                لیست علاقه مندی ها
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'messages' %}">
+                            <div class="dashboard-item">
+                                <i class="fal fa-envelope"></i>
+                                پیام ها
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'comments' %}">
+                            <div class="dashboard-item">
+                                <i class="fal fa-comment"></i>
+                                نظرات
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

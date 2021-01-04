@@ -1,0 +1,67 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>تماس با ما | فروشگاه موبایل</title>
+</head>
+<body>
+
+    
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="contact-us">
+            <div class="row">
+                <div class="col-12">
+                    <div class="whole-card text-right">
+                        <div class="title text-center mb-5">
+                            <h5>
+                                تماس با ما
+                            </h5>
+                        </div>
+                        <div class="form-row contact-us-form-row justify-content-center mb-3">
+                            <div class="col-12">
+                                <label for="title">عنوان پیام</label>
+                                <input id="title" class="form-control" type="text" placeholder="عنوان پیام" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-row contact-us-form-row justify-content-center mb-3">
+                            <div class="col-12">
+                                <label for="phone-number">شماره تماس</label>
+                                <input id="phone-number" class="form-control" type="text" placeholder="شماره تماس" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-row contact-us-form-row justify-content-center mb-3">
+                            <div class="col-12">
+                                <label for="email">ایمیل</label>
+                                <input id="email" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-row contact-us-form-row justify-content-center mb-3">
+                            <div class="col-12">
+                                <label for="text-message">متن پیام</label>
+                                <textarea name="text-message" id="text-message" class="form-control" cols="20" rows="7" placeholder="پیام خود را اینجا بنویسید..."></textarea>
+                            </div>
+                        </div>
+                        <div class="send-message">
+                            <button class="btn btn-primary w-100" id="send-message">
+                                ارسال
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+{% block foot %}
+{% include "base/foot.html" %}
+{% endblock %}

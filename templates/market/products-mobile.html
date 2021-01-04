@@ -1,0 +1,1479 @@
+{% block head %}
+{% include "base/head.html" %}
+{% endblock %}
+
+{% load static %}
+
+<title>موبایل | فروشگاه موبایل</title>
+</head>
+<body>
+
+    
+    {% block header %}
+    {% include "base/header.html" %}
+    {% endblock %}
+
+    <section class="product-section">
+        <div class="container text-right">
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12 product-sidebar-col">
+                    <div class="product-sidebar filter-products-section">
+                        <div class="product-types available-filter-div">
+                            <div class="custom-control custom-switch d-inline-block search-filters-button">
+                                <input type="checkbox" class="custom-control-input search-filters-input" id="customSwitch1">
+                                <label class="custom-control-label search-filters-label" for="customSwitch1"></label>
+                            </div>
+                            <span>
+                                نمایش کالاهای موجود
+                            </span>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                برند
+                            </h5>
+                            <div class="filter-checkbox filter-brand">
+                                <div>
+                                    <input id="samsung-brand" type="checkbox" name="brand-check">
+                                    <label for="samsung-brand">
+                                        سامسونگ | Samsung
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="sony-brand" type="checkbox" name="brand-check">
+                                    <label for="sony-brand">
+                                        سونی | Sony
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="htc-brand" type="checkbox" name="brand-check">
+                                    <label for="htc-brand">
+                                        اچ تی سی | HTC
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="apple-brand" type="checkbox" name="brand-check">
+                                    <label for="apple-brand">
+                                        اپل | Apple
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="xiaomi-brand" type="checkbox" name="brand-check">
+                                    <label for="xiaomi-brand">
+                                        شیائومی | Xiaomi
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="huawei-brand" type="checkbox" name="brand-check">
+                                    <label for="huawei-brand">
+                                        هوآوی | Huawei
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="nokia-brand" type="checkbox" name="brand-check">
+                                    <label for="nokia-brand">
+                                        نوکیا | Nokia
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="glx-brand" type="checkbox" name="brand-check">
+                                    <label for="glx-brand">
+                                        جی ال ایکس | GLX
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="lg-brand" type="checkbox" name="brand-check">
+                                    <label for="lg-brand">
+                                        ال جی | LG
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-price filter-products">
+                            <h5>
+                                محدوده قیمت
+                            </h5>
+                            <p>
+                                <!-- <label for="amount"></label> -->
+                                <input type="text" id="amount" readonly>
+                            </p>
+                            
+                            <div id="filter-price-range"></div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                رنگ
+                            </h5>
+                            <div class="filter-checkbox filter-color">
+                                <div>
+                                    <input id="black-color" type="checkbox" name="color-check">
+                                    <label for="black-color">
+                                        مشکی
+                                        <div class="color-square black-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="brown-color" type="checkbox" name="color-check">
+                                    <label for="brown-color">
+                                        قهوه ای
+                                        <div class="color-square brown-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="silver-color" type="checkbox" name="color-check">
+                                    <label for="silver-color">
+                                        نقره ای
+                                        <div class="color-square silver-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="white-color" type="checkbox" name="color-check">
+                                    <label for="white-color">
+                                        سفید
+                                        <div class="color-square white-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="blue-color" type="checkbox" name="color-check">
+                                    <label for="blue-color">
+                                        آبی
+                                        <div class="color-square blue-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="green-color" type="checkbox" name="color-check">
+                                    <label for="green-color">
+                                        سبز
+                                        <div class="color-square green-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="red-color" type="checkbox" name="color-check">
+                                    <label for="red-color">
+                                        قرمز
+                                        <div class="color-square red-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="yellow-color" type="checkbox" name="color-check">
+                                    <label for="yellow-color">
+                                        زرد
+                                        <div class="color-square yellow-color-square"></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="purple-color" type="checkbox" name="color-check">
+                                    <label for="purple-color">
+                                        بنفش
+                                        <div class="color-square purple-color-square"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                تعداد سیم کارت
+                            </h5>
+                            <div class="filter-simcard">
+                                <div>
+                                    <label>
+                                        <input id="both-sim" type="radio" name="simcardradio" checked>
+                                        <span>
+                                            هر دو
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input id="single-sim" type="radio" name="simcardradio">
+                                        <span>
+                                            تک سیمکارت
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input id="couple-sim" type="radio" name="simcardradio">
+                                        <span>
+                                            دو سیمکارت
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                حافظه داخلی
+                            </h5>
+                            <div class="filter-checkbox filter-memory">
+                                <div>
+                                    <input id="gb-1-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-1-memory">
+                                        1 گیگابایت و کمتر
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-2-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-2-memory">
+                                        2 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-4-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-4-memory">
+                                        4 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-8-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-8-memory">
+                                        8 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-16-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-16-memory">
+                                        16 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-32-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-32-memory">
+                                        32 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-64-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-64-memory">
+                                        64 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-128-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-128-memory">
+                                        128 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-256-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-256-memory">
+                                        256 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-512-memory" type="checkbox" name="memory-check">
+                                    <label for="gb-512-memory">
+                                        512 گیگابایت و بیشتر
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                حافظه RAM
+                            </h5>
+                            <div class="filter-checkbox filter-ram">
+                                <div>
+                                    <input id="gb-1-ram" type="checkbox" name="ram-check">
+                                    <label for="gb-1-ram">
+                                        1 گیگابایت و کمتر
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-2-ram" type="checkbox" name="ram-check">
+                                    <label for="gb-2-ram">
+                                        2 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-4-ram" type="checkbox" name="ram-check">
+                                    <label for="gb-4-ram">
+                                        4 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-8-ram" type="checkbox" name="ram-check">
+                                    <label for="gb-8-ram">
+                                        8 گیگابایت
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="gb-16-ram" type="checkbox" name="ram-check">
+                                    <label for="gb-16-ram">
+                                        16 گیگابایت و بیشتر
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                کیفیت دوربین
+                            </h5>
+                            <div class="filter-checkbox filter-camera">
+                                <div>
+                                    <input id="px-5-camera" type="checkbox" name="camera-check">
+                                    <label for="px-5-camera">
+                                        5 پیکسل و کمتر
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-8-camera" type="checkbox" name="camera-check">
+                                    <label for="px-8-camera">
+                                        8 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-12-camera" type="checkbox" name="camera-check">
+                                    <label for="px-12-camera">
+                                        12 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-13-camera" type="checkbox" name="camera-check">
+                                    <label for="px-13-camera">
+                                        13 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-16-camera" type="checkbox" name="camera-check">
+                                    <label for="px-16-camera">
+                                        16 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-20-camera" type="checkbox" name="camera-check">
+                                    <label for="px-20-camera">
+                                        20 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-24-camera" type="checkbox" name="camera-check">
+                                    <label for="px-24-camera">
+                                        24 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-40-camera" type="checkbox" name="camera-check">
+                                    <label for="px-40-camera">
+                                        40 پیکسل
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="px-no-camera" type="checkbox" name="camera-check">
+                                    <label for="px-no-camera">
+                                        فاقد دوربین
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                سیستم عامل
+                            </h5>
+                            <div class=" filter-os">
+                                <div>
+                                    <input id="android-os" type="checkbox" name="os-check">
+                                    <label for="android-os">
+                                        اندروید
+                                    </label>
+                                </div>
+                                <div>
+                                    <input id="ios-os" type="checkbox" name="os-check">
+                                    <label for="ios-os">
+                                        ios
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-types filter-products">
+                            <h5>
+                                باتری قابل تعویض
+                            </h5>
+                            <div class="filter-changable-battery">
+                                <div>
+                                    <label>
+                                        <input id="both-change" type="radio" name="changable-battery-radio" checked>
+                                        <span>
+                                            هر دو
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input id="yes-change" type="radio" name="changable-battery-radio">
+                                        <span>
+                                            بله
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input id="no-change" type="radio" name="changable-battery-radio">
+                                        <span>
+                                            خیر
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="do-filters">
+                            <button id="do-filters-btn" class="btn btn-primary w-100">
+                                اعمال فیلتر ها
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+                    <div class="product-main">
+                        <div class="product-section-title">
+                            <h5>
+                                موبایل
+                            </h5>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="product-main-filter">
+                                    <p>مرتب سازی بر اساس :</p>
+                                    <div class="filter-item active">پر بازدیدترین</div>
+                                    <div class="filter-item">پرفروش ترین</div>
+                                    <div class="filter-item">گران ترین</div>
+                                    <div class="filter-item">ارزان ترین</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                    <div class="product">
+                                        <a href="{% url 'product' %}">
+                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
+                                            <div class="product-title">
+                                                گوشی موبایل هوآوی مدل P10
+                                            </div>
+                                        </a>
+                                        <div class="product-rate">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="product-prices">
+                                            <div class="product-price-off">
+                                                4,950,000 تومان
+                                            </div>
+                                            <div class="product-price">
+                                                <span>
+                                                    4,800,000
+                                                </span>
+                                                <span>
+                                                    تومان
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+
+
+    {% block footer %}
+    {% include "base/footer.html" %}
+    {% endblock %}
+    
+    {% block foot %}
+    {% include "base/foot.html" %}
+    {% endblock %}
