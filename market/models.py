@@ -1,10 +1,42 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.postgres.fields import ArrayField
+from django.utils.deconstruct import deconstructible
 from django.db.models import JSONField
 from datetime import datetime
 from django.db import models
 import os
 
+# factor number function   
+@deconstructible
+class factor_number():
+    def __init__(self, this_size):
+        self.size = this_size
+
+    def __call__(self):
+        if Factor.objects.filter(number = self.extend('1')).exists():
+            last = Factor.objects.latest('orderdate').number
+            i = 1
+            while 1:
+                value = self.extend(str(int(last) + i))
+                if not Factor.objects.filter(number = value).exists():
+                    return value
+                else:
+                    i += 1
+        else:
+            return self.extend('1')
+
+    def extend(self, value):
+        count = self.size - len(value)
+        if count == 0:
+            return value
+        else:
+            result = ''
+            while count > 0:
+                result += '0'
+                count -= 1
+            result += value
+            return result
+            
 # --------------------------------------------------------------------------------------------------------------------------------------
 
 class UserManager(BaseUserManager):
@@ -132,11 +164,11 @@ class Mobile (models.Model):
     points = JSONField(verbose_name = 'امتیازات', null = True, blank = True)
     price = models.CharField(verbose_name = 'قیمت', max_length = 15)
     discount = models.PositiveSmallIntegerField(verbose_name = 'تخفیف', default = 0)
-    FK_Comments = models.ManyToManyField('Comment', verbose_name = 'نظرات', related_name = 'mobile_comments', blank = True)
+    comments = JSONField(verbose_name = 'نظرات', blank = True, null = True)
     colors = ArrayField(models.CharField(verbose_name = 'رنگ', max_length = 9), verbose_name = 'رنگ ها', blank = True, null = True)
     inventory = models.IntegerField(verbose_name = 'موجودی', default = 1)
     guarantees = ArrayField(models.CharField(verbose_name = 'گارانتی', max_length = 225), verbose_name = 'گارانتی ها', blank = True, null = True)
-    technical_details = JSONField(verbose_name = 'جزئیات فنی', null = True, blank = True)
+    technical_details = JSONField(verbose_name = 'جزئیات فنی', blank = True, null = True)
     datecreate = models.DateTimeField(verbose_name = 'تاریخ بارگذاری', auto_now_add = True)
     dateupdate = models.DateTimeField(verbose_name = 'تاریخ بروزرسانی', auto_now = True)
     PUBLISH_STATUS =(
@@ -218,3 +250,76 @@ class Contact(models.Model):
         verbose_name_plural = "ارتباط با ما ها"
 
 # --------------------------------------------------------------------------------------------------------------------------------------
+
+# Slider (اسلایدر) Model
+class Slider(models.Model):
+    image = models.ImageField(verbose_name='عکس', upload_to = 'media/images/slider/')
+    description = models.CharField(verbose_name = 'برچسب روی اسلایدر', max_length = 150, blank = True, null = True)
+    link = models.URLField(verbose_name = 'لینک', blank = True, null = True)
+    PUBLISH_STATUS = (
+        (True,'منتشر شده'),
+        (False,'منتشر نشده'),
+    )
+    publish = models.BooleanField(verbose_name = 'وضعیت انتشار', choices = PUBLISH_STATUS, default = True)
+
+    def __str__(self):
+        return "{}".format(self.description)
+
+    class Meta:
+        ordering = ('id', )   
+        verbose_name = "اسلایدر"
+        verbose_name_plural = "اسلایدر ها"
+    
+#----------------------------------------------------------------------------------------------------------------------------------
+
+# Message (پیام) Model
+class Message(models.Model):
+    title = models.CharField(verbose_name = 'عنوان', db_index = True, max_length = 225)
+    text = models.TextField(verbose_name = 'متن')
+    SEEN_STATUS = (
+        (True,'دیده شده'),
+        (False,'دیده نشده'),
+    )
+    users = JSONField(verbose_name = 'کاربران', blank = True, null = True)
+    datetime = models.DateTimeField(verbose_name = 'تاریخ و زمان ثبت', auto_now_add = True)
+
+    def __str__(self):
+        return "{} ({})".format(self.title, self.datetime)
+
+    class Meta:
+        ordering = ('id',)
+        verbose_name = "پیام"
+        verbose_name_plural = "پیام ها"
+
+#----------------------------------------------------------------------------------------------------------------------------------
+
+# Factor (فاکتور) Model 
+class Factor(models.Model):
+    number = models.CharField(verbose_name = 'شماره فاکتور', max_length = 5, unique = True, default = factor_number(5))
+    FK_User = models.ForeignKey(User, verbose_name = 'کاربر', on_delete = models.SET_NULL, related_name = 'user_factor', null = True)
+    address = JSONField(verbose_name = 'آدرس', blank = True, null = True)
+    items = JSONField(verbose_name = 'محصولات', blank = True, null = True)
+    post_price = models.CharField(verbose_name = 'هزینه پست', max_length = 15)
+    total_price = models.CharField(verbose_name = 'هزینه کل', max_length = 15)
+    PAYMENT_STATUS = (
+        (True,'پرداخت شد'),
+        (False,'پرداخت نشده'),
+    )
+    payment_status = models.BooleanField(verbose_name = 'وضعیت پرداخت', choices = PAYMENT_STATUS, default = False)
+    orderdate = models.DateTimeField(verbose_name = 'تاریخ و زمان ثبت', auto_now_add = True)
+    FACTOR_STATUS = (
+        (0,'فاکتور در حال آماده سازی'),
+        (1,'سفارش آماده است'),
+        (2,'سفارش ارسال شده است'),
+    )
+    status = models.PositiveSmallIntegerField(verbose_name = 'وضعیت فاکتور', choices = FACTOR_STATUS, default = 0)
+
+    def __str__(self):
+        return "{} ({})".format(self.number, self.FK_User)
+
+    class Meta:
+        ordering = ('id', 'orderdate')
+        verbose_name = "فاکتور"
+        verbose_name_plural = "فاکتور ها"
+
+#----------------------------------------------------------------------------------------------------------------------------------
