@@ -1,8 +1,9 @@
-// $.digits = function(){ 
-//     return this.each(function(){ 
-//         $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
-//     })
-// }
+$.fn.digits = function(){ 
+    return this.each(function(){ 
+        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
+    })
+}
+$(".split-number").digits();
 
 //ُMain Slider in index page
 var showingSlide;
@@ -10,11 +11,17 @@ var showingSlide;
 $('.slide:nth-child(1)').css('z-index', 1);
 $('.slide:nth-child(1)').css('opacity', 1);
 showingSlide = 1;
+slideCount = $('.slide').length;
+
+if (slideCount <= 1)
+{
+    $(".arrow").hide();
+}
 
 $('.next').on('click', function () {
     $('.slide:nth-child(' + showingSlide + ')').css('opacity', 0);
     $('.slide:nth-child(' + showingSlide + ')').css('z-index', '-1');
-    if (showingSlide == 4)
+    if (showingSlide == slideCount)
     {
         showingSlide = 1;
     }
@@ -29,7 +36,7 @@ $('.prev').on('click', function () {
     $('.slide:nth-child(' + showingSlide + ')').css('z-index', '-1');
     if (showingSlide == 1)
     {
-        showingSlide = 4;
+        showingSlide = slideCount;
     }
     else {
         showingSlide -= 1;

@@ -3,6 +3,7 @@
 {% endblock %}
 
 {% load static %}
+{% load jformat %}
 
     <title>پیام ها | فروشگاه موبایل</title>
     </head>
@@ -33,82 +34,46 @@
                                 <div class="row flex-nowrap">
                                     <div class="col-1">#</div>
                                     <div class="col-md-2 col-3">عنوان</div>
-                                    <div class="col-lg-4 col-md-3 col-4">متن</div>
+                                    <div class="col-md-4 col-4">متن</div>
                                     <div class="col-3">تاریخ و ساعت</div>
-                                    <div class="col-1">وضعیت</div>
-                                    <div class="col-sm-1 col-2"></div>
+                                    <div class="col-2">وضعیت</div>
                                 </div>
                             </div>
                             <div class="card-product-detail">
                                 <div class="card-product-detail-item">
-                                    <div class="single-message">
-                                        <div class="row align-items-center flex-nowrap">
-                                            <div class="col-1">
-                                                <div class="factor-table-col">
-                                                    1
+                                    {% for item in Messages %}
+                                        <div class="single-message">
+                                            <div class="row align-items-center flex-nowrap">
+                                                <div class="col-1">
+                                                    <div class="factor-table-col">
+                                                        {{ forloop.counter }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-2 col-3">
-                                                <div class="factor-table-col title">
-                                                    <a href="{% url 'message' %}">
-                                                        عنوان عنوانعنوان عنوان
-                                                    </a>
+                                                <div class="col-md-2 col-3">
+                                                    <div class="factor-table-col title">
+                                                        <a href="{% url 'message' item.Message.id %}">
+                                                            {{ item.Message.Title }}
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-3 col-4">
-                                                <div class="factor-table-col text-right">
-                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت ...
+                                                <div class="col-md-4 col-4">
+                                                    <div class="factor-table-col text-right">
+                                                        {{ item.Message.summary }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-3">
-                                                1399/09/23
-                                                &nbsp;
-                                                12:25
-                                            </div>
-                                            <div class="col-1 message-status">
-                                                <i class="fas fa-envelope" title="خوانده نشده"></i>
-                                            </div>
-                                            <div class="col-sm-1 col-2">
-                                                <button class="btn btn-danger">
-                                                    حذف
-                                                </button>
+                                                <div class="col-3">
+                                                    {{ item.Message.Date | jformat:"%H:%M %Y/%m/%d" }}
+                                                </div>
+                                                <div class="col-2 message-status">
+                                                    {% if item.Status %}
+                                                        <i class="fas fa-envelope-open" title="خوانده شده"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-envelope" title="خوانده نشده"></i>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="single-message">
-                                        <div class="row align-items-center flex-nowrap">
-                                            <div class="col-1">
-                                                <div class="factor-table-col">
-                                                    2
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 col-3">
-                                                <div class="factor-table-col title">
-                                                    <a href="{% url 'message' %}">
-                                                        عنوان عنوانعنوان عنوان
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-3 col-4">
-                                                <div class="factor-table-col text-right">
-                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم ، ...
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                1399/09/23
-                                                &nbsp;
-                                                12:25
-                                            </div>
-                                            <div class="col-1 message-status">
-                                                <i class="fas fa-envelope-open" title="خوانده شده"></i>
-                                            </div>
-                                            <div class="col-sm-1 col-2">
-                                                <button class="btn btn-danger">
-                                                    حذف
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

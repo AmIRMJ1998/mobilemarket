@@ -6,7 +6,7 @@ urlpatterns = [
     path('products/', views.products, name="products"),
     path('products/mobile', views.mobile, name="mobile"),
     path('products/tablet', views.tablet, name="tablet"),
-    path('products/mobile/product-slug', views.product, name="product"),
+    path('products/mobile/<slug:slug>', views.product, name="product"),
     path('card/', views.card, name="card"),
     path('register/', views.register, name="register"),
     path('dashboard/', views.dashboard, name="dashboard"),
@@ -18,5 +18,10 @@ urlpatterns = [
     path('dashboard/messages/message-slug', views.message, name="message"),
     path('dashboard/comments', views.comments, name="comments"),
     path('compare/', views.compare, name="compare"),
-    path('contact-us/', views.contactUs, name="contact-us")
+    path('contact-us/', views.contactUs, name="contact-us"),
+    path('login/', views.loginPage, name='login'),
+
+
+    path('loginRequest/', views.loginRequest, name='loginRequest'),
+    path('logout/', views.logoutRequest, name='logoutRequest')
 ]

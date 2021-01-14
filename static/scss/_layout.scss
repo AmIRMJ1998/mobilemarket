@@ -243,7 +243,7 @@ section.products-section {
             }
 
             img {
-                width: 80%;
+                width: 100%;
                 margin: auto;
             }
         }
@@ -1658,6 +1658,91 @@ section.product-section {
     line-height: 30px;
 }
 
+.login {
+    .whole-card {
+        margin: 20px 230px;
+        padding: 0;
+
+        .login-button {
+            padding-bottom: 10px;
+            border-bottom: 1px solid $color-light;
+        }
+
+        .information-card-content.login {
+            margin: 0 30px;
+        }
+        
+        .unregistered-text {
+            a {
+                color: $color-bootstrap;
+            }
+        }
+    }
+}
+
+.alert-message {
+    padding: 10px;
+    border-radius: 5px;
+
+    &.front {
+        display: none;
+    }
+
+    &.error-message {
+        background: #ffe4e4;
+    }
+
+    &.success-message {
+        background: #e1ffe1;
+    }
+
+    .alert-message-content {
+        display: inline-block;
+
+        .alert-message-text {
+            display: inline-block;
+        }
+
+        &.error-content {
+        
+            i {
+                color: #9c0000;
+            }
+        }
+        &.success-content {
+        
+            i {
+                color: #0a940a;
+            }
+        }
+    }    
+
+    .close-message {
+        float: left;
+
+        i {
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        
+        &.close-error-message {
+            i {
+                color: #a78b8b;
+            }
+        }
+
+        &.close-success-message {
+            i {
+                color: #608460;
+            }
+        }
+    }
+}
+
+input.empty {
+    background-color: #ffe4e4;
+}
+
 .blog {
     .blog-post-preview {
         padding-bottom: 10px;
@@ -1902,6 +1987,11 @@ section.product-section {
             padding: 20px;
         }
     }
+    .login {
+        .whole-card {
+            margin: 20px 120px;
+        }
+    }
     // .available-filter-div {
     //     .search-filters-button {
     //         margin-right: -20px;
@@ -2010,6 +2100,11 @@ section.product-section {
             padding: 20px;
         }
     }
+    .login {
+        .whole-card {
+            margin: 20px 40px;
+        }
+    }
 }
 @media (max-width: 575px) {
     header {
@@ -2109,6 +2204,11 @@ section.product-section {
     .contact-us {
         .whole-card {
             padding: 20px;
+        }
+    }
+    .login {
+        .whole-card {
+            margin: 20px 10px;
         }
     }
 }

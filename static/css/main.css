@@ -363,7 +363,7 @@ section.products-section .slider-slick .slider-slick-item .product-prices .produ
 }
 
 section.products-section .slider-slick .slider-slick-item img {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 
@@ -1601,6 +1601,78 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   line-height: 30px;
 }
 
+.login .whole-card {
+  margin: 20px 230px;
+  padding: 0;
+}
+
+.login .whole-card .login-button {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.login .whole-card .information-card-content.login {
+  margin: 0 30px;
+}
+
+.login .whole-card .unregistered-text a {
+  color: #007bff;
+}
+
+.alert-message {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-message.front {
+  display: none;
+}
+
+.alert-message.error-message {
+  background: #ffe4e4;
+}
+
+.alert-message.success-message {
+  background: #e1ffe1;
+}
+
+.alert-message .alert-message-content {
+  display: inline-block;
+}
+
+.alert-message .alert-message-content .alert-message-text {
+  display: inline-block;
+}
+
+.alert-message .alert-message-content.error-content i {
+  color: #9c0000;
+}
+
+.alert-message .alert-message-content.success-content i {
+  color: #0a940a;
+}
+
+.alert-message .close-message {
+  float: left;
+}
+
+.alert-message .close-message i {
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.alert-message .close-message.close-error-message i {
+  color: #a78b8b;
+}
+
+.alert-message .close-message.close-success-message i {
+  color: #608460;
+}
+
+input.empty {
+  background-color: #ffe4e4;
+}
+
 .blog .blog-post-preview {
   padding-bottom: 10px;
   border-bottom: 2px solid #e0e0e0;
@@ -1815,6 +1887,9 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   .contact-us .whole-card {
     padding: 20px;
   }
+  .login .whole-card {
+    margin: 20px 120px;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -1872,6 +1947,9 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   }
   .contact-us .whole-card {
     padding: 20px;
+  }
+  .login .whole-card {
+    margin: 20px 40px;
   }
 }
 
@@ -1945,6 +2023,9 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   }
   .contact-us .whole-card {
     padding: 20px;
+  }
+  .login .whole-card {
+    margin: 20px 10px;
   }
 }
 

@@ -3,6 +3,7 @@
 {% endblock %}
 
 {% load static %}
+{% load jformat %}
 
 <title>مشخصات | فروشگاه موبایل</title>
 </head>
@@ -27,268 +28,281 @@
                         </div>
                     </div>
                 </div>
-                <fieldset disabled="disabled">
-                    <div class="form-row information-form-row justify-content-center">
-                        <div class="col-md-6 col-12">
-                            <div class="information-item first">
-                                <label for="fname">نام</label>
-                                <input  id="fname" class="form-control" type="text" placeholder="نام" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="lname">نام خانوادگی</label>
-                            <input  id="lname" class="form-control" type="text" placeholder="نام خانوادگی" autocomplete="off">
+                <div class="alert-message error-message front">
+                    <div class="alert-message-content error-content">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="alert-message-text error-text">
                         </div>
                     </div>
-                    <div class="form-row information-form-row justify-content-center">
-                        <div class="col-md-6 col-12">
-                            <div class="information-item first">
-                                <label for="nationalcode">کد ملی</label>
-                                <input  id="nationalcode" class="form-control" type="number" placeholder="کد ملی" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="email">ایمیل</label>
-                            <input  id="email" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-row information-form-row justify-content-start">
-                        <div class="col-md-6 col-12">
-                            <div class="information-item first">
-                                <label for="birthday">تاریخ تولد</label>
-                                <div class="form-row">
-                                    <div class="col-4">
-                                        <select  id="birthday-day" class="form-control birthday" autocomplete="off">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
-                                            <option value="13">13</option>
-                                            <option value="14">14</option>
-                                            <option value="15">15</option>
-                                            <option value="16">16</option>
-                                            <option value="17">17</option>
-                                            <option value="18">18</option>
-                                            <option value="19">19</option>
-                                            <option value="20">20</option>
-                                            <option value="21">21</option>
-                                            <option value="22">22</option>
-                                            <option value="23">23</option>
-                                            <option value="24">24</option>
-                                            <option value="25">25</option>
-                                            <option value="26">26</option>
-                                            <option value="27">27</option>
-                                            <option value="28">28</option>
-                                            <option value="29">29</option>
-                                            <option value="30">30</option>
-                                            <option value="31">31</option>
-                                        </select>
-                                    </div>
-                                <div class="col-4">
-                                    <select  id="birthday-month" class="form-control birthday" autocomplete="off">
-                                        <option value="1">فروردین</option>
-                                        <option value="2">اردیبهشت</option>
-                                        <option value="3">خرداد</option>
-                                        <option value="4">تیر</option>
-                                        <option value="5">مرداد</option>
-                                        <option value="6">شهریور</option>
-                                        <option value="7">مهر</option>
-                                        <option value="8">آبان</option>
-                                        <option value="9">آذر</option>
-                                        <option value="10">دی</option>
-                                        <option value="11">بهمن</option>
-                                        <option value="12">اسفند</option>
-                                    </select>
-                                </div>
-                                <div class="col-4">
-                                    <select  id="birthday-year" class="form-control birthday" autocomplete="off">
-                                        <option value="1301">1301</option>
-                                        <option value="1302">1302</option>
-                                        <option value="1303">1303</option>
-                                        <option value="1304">1304</option>
-                                        <option value="1305">1305</option>
-                                        <option value="1306">1306</option>
-                                        <option value="1307">1307</option>
-                                        <option value="1308">1308</option>
-                                        <option value="1309">1309</option>
-                                        <option value="1310">1310</option>
-                                        <option value="1311">1311</option>
-                                        <option value="1312">1312</option>
-                                        <option value="1313">1313</option>
-                                        <option value="1314">1314</option>
-                                        <option value="1315">1315</option>
-                                        <option value="1316">1316</option>
-                                        <option value="1317">1317</option>
-                                        <option value="1318">1318</option>
-                                        <option value="1319">1319</option>
-                                        <option value="1320">1320</option>
-                                        <option value="1321">1321</option>
-                                        <option value="1322">1322</option>
-                                        <option value="1323">1323</option>
-                                        <option value="1324">1324</option>
-                                        <option value="1325">1325</option>
-                                        <option value="1326">1326</option>
-                                        <option value="1327">1327</option>
-                                        <option value="1328">1328</option>
-                                        <option value="1329">1329</option>
-                                        <option value="1330">1330</option>
-                                        <option value="1331">1331</option>
-                                        <option value="1332">1332</option>
-                                        <option value="1333">1333</option>
-                                        <option value="1334">1334</option>
-                                        <option value="1335">1335</option>
-                                        <option value="1336">1336</option>
-                                        <option value="1337">1337</option>
-                                        <option value="1338">1338</option>
-                                        <option value="1339">1339</option>
-                                        <option value="1340">1340</option>
-                                        <option value="1341">1341</option>
-                                        <option value="1342">1342</option>
-                                        <option value="1343">1343</option>
-                                        <option value="1344">1344</option>
-                                        <option value="1345">1345</option>
-                                        <option value="1346">1346</option>
-                                        <option value="1347">1347</option>
-                                        <option value="1348">1348</option>
-                                        <option value="1349">1349</option>
-                                        <option value="1350">1350</option>
-                                        <option value="1351">1351</option>
-                                        <option value="1352">1352</option>
-                                        <option value="1353">1353</option>
-                                        <option value="1354">1354</option>
-                                        <option value="1355">1355</option>
-                                        <option value="1356">1356</option>
-                                        <option value="1357">1357</option>
-                                        <option value="1358">1358</option>
-                                        <option value="1359">1359</option>
-                                        <option value="1360">1360</option>
-                                        <option value="1361">1361</option>
-                                        <option value="1362">1362</option>
-                                        <option value="1363">1363</option>
-                                        <option value="1364">1364</option>
-                                        <option value="1365">1365</option>
-                                        <option value="1366">1366</option>
-                                        <option value="1367">1367</option>
-                                        <option value="1368">1368</option>
-                                        <option value="1369">1369</option>
-                                        <option value="1370">1370</option>
-                                        <option value="1371">1371</option>
-                                        <option value="1372">1372</option>
-                                        <option value="1373">1373</option>
-                                        <option value="1374">1374</option>
-                                        <option value="1375">1375</option>
-                                        <option value="1376">1376</option>
-                                        <option value="1377">1377</option>
-                                        <option value="1378">1378</option>
-                                        <option value="1379">1379</option>
-                                        <option value="1380">1380</option>
-                                        <option value="1381">1381</option>
-                                        <option value="1382">1382</option>
-                                        <option value="1383">1383</option>
-                                        <option value="1384">1384</option>
-                                        <option value="1385">1385</option>
-                                        <option value="1386">1386</option>
-                                        <option value="1387">1387</option>
-                                        <option value="1388">1388</option>
-                                        <option value="1389">1389</option>
-                                        <option value="1390">1390</option>
-                                        <option value="1391">1391</option>
-                                        <option value="1392">1392</option>
-                                        <option value="1393">1393</option>
-                                        <option value="1394">1394</option>
-                                        <option value="1395">1395</option>
-                                        <option value="1396">1396</option>
-                                        <option value="1397">1397</option>
-                                        <option value="1398">1398</option>
-                                        <option value="1399" selected>1399</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <label for="username">نام کاربری</label>
-                        <input  id="username" class="form-control" type="text" placeholder="نام کاربری" autocomplete="off">
-                    </div>
-                    </div>
-                    <div class="form-row information-form-row justify-content-center">
-                        <div class="col-md-6 col-12">
-                            <div class="information-item first">
-                                <label for="password">رمز عبور</label>
-                                <input  id="password" class="form-control" type="password" placeholder="رمز عبور" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="repeatpassword">تکرار رمز عبور</label>
-                            <input  id="repeatpassword" class="form-control" type="password" placeholder="تکرار رمز عبور" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-row information-form-row justify-content-center">
-                        <div class="col-md-6 col-12">
-                            <div class="information-item first">
-                                <label for="cell-number">شماره همراه</label>
-                                <input  id="cell-number" class="form-control" type="number" placeholder="شماره همراه" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-8">
-                            <label for="phone-number">شماره ثابت</label>
-                            <input  id="phone-number" class="form-control" type="number" placeholder="شماره ثابت" autocomplete="off">
-                        </div>
-                        <div class="col-md-2 col-4">
-                            <label for="pre-phone">پیش شماره</label>
-                            <input  id="pre-phone" class="form-control" type="number" placeholder="پیش شماره" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-row information-form-row justify-content-center">
-                        <div class="col-md-6 col-12">
-                            <div class="information-item first">
-                                <label for="lname">استان</label>
-                                <input  id="state" class="form-control" type="text" placeholder="استان">
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-6 col-12">
-                            <label for="township">شهرستان</label>
-                            <input  id="township" class="form-control" type="text" placeholder="شهرستان">
-                        </div> -->
-                        <div class="col-md-6 col-12">
-                            <label for="city">شهر</label>
-                            <input  id="city" class="form-control" type="text" placeholder="شهر">
-                        </div>
-                    </div>
-                    <div class="form-row information-form-row justify-content-center">
-                        <div class="col-12">
-                            <label for="address">آدرس</label>
-                            <input id="address" class="form-control" type="text" placeholder="آدرس" autocomplete="off">
-                        </div>
-                    </div>
-                </fieldset>
-                <div class="form-row information-form-row justify-content-between align-items-end">
-                    <div class="col-md-6 col-12">
-                        <div class="information-item first">
-                            <fieldset disabled="disabled">
-                                <label for="postal-code">کد پستی</label>
-                                <input id="postal-code" class="form-control" type="number" placeholder="کد پستی" autocomplete="off">
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-12 text-left">
-                        <button id="edit-information" class="btn btn-primary w-100">
-                            ویرایش
-                            <i class="fal fa-pencil-alt"></i>
-                        </button>
-                        <button id="save-information" class="btn btn-primary">
-                            ذخیره
-                        </button>
+                    <div class="close-message close-error-message">
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
+                <div class="alert-message success-message front">
+                    <div class="alert-message-content success-content">
+                        <i class="fas fa-check"></i>
+                        <div class="alert-message-text success-text">
+                        </div>
+                    </div>
+                    <div class="close-message close-success-message">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <!-- <form method="POST" action="{% url 'changeInformation' %}"> -->
+                    <fieldset disabled="disabled">
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-md-6 col-12">
+                                <div class="information-item first">
+                                    <label for="fname">نام<code>*</code></label>
+                                    <input name="firstname" value="{{User_Profile.first_name}}" id="fname" class="form-control" type="text" placeholder="نام" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="lname">نام خانوادگی<code>*</code></label>
+                                <input name="lastname" value="{{User_Profile.last_name}}" id="lname" class="form-control" type="text" placeholder="نام خانوادگی" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-md-6 col-12">
+                                <div class="information-item first">
+                                    <label for="nationalcode">کد ملی<code>*</code></label>
+                                    <input disabled value="{{User_Profile.NationalCode}}" id="nationalcode" class="form-control" type="number" placeholder="کد ملی" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="email">ایمیل<code>*</code></label>
+                                <input name="email" value="{{User_Profile.email}}" id="email" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-start">
+                            <div class="col-md-6 col-12">
+                                <div class="information-item first">
+                                    <label for="birthday">تاریخ تولد</label>
+                                    <div class="form-row">
+                                        <div class="col-4">
+                                            <select name="birthday-day" id="birthday-day" class="form-control birthday" autocomplete="off">
+                                                <option value="01">1</option>
+                                                <option value="02">2</option>
+                                                <option value="03">3</option>
+                                                <option value="04">4</option>
+                                                <option value="05">5</option>
+                                                <option value="06">6</option>
+                                                <option value="07">7</option>
+                                                <option value="08">8</option>
+                                                <option value="09">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20">20</option>
+                                                <option value="21">21</option>
+                                                <option value="22">22</option>
+                                                <option value="23">23</option>
+                                                <option value="24">24</option>
+                                                <option value="25">25</option>
+                                                <option value="26">26</option>
+                                                <option value="27">27</option>
+                                                <option value="28">28</option>
+                                                <option value="29">29</option>
+                                                <option value="30">30</option>
+                                                <option value="31">31</option>
+                                            </select>
+                                        </div>
+                                    <div class="col-4">
+                                        <select name="birthday-month" id="birthday-month" class="form-control birthday" autocomplete="off">
+                                            <option value="01">فروردین</option>
+                                            <option value="02">اردیبهشت</option>
+                                            <option value="03">خرداد</option>
+                                            <option value="04">تیر</option>
+                                            <option value="05">مرداد</option>
+                                            <option value="06">شهریور</option>
+                                            <option value="07">مهر</option>
+                                            <option value="08">آبان</option>
+                                            <option value="09">آذر</option>
+                                            <option value="10">دی</option>
+                                            <option value="11">بهمن</option>
+                                            <option value="12">اسفند</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <select name="birthday-year" id="birthday-year" class="form-control birthday" autocomplete="off">
+                                            <option value="1301">1301</option>
+                                            <option value="1302">1302</option>
+                                            <option value="1303">1303</option>
+                                            <option value="1304">1304</option>
+                                            <option value="1305">1305</option>
+                                            <option value="1306">1306</option>
+                                            <option value="1307">1307</option>
+                                            <option value="1308">1308</option>
+                                            <option value="1309">1309</option>
+                                            <option value="1310">1310</option>
+                                            <option value="1311">1311</option>
+                                            <option value="1312">1312</option>
+                                            <option value="1313">1313</option>
+                                            <option value="1314">1314</option>
+                                            <option value="1315">1315</option>
+                                            <option value="1316">1316</option>
+                                            <option value="1317">1317</option>
+                                            <option value="1318">1318</option>
+                                            <option value="1319">1319</option>
+                                            <option value="1320">1320</option>
+                                            <option value="1321">1321</option>
+                                            <option value="1322">1322</option>
+                                            <option value="1323">1323</option>
+                                            <option value="1324">1324</option>
+                                            <option value="1325">1325</option>
+                                            <option value="1326">1326</option>
+                                            <option value="1327">1327</option>
+                                            <option value="1328">1328</option>
+                                            <option value="1329">1329</option>
+                                            <option value="1330">1330</option>
+                                            <option value="1331">1331</option>
+                                            <option value="1332">1332</option>
+                                            <option value="1333">1333</option>
+                                            <option value="1334">1334</option>
+                                            <option value="1335">1335</option>
+                                            <option value="1336">1336</option>
+                                            <option value="1337">1337</option>
+                                            <option value="1338">1338</option>
+                                            <option value="1339">1339</option>
+                                            <option value="1340">1340</option>
+                                            <option value="1341">1341</option>
+                                            <option value="1342">1342</option>
+                                            <option value="1343">1343</option>
+                                            <option value="1344">1344</option>
+                                            <option value="1345">1345</option>
+                                            <option value="1346">1346</option>
+                                            <option value="1347">1347</option>
+                                            <option value="1348">1348</option>
+                                            <option value="1349">1349</option>
+                                            <option value="1350">1350</option>
+                                            <option value="1351">1351</option>
+                                            <option value="1352">1352</option>
+                                            <option value="1353">1353</option>
+                                            <option value="1354">1354</option>
+                                            <option value="1355">1355</option>
+                                            <option value="1356">1356</option>
+                                            <option value="1357">1357</option>
+                                            <option value="1358">1358</option>
+                                            <option value="1359">1359</option>
+                                            <option value="1360">1360</option>
+                                            <option value="1361">1361</option>
+                                            <option value="1362">1362</option>
+                                            <option value="1363">1363</option>
+                                            <option value="1364">1364</option>
+                                            <option value="1365">1365</option>
+                                            <option value="1366">1366</option>
+                                            <option value="1367">1367</option>
+                                            <option value="1368">1368</option>
+                                            <option value="1369">1369</option>
+                                            <option value="1370">1370</option>
+                                            <option value="1371">1371</option>
+                                            <option value="1372">1372</option>
+                                            <option value="1373">1373</option>
+                                            <option value="1374">1374</option>
+                                            <option value="1375">1375</option>
+                                            <option value="1376">1376</option>
+                                            <option value="1377">1377</option>
+                                            <option value="1378">1378</option>
+                                            <option value="1379">1379</option>
+                                            <option value="1380">1380</option>
+                                            <option value="1381">1381</option>
+                                            <option value="1382">1382</option>
+                                            <option value="1383">1383</option>
+                                            <option value="1384">1384</option>
+                                            <option value="1385">1385</option>
+                                            <option value="1386">1386</option>
+                                            <option value="1387">1387</option>
+                                            <option value="1388">1388</option>
+                                            <option value="1389">1389</option>
+                                            <option value="1390">1390</option>
+                                            <option value="1391">1391</option>
+                                            <option value="1392">1392</option>
+                                            <option value="1393">1393</option>
+                                            <option value="1394">1394</option>
+                                            <option value="1395">1395</option>
+                                            <option value="1396">1396</option>
+                                            <option value="1397">1397</option>
+                                            <option value="1398">1398</option>
+                                            <option value="1399" selected>1399</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="username">نام کاربری<code>*</code></label>
+                            <input disabled value="{{request.user.username}}" id="username" class="form-control" type="text" placeholder="نام کاربری" autocomplete="off">
+                        </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-md-6 col-12">
+                                <div class="information-item first">
+                                    <label for="cell-number">شماره همراه</label>
+                                    <input name="mobilenumber" value="{{User_Profile.MobileNumber}}" id="cell-number" class="form-control" type="number" placeholder="شماره همراه" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-8">
+                                <label for="phone-number">شماره ثابت</label>
+                                <input name="phonenumber" value="{{User_Profile.PhoneNumber}}" id="phone-number" class="form-control" type="number" placeholder="شماره ثابت" autocomplete="off">
+                            </div>
+                            <div class="col-md-2 col-4">
+                                <label for="pre-phone">پیش شماره</label>
+                                <input name="prephonenumber" value="{{User_Profile.PrePhone}}" id="pre-phone" class="form-control" type="number" placeholder="پیش شماره" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-md-6 col-12">
+                                <div class="information-item first">
+                                    <label for="state">استان</label>
+                                    <input name="state" value="{{User_Profile.State}}" id="state" class="form-control" type="text" placeholder="استان">
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6 col-12">
+                                <label for="township">شهرستان</label>
+                                <input  id="township" class="form-control" type="text" placeholder="شهرستان">
+                            </div> -->
+                            <div class="col-md-6 col-12">
+                                <label for="city">شهر</label>
+                                <input name="city" value="{{User_Profile.City}}" id="city" class="form-control" type="text" placeholder="شهر">
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
+                            <div class="col-12">
+                                <label for="address">آدرس</label>
+                                <input name="address" value="{{User_Profile.Address}}" id="address" class="form-control" type="text" placeholder="آدرس" autocomplete="off">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-row information-form-row justify-content-between align-items-end">
+                        <div class="col-md-6 col-12">
+                            <div class="information-item first">
+                                <fieldset disabled="disabled">
+                                    <label for="postal-code">کد پستی</label>
+                                    <input name="postalcode" value="{{User_Profile.PostalCode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی" autocomplete="off">
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-12 text-left">
+                            <button id="edit-information" class="btn btn-primary w-100">
+                                ویرایش
+                                <i class="fal fa-pencil-alt"></i>
+                            </button>
+                            <button id="cancel" class="btn btn-primary">
+                                لغو
+                            </button>
+                            <button type="submit" id="save-information" class="btn btn-primary">
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                <!-- </form> -->
             </div>
         </div>
     </div>
@@ -300,3 +314,71 @@
 {% block foot %}
 {% include "base/foot.html" %}
 {% endblock %}
+
+<script>
+    $(document).ready(function () {
+        $("#birthday-day").val("{{User_Profile.BirthDay |jformat:'%d' }}");
+        $("#birthday-month").val("{{User_Profile.BirthDay |jformat:'%m' }}");
+        $("#birthday-year").val("{{User_Profile.BirthDay |jformat:'%Y' }}");
+    })
+
+    $("#save-information").click(function (){
+        var fname = $("#fname").val();
+        var lname = $("#lname").val();
+        var email = $("#email").val();
+        var birthday_day = $("#birthday-day").val();
+        var birthday_month = $("#birthday-month").val();
+        var birthday_year = $("#birthday-year").val();
+        var birthday = birthday_year + "-" + birthday_month + "-" + birthday_day;
+        var mobilenumber = $("#cell-number").val();
+        var phonenumber = $("#phone-number").val();
+        var prephone = $("#pre-phone").val();
+        var state = $("#state").val();
+        var city = $("#city").val();
+        var address = $("#address").val();
+        var postalcode = $("#postal-code").val();
+
+        $.ajax (
+            {
+                type: 'POST',
+                url: '{% url "changeInformation" %}',
+                data: {
+                    firstname: fname,
+                    lastname: lname,
+                    email: email,
+                    birthday: birthday,
+                    mobilenumber: mobilenumber,
+                    phonenumber: phonenumber,
+                    prephonenumber: prephone,
+                    state: state,
+                    city: city,
+                    address: address,
+                    postalcode: postalcode,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log(json);
+                    if (json.has_message)
+                    {
+                        $(".alert-message.success-message .alert-message-text.success-text").text(json.message);
+                        $(".alert-message.success-message").show();
+                    }
+                    else
+                    {
+                        $(".alert-message.error-message .alert-message-text.error-text").text(json.error);
+                        $(".alert-message.error-message").show();
+                    }
+                },
+                error: function (json) {
+                    console.log(json);
+                }
+            }
+        )
+
+        $(".information-card-content fieldset").prop('disabled', true);
+        $(this).hide();
+        $("#cancel").hide()
+        $("#edit-information").show();
+    })
+</script>
