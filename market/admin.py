@@ -33,8 +33,7 @@ class ContactAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('FK_User', 'title', 'datecreate')
     search_fields = ['title', 'description', 'FK_User']
-    list_filter = ('status',)
-    ordering = ['id', 'datecreate', 'status']
+    ordering = ['id', 'datecreate']
 # Message Admin Section
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):

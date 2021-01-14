@@ -33,7 +33,7 @@
         <div class="modal-footer justify-content-start unregistered-text">
             تا به حال ثبت نام نکرده اید؟
             &nbsp;
-            <a class="" href="{% url 'register' %}">
+            <a class="" href="{% url 'market:register' %}">
                 ثبت نام
             </a>
         </div>
@@ -73,7 +73,7 @@
                             <div class="user-menu">
                                 <ul>
                                     <li>
-                                        <a href="{% url 'dashboard' %}">
+                                        <a href="{% url 'market:dashboard' %}">
                                             حساب کاربری
                                         </a>
                                     </li>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6 text-center">
                     <!-- if logged-in -->
-                    <a href="{% url 'card' %}" class="cartbox btn btn-primary">
+                    <a href="{% url 'market:card' %}" class="cartbox btn btn-primary">
                         <i class="fas fa-shopping-cart"></i>
                         <span> سبد خرید - </span> <span id="total-price"> 3,290,000 </span> <span> تومان </span>
                     </a>
@@ -121,26 +121,17 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{BASE_URL}}/">خانه <span class="sr-only">(current)</span></a>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{% url 'products' %}">
-                            محصولات
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{% url 'mobile' %}">موبایل</a>
-                            <a class="dropdown-item" href="{% url 'tablet' %}">تبلت</a>
-                        </div>
-                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'mobile' %}">موبایل ها</a>
+                        <a class="nav-link" href="{% url 'market:mobile' %}">موبایل ها</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'compare' %}">مقایسه</a>
+                        <a class="nav-link" href="{% url 'market:compare' %}">مقایسه</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'blogIndex' %}">بلاگ</a>
+                        <a class="nav-link" href="{% url 'blog:blog_index' %}">بلاگ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact-us' %}">تماس با ما</a>
+                        <a class="nav-link" href="{% url 'market:contact-us' %}">تماس با ما</a>
                     </li>
                 </ul>
             </div>

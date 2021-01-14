@@ -1,5 +1,5 @@
 {% block head %}
-{% include "base/head.html" %}
+    {% include "base/head.html" %}
 {% endblock %}
 
 {% load static %}
@@ -7,137 +7,93 @@
 <title>وبلاگ | فروشگاه موبایل</title>
 </head>
 <body>
-
-    
-    {% block header %}
+  
+{% block header %}
     {% include "base/header.html" %}
-    {% endblock %}
+{% endblock %}
+
     <div class="container">
         <div class="blog">
             <div class="row">
                 <div class="col-lg-9 col-md-8 col-12">
-                    <div class="whole-card text-right">
-                        <div class="blog-post-preview">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="first-row d-flex justify-content-between">
-                                        <div class="post-title">
-                                            <h5>
-                                                عنوان پست
-                                            </h5>
-                                        </div>
-                                        <div class="post-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-content-preview">
+                    {% for item in PostList %}
+                        <div class="whole-card text-right">
+                            <div class="blog-post-preview">
                                 <div class="row">
-                                    <div class="col-lg-2 col-md-5 col-sm-6 col-12">
-                                        <div class="image-of-post">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="عکس پست">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-10 col-md-7 col-sm-6 col-12">
-                                        <div class="post-content-preview-text">
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ا
+                                    <div class="col-12">
+                                        <div class="first-row d-flex justify-content-between">
+                                            <div class="post-title">
+                                                <h5>
+                                                    {{item.title}}
+                                                </h5>
+                                            </div>
+                                            <div class="post-rate">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="single-post-link">
-                                <div class="row justify-content-end">
-                                    <div class="col-lg-3 col-md-4 col-12">
-                                        <a href="{% url 'blogPost' %}" class="btn btn-primary w-100">
-                                            مشاهده پست
-                                            <i class="fal fa-angle-left"></i>
-                                        </a>
+                                <div class="post-content-preview">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-5 col-sm-6 col-12">
+                                            <div class="image-of-post">
+                                                <img src="{{item.index_image.url}}" alt="عکس پست">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 col-md-7 col-sm-6 col-12">
+                                            <div class="post-content-preview-text">{{item.text|truncatechars:232}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-post-link">
+                                    <div class="row justify-content-end">
+                                        <div class="col-lg-3 col-md-4 col-12">
+                                            <a href="{{item.get_url}}" class="btn btn-primary w-100">
+                                                مشاهده پست
+                                                <i class="fal fa-angle-left"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="whole-card text-right">
-                        <div class="blog-post-preview">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="first-row d-flex justify-content-between">
-                                        <div class="post-title">
-                                            <h5>
-                                                عنوان پست
-                                            </h5>
-                                        </div>
-                                        <div class="post-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="post-content-preview">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-5 col-sm-6 col-12">
-                                        <div class="image-of-post">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="عکس پست">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-10 col-md-7 col-sm-6 col-12">
-                                        <div class="post-content-preview-text">
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-post-link">
-                                <div class="row justify-content-end">
-                                    <div class="col-lg-3 col-md-4 col-12">
-                                        <a href="{% url 'blogPost' %}" class="btn btn-primary w-100">
-                                            مشاهده پست
-                                            <i class="fal fa-angle-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
+            
+
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="whole-card text-right blog-sidebar">
                         <div class="blog-sidebar-title">
                             <h5>
-                                محبوبترین نوشته ها
+                                محبوب ترین نوشته ها
                             </h5>
                         </div>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 1
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 2
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 3
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 3
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 3
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 3
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 3
                         </a>
-                        <a href="{% url 'blogPost' %}">
+                        <a href="#">
                             لینک 3
                         </a>
                     </div>
@@ -145,10 +101,14 @@
             </div>
         </div>
     </div>
+
     {% block footer %}
-    {% include "base/footer.html" %}
+        {% include "base/footer.html" %}
     {% endblock %}
-    
-{% block foot %}
-{% include "base/foot.html" %}
-{% endblock %}
+        
+    {% block foot %}
+        {% include "base/foot.html" %}
+    {% endblock %}
+
+</body>
+</html>

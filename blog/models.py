@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db.models import JSONField
+from django.shortcuts import reverse
 from datetime import datetime
 from django.db import models
 import os, jdatetime
@@ -24,16 +25,27 @@ class Post (models.Model):
     )
     publish = models.BooleanField(verbose_name = 'وضعیت انتشار', choices = PUBLISH_STATUS, default = False)
 
-    def get_index_image_url(self):
-        return self.index_image.url
+    def get_url(self):
+        return reverse("blog:blog_post", kwargs = {
+            'slug': self.slug,
+        })
 
-    def get_slider_image_url(self):
-        return self.slider_image.url
+    # commnets function
+    def post_comments(self, this_comment_id):
+        if self.comments is None:
+            data = {}
+            data['list'] = []
+            data['list'].append(this_comment_id)
+            self.comments = data
+            self.save()
+        else:
+            self.comments['list'] = this_comment_id
+            self.save()
 
-    def get_publishdate_to_jalali(self):
-        date_format = "%Y-%m-%d"
-        thisdate = datetime.strptime(str(self.publishdate.date()), date_format)
-        return str(jdatetime.date.fromgregorian(day = thisdate.day, month = thisdate.month, year = thisdate.year))
+    # def get_publishdate_to_jalali(self):
+    #     date_format = "%Y-%m-%d"
+    #     thisdate = datetime.strptime(str(self.publishdate.date()), date_format)
+    #     return str(jdatetime.date.fromgregorian(day = thisdate.day, month = thisdate.month, year = thisdate.year))
 
     class Meta:
         ordering = ('id', 'createdate', 'publishdate')   
