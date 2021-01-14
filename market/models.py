@@ -205,17 +205,12 @@ class Mobile (models.Model):
 
 # Comment (نظر) Model
 class Comment(models.Model):
-    FK_User = models.ForeignKey(User, verbose_name = 'کاربر', related_name='user_comment', on_delete = models.SET_NULL, null = True)
+    FK_User = models.ForeignKey(User, verbose_name = 'کاربر', related_name = 'user_comment', on_delete = models.SET_NULL, null = True)
     title = models.CharField(verbose_name = 'عنوان', max_length = 225)
     description = models.TextField(verbose_name = 'توضیحات')
     likes = JSONField(verbose_name = 'لایک ها', null = True, blank = True)
     replay = JSONField(verbose_name = 'ریپلای ها', null = True, blank = True)
     datecreate = models.DateTimeField(verbose_name = 'تاریخ ثبت', auto_now_add = True)
-    STATUS_TYPE = (
-        (True,'خوانده شده'),
-        (False,'خوانده نشده'),
-    )
-    status = models.BooleanField(verbose_name = 'وضعیت', choices = STATUS_TYPE, default = False)
 
     def __str__(self):
         return "{}".format(self.title)
