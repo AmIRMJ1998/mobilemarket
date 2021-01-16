@@ -2,11 +2,14 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.postgres.fields import ArrayField
 from django.utils.deconstruct import deconstructible
 from django.db.models import JSONField
+from django_jalali.db import models as jmodels
 from datetime import datetime
 from django.db import models
-import os
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+import os, jdatetime
 
-# factor number function   
+# factor number function
 @deconstructible
 class factor_number():
     def __init__(self, this_size):
@@ -84,17 +87,17 @@ class User (AbstractBaseUser):
     mobile = models.CharField(verbose_name = 'mobile number', max_length = 11, unique = True, blank = True, null = True)
     email = models.EmailField(verbose_name = 'email', unique = True, null = True)
     nationalcode = models.CharField(verbose_name = 'national code', max_length = 10, blank = True, null = True)
-    address = models.JSONField(verbose_name = 'آدرس', blank = True, null = True)
+    address = JSONField(verbose_name = 'آدرس', blank = True, null = True)
     active = models.BooleanField(verbose_name = 'وضعیت فعالیت', default = True)
     superuser = models.BooleanField(verbose_name = 'وضعیت مدیریت', default = False)
     staff = models.BooleanField(verbose_name = 'وضعیت کارمندی', default = False)
     citypercode = models.CharField(verbose_name = 'پیش شماره', max_length = 3, blank = True, null = True)
     phone = models.CharField(verbose_name = 'شماره تلفن ثابت', max_length = 8, blank = True)
-    brithday = models.DateField(verbose_name = 'تاریخ تولد', null = True, auto_now_add = True)
-    comment_list = models.JSONField(verbose_name = 'لیست نظرات ها', null = True, blank = True)
-    factor_list = models.JSONField(verbose_name = 'لیست فاکتور ها', null = True, blank = True)
+    birthday = jmodels.jDateField(verbose_name = 'تاریخ تولد', null = True)
+    comment_list = JSONField(verbose_name = 'لیست نظرات ها', null = True, blank = True)
+    factor_list = JSONField(verbose_name = 'لیست فاکتور ها', null = True, blank = True)
     message_list = JSONField(verbose_name = 'لیست پیام ها', null = True, blank = True)
-    favorite_list = JSONField(verbose_name = 'لیست موقعیت های مورد علاقه', null = True, blank = True)
+    favorite_list = ArrayField(models.BigIntegerField(verbose_name = 'محصول مورد علاقه'), verbose_name = 'لیست محصولات مورد علاقه', null = True, blank = True)
     createdate = models.DateTimeField(verbose_name = 'تاریخ عضویت', auto_now_add = True)
 
     USERNAME_FIELD = 'username'
@@ -156,16 +159,17 @@ class User (AbstractBaseUser):
 # Mobile (موبایل) Model
 class Mobile (models.Model):
     title = models.CharField(verbose_name='نام', max_length = 225, db_index = True)
-    slug = models.SlugField(verbose_name = 'شناسه', unique = True, db_index = True)
+    slug = models.SlugField(verbose_name = 'شناسه', unique = True, db_index = True, max_length= 100)
     brand = models.CharField(verbose_name = 'برند', max_length = 50)
-    description = models.TextField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
+    # description = models.TextField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
+    description = RichTextUploadingField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
     index_image = models.ImageField(verbose_name = 'عکس اصلی', upload_to = 'media/images/mobile/', blank = True, null = True)
     gallery = ArrayField(models.ImageField(verbose_name = 'عکس', upload_to = 'media/images/mobile/'), verbose_name = 'گالری', blank = True, null = True)
     points = JSONField(verbose_name = 'امتیازات', null = True, blank = True)
     price = models.CharField(verbose_name = 'قیمت', max_length = 15)
-    discount = models.PositiveSmallIntegerField(verbose_name = 'تخفیف', default = 0)
-    comments = JSONField(verbose_name = 'نظرات', blank = True, null = True)
-    colors = ArrayField(models.CharField(verbose_name = 'رنگ', max_length = 9), verbose_name = 'رنگ ها', blank = True, null = True)
+    discount = models.CharField(verbose_name = 'تخفیف', max_length = 15, default='0')
+    comments = ArrayField((models.BigIntegerField(verbose_name= 'نظر')),verbose_name = 'نظرات', blank = True, null = True)
+    colors = JSONField(verbose_name = 'رنگ ها', blank = True, null = True)
     inventory = models.IntegerField(verbose_name = 'موجودی', default = 1)
     guarantees = ArrayField(models.CharField(verbose_name = 'گارانتی', max_length = 225), verbose_name = 'گارانتی ها', blank = True, null = True)
     technical_details = JSONField(verbose_name = 'جزئیات فنی', blank = True, null = True)
@@ -179,6 +183,35 @@ class Mobile (models.Model):
 
     def __str__(self):
         return "{}".format(self.title)
+
+    def total_point(self):
+        totalPoint = 0
+        pointCount = 0
+        for item in self.points:
+            totalPoint += float(item['productRate'])
+            pointCount += 1
+        averagePoint = float(totalPoint / pointCount)
+        return averagePoint
+    
+    def real_price(self):
+        discountInt = int(self.discount)
+        priceInt = int(self.price)
+        return discountInt + priceInt
+
+
+    def product_rate_set(self, userID = None, productRate = None):
+        if self.points is None:
+            self.points = [{'userID' : userID, 'productRate' : productRate},]
+            self.save()
+        else:
+            if self.points is not None:
+                for item in self.points:
+                    if item['userID'] == userID:
+                        item['productRate'] = productRate
+                        self.save()
+                    else:
+                        self.points.append({'userID': userID, 'productRate': productRate},)
+                        self.save()
 
     # def get_absolute_url(self):
     #     return reverse("nakhll_market:ProductsDetail", kwargs={
@@ -206,11 +239,11 @@ class Mobile (models.Model):
 # Comment (نظر) Model
 class Comment(models.Model):
     FK_User = models.ForeignKey(User, verbose_name = 'کاربر', related_name = 'user_comment', on_delete = models.SET_NULL, null = True)
-    title = models.CharField(verbose_name = 'عنوان', max_length = 225)
+    title = models.CharField(verbose_name = 'عنوان', max_length = 225, null=True, blank=True)
     description = models.TextField(verbose_name = 'توضیحات')
-    likes = JSONField(verbose_name = 'لایک ها', null = True, blank = True)
-    replay = JSONField(verbose_name = 'ریپلای ها', null = True, blank = True)
-    datecreate = models.DateTimeField(verbose_name = 'تاریخ ثبت', auto_now_add = True)
+    likes = ArrayField(models.BigIntegerField(verbose_name='لایک'), verbose_name = 'لایک ها', null = True, blank = True)
+    replay = ArrayField(models.BigIntegerField(verbose_name='لایک'), verbose_name = 'ریپلای ها', null = True, blank = True)
+    datecreate = jmodels.jDateTimeField(verbose_name = 'تاریخ ثبت', auto_now_add = True)
 
     def __str__(self):
         return "{}".format(self.title)
@@ -219,6 +252,12 @@ class Comment(models.Model):
         ordering = ('id', 'datecreate')   
         verbose_name = "نظر"
         verbose_name_plural = "نظرات"
+
+    def like_count(self):
+        pointCount = 0
+        for _ in self.likes:
+            pointCount += 1
+        return pointCount
 
 # --------------------------------------------------------------------------------------------------------------------------------------
 
@@ -276,15 +315,19 @@ class Message(models.Model):
         (False,'دیده نشده'),
     )
     users = JSONField(verbose_name = 'کاربران', blank = True, null = True)
-    datetime = models.DateTimeField(verbose_name = 'تاریخ و زمان ثبت', auto_now_add = True)
+    datetime = jmodels.jDateTimeField(verbose_name = 'تاریخ و زمان ثبت', auto_now_add = True)
 
     def __str__(self):
         return "{} ({})".format(self.title, self.datetime)
+
+    def summary(self):
+        return str(self.text)[:50] + '...'
 
     class Meta:
         ordering = ('id',)
         verbose_name = "پیام"
         verbose_name_plural = "پیام ها"
+
 
 #----------------------------------------------------------------------------------------------------------------------------------
 

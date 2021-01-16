@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="dashboard-item-title information-title">
-                            <a href="{% url 'dashboard' %}">
+                            <a href="{% url 'market:dashboard' %}">
                                 <i class="fas fa-long-arrow-right"></i>
                             </a>
                             <h4>
@@ -48,30 +48,30 @@
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
-                <!-- <form method="POST" action="{% url 'changeInformation' %}"> -->
+                <!-- <form method="POST" action="{% url 'market:changeInformation' %}"> -->
                     <fieldset disabled="disabled">
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-md-6 col-12">
                                 <div class="information-item first">
                                     <label for="fname">نام<code>*</code></label>
-                                    <input name="firstname" value="{{User_Profile.first_name}}" id="fname" class="form-control" type="text" placeholder="نام" autocomplete="off">
+                                    <input name="firstname" value="{{request.user.first_name}}" id="fname" class="form-control" type="text" placeholder="نام" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <label for="lname">نام خانوادگی<code>*</code></label>
-                                <input name="lastname" value="{{User_Profile.last_name}}" id="lname" class="form-control" type="text" placeholder="نام خانوادگی" autocomplete="off">
+                                <input name="lastname" value="{{request.user.last_name}}" id="lname" class="form-control" type="text" placeholder="نام خانوادگی" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-md-6 col-12">
                                 <div class="information-item first">
                                     <label for="nationalcode">کد ملی<code>*</code></label>
-                                    <input disabled value="{{User_Profile.NationalCode}}" id="nationalcode" class="form-control" type="number" placeholder="کد ملی" autocomplete="off">
+                                    <input disabled value="{{request.user.nationalcode}}" id="nationalcode" class="form-control" type="number" placeholder="کد ملی" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <label for="email">ایمیل<code>*</code></label>
-                                <input name="email" value="{{User_Profile.email}}" id="email" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
+                                <input name="email" value="{{request.user.email}}" id="email" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-row information-form-row justify-content-start">
@@ -237,31 +237,31 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
-                            <label for="username">نام کاربری<code>*</code></label>
-                            <input disabled value="{{request.user.username}}" id="username" class="form-control" type="text" placeholder="نام کاربری" autocomplete="off">
+                            <label for="username2">نام کاربری<code>*</code></label>
+                            <input disabled value="{{request.user.username}}" id="username2" class="form-control" type="text" placeholder="نام کاربری" autocomplete="off">
                         </div>
                         </div>
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-md-6 col-12">
                                 <div class="information-item first">
                                     <label for="cell-number">شماره همراه</label>
-                                    <input name="mobilenumber" value="{{User_Profile.MobileNumber}}" id="cell-number" class="form-control" type="number" placeholder="شماره همراه" autocomplete="off">
+                                    <input name="mobilenumber" value="{{request.user.mobile}}" id="cell-number" class="form-control" type="number" placeholder="شماره همراه" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4 col-8">
                                 <label for="phone-number">شماره ثابت</label>
-                                <input name="phonenumber" value="{{User_Profile.PhoneNumber}}" id="phone-number" class="form-control" type="number" placeholder="شماره ثابت" autocomplete="off">
+                                <input name="phonenumber" value="{{request.user.phone}}" id="phone-number" class="form-control" type="number" placeholder="شماره ثابت" autocomplete="off">
                             </div>
                             <div class="col-md-2 col-4">
                                 <label for="pre-phone">پیش شماره</label>
-                                <input name="prephonenumber" value="{{User_Profile.PrePhone}}" id="pre-phone" class="form-control" type="number" placeholder="پیش شماره" autocomplete="off">
+                                <input name="prephonenumber" value="{{request.user.citypercode}}" id="pre-phone" class="form-control" type="number" placeholder="پیش شماره" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-md-6 col-12">
                                 <div class="information-item first">
                                     <label for="state">استان</label>
-                                    <input name="state" value="{{User_Profile.State}}" id="state" class="form-control" type="text" placeholder="استان">
+                                    <input name="state" value="{{request.user.address.state}}" id="state" class="form-control" type="text" placeholder="استان">
                                 </div>
                             </div>
                             <!-- <div class="col-md-6 col-12">
@@ -270,13 +270,13 @@
                             </div> -->
                             <div class="col-md-6 col-12">
                                 <label for="city">شهر</label>
-                                <input name="city" value="{{User_Profile.City}}" id="city" class="form-control" type="text" placeholder="شهر">
+                                <input name="city" value="{{request.user.address.city}}" id="city" class="form-control" type="text" placeholder="شهر">
                             </div>
                         </div>
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-12">
                                 <label for="address">آدرس</label>
-                                <input name="address" value="{{User_Profile.Address}}" id="address" class="form-control" type="text" placeholder="آدرس" autocomplete="off">
+                                <input name="address" value="{{request.user.address.address}}" id="address" class="form-control" type="text" placeholder="آدرس" autocomplete="off">
                             </div>
                         </div>
                     </fieldset>
@@ -285,7 +285,7 @@
                             <div class="information-item first">
                                 <fieldset disabled="disabled">
                                     <label for="postal-code">کد پستی</label>
-                                    <input name="postalcode" value="{{User_Profile.PostalCode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی" autocomplete="off">
+                                    <input name="postalcode" value="{{request.user.address.zipcode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی" autocomplete="off">
                                 </fieldset>
                             </div>
                         </div>
@@ -317,9 +317,9 @@
 
 <script>
     $(document).ready(function () {
-        $("#birthday-day").val("{{User_Profile.BirthDay |jformat:'%d' }}");
-        $("#birthday-month").val("{{User_Profile.BirthDay |jformat:'%m' }}");
-        $("#birthday-year").val("{{User_Profile.BirthDay |jformat:'%Y' }}");
+        $("#birthday-day").val("{{request.user.birthday | jformat:'%d' }}");
+        $("#birthday-month").val("{{request.user.birthday |jformat:'%m' }}");
+        $("#birthday-year").val("{{request.user.birthday |jformat:'%Y' }}");
     })
 
     $("#save-information").click(function (){
@@ -341,7 +341,7 @@
         $.ajax (
             {
                 type: 'POST',
-                url: '{% url "changeInformation" %}',
+                url: '{% url "market:changeInformation" %}',
                 data: {
                     firstname: fname,
                     lastname: lname,

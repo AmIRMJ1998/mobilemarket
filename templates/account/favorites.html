@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="dashboard-item-title favorites-title">
-                        <a href="{% url 'dashboard' %}">
+                        <a href="{% url 'market:dashboard' %}">
                             <i class="fas fa-long-arrow-right"></i>
                         </a>
                         <h4>
@@ -28,11 +28,56 @@
             </div>
             <div class="favorite-products">
                 <div class="row">
-                    <div class="col-md-6 col-12">
+                    {% for mobile in favoritemobiles%}
+                        <div val="{{mobile.id}}" class="col-md-6 col-12">
+                            <div class="favorite-product">
+                                <div class="row">
+                                    <div class="col-lg-3 col-5">
+                                        <a href="{% url 'market:product' mobile.slug %}">
+                                            <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-9 col-12">
+                                        <div class="product-details">
+                                            <div class="product-detail product-title">
+                                                {{mobile.title}}
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                {% if mobile.inventory != 0 %}
+                                                    <div class="product-detail product-price">
+                                                        <span class="title">
+                                                            قیمت: 
+                                                        </span>
+                                                        <span>
+                                                            4,800,000 تومان
+                                                        </span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="no-available">
+                                                        ناموجود
+                                                    </div>
+                                                {% endif %}
+                                                <div class="product-links">
+                                                    <a href="{% url 'market:product' mobile.slug %}">
+                                                        مشاهده محصول
+                                                        <i class="far fa-angle-left"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="remove-favorite mr-2">
+                                    <i class="far fa-trash-alt" val="{{mobile.id}}"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- <div class="col-md-6 col-12">
                         <div class="favorite-product">
                             <div class="row">
                                 <div class="col-lg-3 col-5">
-                                    <a href="{% url 'product' %}">
+                                    <a href="{.% url 'market:product' %.}">
                                         <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
                                     </a>
                                 </div>
@@ -51,7 +96,7 @@
                                                 </span>
                                             </div>
                                             <div class="product-links">
-                                                <a href="{% url 'product' %}">
+                                                <a href="{.% url 'market:product' %.}">
                                                     مشاهده محصول
                                                     <i class="far fa-angle-left"></i>
                                                 </a>
@@ -69,7 +114,7 @@
                         <div class="favorite-product">
                             <div class="row">
                                 <div class="col-lg-3 col-5">
-                                    <a href="{% url 'product' %}">
+                                    <a href="{.% url 'market:product' %.}">
                                         <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
                                     </a>
                                 </div>
@@ -88,7 +133,7 @@
                                                 </span>
                                             </div>
                                             <div class="product-links">
-                                                <a href="{% url 'product' %}">
+                                                <a href="{.% url 'market:product' %.}">
                                                     مشاهده محصول
                                                     <i class="far fa-angle-left"></i>
                                                 </a>
@@ -101,44 +146,7 @@
                                 <i class="far fa-trash-alt"></i>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <div class="favorite-product">
-                            <div class="row">
-                                <div class="col-lg-3 col-5">
-                                    <a href="{% url 'product' %}">
-                                        <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                    </a>
-                                </div>
-                                <div class="col-lg-9 col-12">
-                                    <div class="product-details">
-                                        <div class="product-detail product-title">
-                                            گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="product-detail product-price">
-                                                <span class="title">
-                                                    قیمت: 
-                                                </span>
-                                                <span>
-                                                    4,800,000 تومان
-                                                </span>
-                                            </div>
-                                            <div class="product-links">
-                                                <a href="{% url 'product' %}">
-                                                    مشاهده محصول
-                                                    <i class="far fa-angle-left"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="remove-favorite mr-2">
-                                <i class="far fa-trash-alt"></i>
-                            </div>
-                        </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -151,3 +159,49 @@
 {% block foot %}
 {% include "base/foot.html" %}
 {% endblock %}
+
+<script>
+    $(".remove-favorite i").click(function () {
+        mobileID = $(this).attr('val');
+        console.log(mobileID)
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:addtofavorite" %}',
+                data: {
+                    mobileID: mobileID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    console.log(json.remove)
+                    if (json.status)
+                    {
+                        if (json.remove == 1)
+                        {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'موفق',
+                                text: ' محصول با موفقیت از لیست علاقه مندی ها حذف شد',
+                            })
+                            $("div[val=" + mobileID + "]").remove();
+                        }
+                    }
+                    else
+                    {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ناموفق',
+                            text: 'افزودن به علاقه مندی ها ممکن نیست',
+                        })
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error);
+                }
+            }
+        )
+
+    })
+</script>

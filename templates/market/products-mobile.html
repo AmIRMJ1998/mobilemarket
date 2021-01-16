@@ -433,16 +433,81 @@
                             <div class="row">
                                 <div class="product-main-filter">
                                     <p>مرتب سازی بر اساس :</p>
-                                    <div class="filter-item active">پر بازدیدترین</div>
+                                    <div class="filter-item active">محبوب ترین</div>
                                     <div class="filter-item">پرفروش ترین</div>
                                     <div class="filter-item">گران ترین</div>
                                     <div class="filter-item">ارزان ترین</div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                {% for mobile in Mobiles%}
+                                    <div class="col-xl-3 col-lg-3 col-4">
+                                        <div class="product">
+                                            <a href="{% url 'market:product' mobile.slug %}">
+                                                <img src="{{mobile.index_image.url}}" alt="محصول">
+                                                <div class="product-title">
+                                                    {{mobile.title}}
+                                                </div>
+                                            </a>
+                                            <div class="product-rate">
+                                                {% if mobile.total_point >= 4.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 3.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 2.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 1.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 0.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-prices">
+                                                {% if mobile.inventory != 0 %}
+                                                    {% if mobile.discount != '0' %}
+                                                        <div class="product-price-off">
+                                                            <span class="split-number">
+                                                                {{mobile.real_price}}
+                                                            </span>
+                                                            <span>
+                                                                تومان
+                                                            </span>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="product-price">
+                                                        <span class="split-number">
+                                                            {{mobile.price}}
+                                                        </span>
+                                                        <span>
+                                                            تومان
+                                                        </span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="no-available">
+                                                        ناموجود
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor%}
+                                <!-- <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -472,7 +537,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -502,7 +567,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -532,7 +597,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -562,7 +627,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -592,7 +657,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -622,7 +687,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -652,7 +717,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -682,7 +747,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -712,7 +777,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -742,7 +807,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -772,7 +837,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -802,7 +867,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -832,7 +897,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -862,7 +927,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -892,7 +957,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -922,7 +987,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -952,7 +1017,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -982,7 +1047,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1012,7 +1077,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1042,7 +1107,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1072,7 +1137,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1102,7 +1167,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1132,7 +1197,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1162,7 +1227,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1192,7 +1257,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1222,7 +1287,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1252,7 +1317,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1282,7 +1347,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1312,7 +1377,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1342,7 +1407,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1372,7 +1437,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1402,7 +1467,7 @@
                                 </div>
                                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
                                     <div class="product">
-                                        <a href="{% url 'product' %}">
+                                        <a href="{.% url 'product' %.}">
                                             <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
                                             <div class="product-title">
                                                 گوشی موبایل هوآوی مدل P10
@@ -1429,37 +1494,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
-                                    <div class="product">
-                                        <a href="{% url 'product' %}">
-                                            <img src="{% static "/images/default-product.jpg" %}" alt="محصول">
-                                            <div class="product-title">
-                                                گوشی موبایل هوآوی مدل P10
-                                            </div>
-                                        </a>
-                                        <div class="product-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <div class="product-prices">
-                                            <div class="product-price-off">
-                                                4,950,000 تومان
-                                            </div>
-                                            <div class="product-price">
-                                                <span>
-                                                    4,800,000
-                                                </span>
-                                                <span>
-                                                    تومان
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

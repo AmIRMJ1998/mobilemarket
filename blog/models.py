@@ -15,7 +15,8 @@ class Post (models.Model):
     index_image = models.ImageField(verbose_name = 'عکس اصلی', upload_to = 'media/images/blog/', null = True, blank = True)
     slider_image = models.ImageField(verbose_name = 'عکس اسلایدر', upload_to = 'media/images/blog/', null = True, blank = True)
     points = JSONField(verbose_name = 'امتیازات', null = True, blank = True)
-    comments = JSONField(verbose_name = 'نظرات', null = True, blank = True)
+    # comments = JSONField(verbose_name = 'نظرات', null = True, blank = True)
+    comments = ArrayField((models.BigIntegerField(verbose_name= 'نظر')),verbose_name = 'نظرات', blank = True, null = True)
     createdate = models.DateTimeField(verbose_name = 'تاریخ ایجاد', auto_now_add = True)
     updatedate = models.DateTimeField(verbose_name = 'تاریخ بروزرسانی', auto_now = True)
     publishdate = models.DateTimeField(verbose_name = 'تاریخ انتشار', null = True, blank = True)
@@ -42,10 +43,10 @@ class Post (models.Model):
             self.comments['list'] = this_comment_id
             self.save()
 
-    # def get_publishdate_to_jalali(self):
-    #     date_format = "%Y-%m-%d"
-    #     thisdate = datetime.strptime(str(self.publishdate.date()), date_format)
-    #     return str(jdatetime.date.fromgregorian(day = thisdate.day, month = thisdate.month, year = thisdate.year))
+    def get_publishdate_to_jalali(self):
+        date_format = "%Y-%m-%d"
+        thisdate = datetime.strptime(str(self.publishdate.date()), date_format)
+        return str(jdatetime.date.fromgregorian(day = thisdate.day, month = thisdate.month, year = thisdate.year))
 
     class Meta:
         ordering = ('id', 'createdate', 'publishdate')   

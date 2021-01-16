@@ -3,8 +3,10 @@
 {% endblock %}
 
 {% load static %}
+{% load jformat %}
 
-<title>{{محصول}} | فروشگاه موبایل</title>
+
+<title>{{mobile.title}} | فروشگاه موبایل</title>
 </head>
 <body>
 
@@ -24,9 +26,9 @@
                                         <div class="product-gallery">
                                             <div class="slider-slick-single">
                                                 <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                    <img src="{{mobile.index_image.url}}" alt="عکس محصول">
                                                 </div>
-                                                <div class="product-gallery-item">
+                                                <!-- <div class="product-gallery-item">
                                                     <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
                                                 </div>
                                                 <div class="product-gallery-item">
@@ -46,14 +48,22 @@
                                                 </div>
                                                 <div class="product-gallery-item">
                                                     <img src="{% static "images/product-4.jpg" %}" alt="عکس محصول">
-                                                </div>
+                                                </div> -->
                                             </div>
-                                            <div class="product-icon add-to-favorite">
-                                                <i class="fal fa-heart"></i>
-                                            </div>
-                                            <div class="product-icon add-to-compare">
+                                            {% if request.user.is_authenticated %}
+                                                {% if favorite %}
+                                                    <div class="product-icon add-to-favorite">
+                                                        <i id="add-to-favorite" class="fas fa-heart added"></i>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="product-icon add-to-favorite">
+                                                        <i id="add-to-favorite" class="fal fa-heart"></i>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                            <!-- <div class="product-icon add-to-compare">
                                                 <i class="fal fa-chart-pie"></i>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -63,9 +73,9 @@
                                     <div class="product-gallery-div">
                                         <div class="slider-slick-gallery">
                                             <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                                <img src="{{mobile.index_image.url}}" alt="عکس محصول">
                                             </div>
-                                            <div class="product-gallery-item thumbnail">
+                                            <!-- <div class="product-gallery-item thumbnail">
                                                 <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
                                             </div>
                                             <div class="product-gallery-item thumbnail">
@@ -85,7 +95,7 @@
                                             </div>
                                             <div class="product-gallery-item thumbnail">
                                                 <img src="{% static "images/product-4.jpg" %}" alt="عکس محصول">
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -96,29 +106,49 @@
                                 <div class="row">
                                     <div class="col-12 product-detail-1st">
                                         <div class="product-title">
-                                            <h6>گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت</h6>
+                                            <h6>{{mobile.title}}</h6>
                                         </div>
                                         <div class="product-rate">
                                             <div class="rating">
                                                 <input id="check-5" type="radio" name="rateradio" hidden >
                                                 <label for="check-5">
-                                                    <i class="fas fa-star"></i>
+                                                    {% if mobile.total_point >= 4.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
                                                 </label>
                                                 <input id="check-4" type="radio" name="rateradio" hidden>
                                                 <label for="check-4">
-                                                    <i class="fas fa-star"></i>
+                                                    {% if mobile.total_point >= 3.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
                                                 </label>
                                                 <input id="check-3" type="radio" name="rateradio" hidden>
                                                 <label for="check-3">
-                                                    <i class="fas fa-star"></i>
+                                                    {% if mobile.total_point >= 2.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
                                                 </label>
                                                 <input id="check-2" type="radio" name="rateradio" hidden>
                                                 <label for="check-2">
-                                                    <i class="fas fa-star"></i>
+                                                    {% if mobile.total_point >= 1.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
                                                 </label>
                                                 <input id="check-1" type="radio" name="rateradio" hidden>
                                                 <label for="check-1">
-                                                    <i class="fas fa-star"></i>
+                                                    {% if mobile.total_point >= 0.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
                                                 </label>
                                             </div>
                                         </div>
@@ -140,60 +170,143 @@
                                     <div class="col-12 product-detail-2nd">
                                         <ul class="product-features">
                                             <li class="product-features-item">
-                                                سیستم عامل : اندروید 10.0
+                                                سیستم عامل :
+                                                {% for dict_item in mobile.technical_details %}
+                                                    {% for key, value in dict_item.items %}
+                                                        {% if key == 'امکانات نرم افزاری' %}
+                                                            {% for y, x in value.items %}
+                                                                {% if y == 'نسخه سیستم عامل' %}
+                                                                    {{x}}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
                                             </li>
                                             <li class="product-features-item">
-                                                حافظه داخلی : 128 گیگابایت
+                                                حافظه داخلی :
+                                                {% for dict_item in mobile.technical_details %}
+                                                    {% for key, value in dict_item.items %}
+                                                        {% if key == 'حافظه' %}
+                                                            {% for y, x in value.items %}
+                                                                {% if y == 'حافظه داخلی' %}
+                                                                    {{x}}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
                                             </li>
                                             <li class="product-features-item">
-                                                مقدار رم : 8 گیگابایت
+                                                مقدار رم :
+                                                {% for dict_item in mobile.technical_details %}
+                                                    {% for key, value in dict_item.items %}
+                                                        {% if key == 'حافظه' %}
+                                                            {% for y, x in value.items %}
+                                                                {% if y == 'مقدار RAM' %}
+                                                                    {{x}}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
                                             </li>
                                             <li class="product-features-item">
-                                                دوربین چهار گانه :  48- 12- 5- 5 مگاپیکسل
+                                                دوربین :
+                                                {% for dict_item in mobile.technical_details %}
+                                                    {% for key, value in dict_item.items %}
+                                                        {% if key == 'دوربین' %}
+                                                            {% for y, x in value.items %}
+                                                                {% if y == 'دوربین' %}
+                                                                    {{x}}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
                                             </li>
                                             <li class="product-features-item">
-                                                پشتیبانی از شبکه ارتباطی : 4G
+                                                تعداد سیم کارت :
+                                                {% for dict_item in mobile.technical_details %}
+                                                    {% for key, value in dict_item.items %}
+                                                        {% if key == 'طراحی' %}
+                                                            {% for y, x in value.items %}
+                                                                {% if y == 'تعداد سیمکارت' %}
+                                                                    {{x}}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
                                             </li>
                                             <li class="product-features-item">
-                                                باتری : لیتیوم پلیمر 4000 میلی آمپر بر ساعت
+                                                باتری :
+                                                {% for dict_item in mobile.technical_details %}
+                                                    {% for key, value in dict_item.items %}
+                                                        {% if key == 'باتری' %}
+                                                            {% for y, x in value.items %}
+                                                                {% if y == 'نوع باتری' %}
+                                                                    {{x}}
+                                                                {% elif y == 'ظرفیت باتری' %}
+                                                                    {{x}}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 product-detail-3rd">
-                                        رنگ :
-                                        <div class="product-color-selection-section">
-                                            <div class="product-color-selection-item active">
-                                                <label for="black-color-radio">
-                                                    <div class="color-square black-color-square"></div>
-                                                    <div class="color-name black-color-name">
-                                                        مشکی
-                                                    </div>
-                                                </label>
-                                                <input hidden type="radio" name="color-radio" id="black-color-radio" checked>
-                                            </div>
-                                            <div class="product-color-selection-item">
-                                                <label for="silver-color-radio">
-                                                    <div class="color-square silver-color-square"></div>
-                                                    <div class="color-name silver-color-name">
-                                                        نقره ای
-                                                    </div>
-                                                </label>
-                                                <input hidden type="radio" name="color-radio" id="silver-color-radio">
-                                            </div>
-                                            <div class="product-color-selection-item">
-                                                <label for="blue-color-radio">
-                                                    <div class="color-square blue-color-square"></div>
-                                                    <div class="color-name blue-color-name">
-                                                        آبی
-                                                    </div>
-                                                </label>
-                                                <input hidden type="radio" name="color-radio" id="blue-color-radio">
+                                {% if mobile.inventory != 0 %}
+                                    <div class="row">
+                                        <div class="col-12 product-detail-3rd">
+                                            رنگ :
+                                            <div class="product-color-selection-section">
+                                                {% for color in mobile.colors %}
+                                                    {% for name, value in color.items %}
+                                                        {% if forloop.parentloop.counter == 1 %}
+                                                            <div class="product-color-selection-item active">
+                                                        {% else %}
+                                                            <div class="product-color-selection-item">
+                                                        {% endif %}
+                                                                <label for="color-{{forloop.parentloop.counter}}">
+                                                                    <div class="color-square" style="background:{{value}};"></div>
+                                                                    <div class="color-name">
+                                                                        {{name}}
+                                                                    </div>
+                                                                </label>
+                                                                {% if forloop.parentloop.counter == 1 %}
+                                                                    <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.counter}}" checked>
+                                                                {% else %}
+                                                                    <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.counter}}">
+                                                                {% endif %}
+                                                            </div>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                                <!-- <div class="product-color-selection-item">
+                                                    <label for="silver-color-radio">
+                                                        <div class="color-square silver-color-square"></div>
+                                                        <div class="color-name silver-color-name">
+                                                            نقره ای
+                                                        </div>
+                                                    </label>
+                                                    <input hidden type="radio" name="color-radio" id="silver-color-radio">
+                                                </div>
+                                                <div class="product-color-selection-item">
+                                                    <label for="blue-color-radio">
+                                                        <div class="color-square blue-color-square"></div>
+                                                        <div class="color-name blue-color-name">
+                                                            آبی
+                                                        </div>
+                                                    </label>
+                                                    <input hidden type="radio" name="color-radio" id="blue-color-radio">
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endif %}
+                                {% if mobile.guarantees %}
                                 <div class="row mt-2 mb-2">
                                     <div class="col-12 product-detail-guarantee d-flex align-items-center">
                                         <div class="title ml-5">
@@ -201,33 +314,56 @@
                                         </div>
                                         <div class="value">
                                             <select class="form-control" name="guarantee" id="guarantee">
-                                                <option value="1">
-                                                    18 ماهه شرکتی + کد رجیستری
-                                                </option>
+                                                {% for guarantee in mobile.guarantees %}
+                                                    <option value="{{forloop.counter}}">
+                                                        {{guarantee}}
+                                                    </option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                                 <div class="row">
                                     <div class="col-12 product-detail-4th">
                                         <div class="product-prices">
-                                            <div class="main-price">
-                                                4,800,000 تومان
-                                            </div>
-                                            <div class="real-price">
-                                                4,950,000 تومان
-                                            </div>
+                                            {% if mobile.inventory != 0 %}
+                                                <div class="main-price">
+                                                    <span class="split-number">
+                                                        {{mobile.price}}
+                                                    </span>
+                                                    <span>
+                                                        تومان
+                                                    </span>
+                                                </div>
+                                                {% if mobile.discount != '0' %}
+                                                    <div class="real-price">
+                                                        <span class="split-number">
+                                                            {{mobile.real_price}}
+                                                        </span>
+                                                        <span>
+                                                            تومان
+                                                        </span>
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <div class="no-available">
+                                                    ناموجود
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 product-detail-5th">
-                                        <button class="btn btn-primary buy-button">
-                                            <i class="fas fa-shopping-cart"></i>
-                                            افزودن به سبد خرید
-                                        </button>
+                                {% if mobile.inventory != 0 %}
+                                    <div class="row">
+                                        <div class="col-12 product-detail-5th">
+                                            <button class="btn btn-primary buy-button">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                افزودن به سبد خرید
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -252,14 +388,11 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="expert-check">
-                                <h5>بررسی تخصصی</h5>
-                                <div class="expert-check-title">
-                                    <h6>معرفی گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت</h6>
-                                </div>
+                                <h5 class="main-title">بررسی تخصصی</h5>
+                                <!-- <div class="expert-check-title">
+                                </div> -->
                                 <div class="expert-check-body">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                                    <img src="{% static "images/random.jpg" %}" alt="بررسی تخصصی">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                    {{mobile.description | safe}}
                                 </div>
                             </div>
                         </div>
@@ -270,7 +403,42 @@
                                         <div class="technical-detail">
                                             <h5>جزئیات فنی</h5>
                                             <div class="technical-detail-items">
-                                                <div class="technical-detail-item">
+                                                {% for dict_item in mobile.technical_details %}
+                                                    <div class="technical-detail-item">
+                                                        {% for key, value in dict_item.items %}
+                                                            <div class="title">
+                                                                <h6>
+                                                                    {{key}}
+                                                                </h6>
+                                                            </div>
+                                                            <div class="container">
+                                                                {% for y, x in value.items %}
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4">
+                                                                            <div class="detail-item detail-title h-100">
+                                                                                {{y}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            <div class="detail-item detail-value">
+                                                                                {% if x == "1"%}
+                                                                                    <i class="fas fa-check"></i>
+                                                                                {% elif x == "0" %}
+                                                                                    <i class="fas fa-times"></i>
+                                                                                {% else %}
+                                                                                    {{x | safe}}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endfor %}
+
+                                                    <!-- {.{mobile.technical_details}.} -->
+                                                <!-- <div class="technical-detail-item">
                                                     <div class="title">
                                                         <h6>
                                                             تاریخ معرفی
@@ -1003,7 +1171,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -1014,80 +1182,82 @@
                             <div class="comments">
                                 <div class="approved-comments">
                                     <h5 class="comment-section-title">نظرات</h5>
-                                    <div class="comment" val="1">
-                                        <div class="commenter-user-name">
-                                            Username
-                                        </div>
-                                        <div class="comment-date">
-                                            25 تیر 1399 ساعت 17:45
-                                        </div>
-                                        <div class="comment-main">
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                                        </div>
-                                        <div class="comment-like-reply">
-                                            <div class="comment-like">
-                                                0
-                                                <i class="fas fa-thumbs-up"></i>
-                                            </div>
-                                            <div class="comment-reply">
-                                                <button val="1" class="btn btn-secondary reply-btn">
-                                                    پاسخ
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="comment" val="2">
-                                        <div class="commenter-user-name">
-                                            Username
-                                        </div>
-                                        <div class="comment-date">
-                                            25 تیر 1399 ساعت 17:45
-                                        </div>
-                                        <div class="comment-main">
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                                        </div>
-                                        <div class="comment-like-reply">
-                                            <div class="comment-like">
-                                                0
-                                                <i class="fas fa-thumbs-up"></i>
-                                            </div>
-                                            <div class="comment-reply">
-                                                <button val="2" class="btn btn-secondary reply-btn">
-                                                    پاسخ
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="comment">
+                                    {% for comment, replylist in commentList.items %}
+                                        <div class="comment" val="{{comment.id}}">
                                             <div class="commenter-user-name">
-                                                Username
+                                                {{comment.FK_User.username}}
                                             </div>
                                             <div class="comment-date">
-                                                25 تیر 1399 ساعت 17:45
+                                                {{ comment.datecreate | jformat:"%Y/%m/%d ساعت %H:%M" }}
                                             </div>
                                             <div class="comment-main">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                                {{ comment.description }}
                                             </div>
                                             <div class="comment-like-reply">
                                                 <div class="comment-like">
-                                                    0
-                                                    <i class="fas fa-thumbs-up"></i>
+                                                    {% if comment.likes|length %}
+                                                        {{comment.like_count}}
+                                                    {% else %}
+                                                        0
+                                                    {% endif %}
+                                                    {% if request.user.is_authenticated %}
+                                                        <i val="{{comment.id}}" class="fas fa-thumbs-up active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-thumbs-up"></i>
+                                                    {% endif %}
                                                 </div>
+                                                {% if request.user.is_authenticated %}
+                                                <div class="comment-reply">
+                                                    <button val="{{comment.id}}" class="btn btn-secondary reply-btn">
+                                                        پاسخ
+                                                    </button>
+                                                </div>
+                                                {% endif %}
                                             </div>
+                                            {% for reply in replylist %}
+                                                <div class="comment">
+                                                    <div class="commenter-user-name">
+                                                        {{reply.FK_User.username}}
+                                                    </div>
+                                                    <div class="comment-date">
+                                                        {{ reply.datecreate | jformat:"%Y/%m/%d ساعت %H:%M" }}
+                                                    </div>
+                                                    <div class="comment-main">
+                                                        {{ reply.description }}
+                                                    </div>
+                                                    <div class="comment-like-reply">
+                                                        <div class="comment-like">
+                                                            {% if reply.likes|length %}
+                                                                {{reply.like_count}}
+                                                            {% else %}
+                                                                0
+                                                            {% endif %}
+                                                            {% if request.user.is_authenticated %}
+                                                                <i val="{{reply.id}}" class="fas fa-thumbs-up active"></i>
+                                                            {% else %}
+                                                                <i class="fas fa-thumbs-up"></i>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if request.user.is_authenticated %}
+                                    <div class="comment-form">
+                                        <h5>
+                                            نظر شما
+                                        </h5>
+                                        <p>
+                                            نظر خود را از طریق بخش زیر برای ما ارسال کنید.
+                                        </p>
+                                        <textarea val="0" name="comment" id="product-comment" class="form-control" cols="20" rows="7" placeholder="نظر خود را در اینجا بنویسید..."></textarea>
+                                        <div class="send-comment-btn text-left mt-3">
+                                            <button val="0" id="send-comment-btn-id" class="btn btn-primary send-comment">ارسال</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="comment-form">
-                                    <h5>
-                                        نظر شما
-                                    </h5>
-                                    <p>
-                                        نظر خود را از طریق بخش زیر برای ما ارسال کنید.
-                                    </p>
-                                    <textarea name="comment" id="product-comment" class="form-control" cols="20" rows="7" placeholder="نظر خود را در اینجا بنویسید..."></textarea>
-                                    <div class="send-comment-btn text-left mt-3">
-                                        <button class="btn btn-primary send-comment">ارسال</button>
-                                    </div>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1103,3 +1273,227 @@
 {% block foot %}
 {% include "base/foot.html" %}
 {% endblock %}
+
+<script>
+    $(".product-rate input").on('change', function () {
+        productRate = productRateFnc();
+        $(".product-rate").find('i').removeClass('active');
+        mobileID = '{{mobile.id}}';
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:Rate" %}',
+                data: {
+                    productRate: productRate,
+                    mobileID: mobileID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    if (json.status)
+                    {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'موفق',
+                            text: 'رای شما با موفقیت ثبت گردید',
+                        })
+                    }
+                    else
+                    {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ناموفق',
+                            text: 'رای شما با مشکل مواجه گردید',
+                        })
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error);
+                }
+            }
+        )
+    })
+
+    $(".add-to-favorite i").click(function () {
+        mobileID = '{{mobile.id}}';
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:addtofavorite" %}',
+                data: {
+                    mobileID: mobileID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    console.log(json.remove)
+                    if (json.status)
+                    {
+                        if (json.remove == 1)
+                        {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'موفق',
+                                text: ' محصول با موفقیت از لیست علاقه مندی ها حذف شد',
+                            })
+                            $("#add-to-favorite").toggleClass('fal fas');
+                            $("#add-to-favorite").removeClass('added');
+                        }
+                        else if (json.remove != 1)
+                        {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'موفق',
+                                text: ' محصول با موفقیت به لیست علاقه مندی ها افزوده شد',
+                            })
+                            $("#add-to-favorite").toggleClass('fal fas');
+                            $("#add-to-favorite").addClass('added');
+                        }
+                    }
+                    else
+                    {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ناموفق',
+                            text: 'افزودن به علاقه مندی ها ممکن نیست',
+                        })
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error);
+                }
+            }
+        )
+    })
+
+    $(document).on("click", ".send-comment", function () {
+        var commentID = $(this).attr('val');
+        var commentText;
+        mobileID = '{{mobile.id}}';
+        if (commentID == '0')
+        {
+            if ($("#product-comment").val().length != 0)
+            {
+                commentText = $("#product-comment").val()
+                $.ajax (
+                    {
+                        method: 'POST',
+                        url: '{% url "market:createComment" %}',
+                        data: {
+                            mobileID: mobileID,
+                            commentText: commentText,
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                            action: 'post',
+                        },
+                        success: function(json) {
+                            console.log(json.status)
+                            console.log(json.error)
+                        },
+                        error: function (json) {
+                            console.log(json.status)
+                            console.log(json.error)
+                        }
+                    }
+                )
+            }
+            else
+            {
+                alert('por kon haji')
+            }
+        }
+        else
+        {
+            if ($("textarea[val='" + commentID + "'").val().length != 0)
+            {
+                commentText = $("textarea[val='" + commentID + "'").val();
+                $.ajax (
+                    {
+                        method: 'POST',
+                        url: '{% url "market:replyComment" %}',
+                        data: {
+                            commentID: commentID,
+                            commentText: commentText,
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                            action: 'post',
+                        },
+                        success: function (json) {
+                            console.log(json.status);
+                            if (json.status)
+                            {
+
+                            }
+                            else
+                            {
+                                console.log(json.error)
+                            }
+                        },
+                        error: function (json) {
+                            console.log(json.status)
+                            console.log(json.error)
+                        }
+                    }
+                )
+            }
+            else
+            {
+                alert('por kon haji')
+            }
+        }
+    })
+    $(document).on("click", ".comment-like i.active", function () {
+        var commentID = $(this).attr('val');
+
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:likeComment"%}',
+                data: {
+                    commentID: commentID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    if (json.status)
+                    {
+                        console.log(json.likeCount)
+                        console.log(json.remove)
+                        if (json.remove == 0)
+                        {
+                            console.log('add')
+                        }
+                        else if (json.remove == 1)
+                        {
+                            console.log('remove')
+                        }
+                    }
+                    else
+                    {
+                        console.log(json.error)
+                    }
+                },
+                error: function (json) {
+                    console.log(json.status)
+                    console.log(json.error)
+                }
+            }
+        )
+    })
+
+    //Make Reply Form in Comments
+    $(".reply-btn").click(function (e) {
+        e.preventDefault();
+        $(".reply-form").remove();
+        var whichComment = $(this).attr('val');
+
+        $(".comment[val='" + whichComment + "'").append(
+        '<div class="reply-form">' +
+            '<textarea val="' + whichComment + '" name="comment" class="form-control" cols="20" rows="7" placeholder="پاسخ خود را اینجا بنویسید..."></textarea>' +
+            '<div class="send-comment-btn text-left mt-3">' +
+                '<button val="' + whichComment + '" class="btn btn-primary send-comment">ارسال</button>' +
+            '</div>' +
+        '</div>')
+    })
+</script>

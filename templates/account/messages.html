@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="dashboard-item-title orders-title">
-                            <a href="{% url 'dashboard' %}">
+                            <a href="{% url 'market:dashboard' %}">
                                 <i class="fas fa-long-arrow-right"></i>
                             </a>
                             <h4>
@@ -41,7 +41,7 @@
                             </div>
                             <div class="card-product-detail">
                                 <div class="card-product-detail-item">
-                                    {% for item in Messages %}
+                                    {% for item in messages %}
                                         <div class="single-message">
                                             <div class="row align-items-center flex-nowrap">
                                                 <div class="col-1">
@@ -51,25 +51,29 @@
                                                 </div>
                                                 <div class="col-md-2 col-3">
                                                     <div class="factor-table-col title">
-                                                        <a href="{% url 'message' item.Message.id %}">
-                                                            {{ item.Message.Title }}
+                                                        <a href="{% url 'market:message' item.id %}">
+                                                            {{ item.title }}
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-4">
                                                     <div class="factor-table-col text-right">
-                                                        {{ item.Message.summary }}
+                                                        {{ item.summary }}
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    {{ item.Message.Date | jformat:"%H:%M %Y/%m/%d" }}
+                                                    {{ item.datetime | jformat:"%H:%M %Y/%m/%d" }}
                                                 </div>
                                                 <div class="col-2 message-status">
-                                                    {% if item.Status %}
-                                                        <i class="fas fa-envelope-open" title="خوانده شده"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-envelope" title="خوانده نشده"></i>
-                                                    {% endif %}
+                                                    {% for x in item.users%}
+                                                        {% if x.userID == request.user.id %}
+                                                            {% if x.seen == '1' %}
+                                                                <i class="fas fa-envelope-open" title="خوانده شده"></i>
+                                                            {% else %}
+                                                                <i class="fas fa-envelope" title="خوانده نشده"></i>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                         </div>

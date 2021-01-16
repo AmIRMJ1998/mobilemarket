@@ -9,7 +9,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST" action="{% url 'loginRequest' %}">
+        <form method="POST" action="{% url 'market:loginRequest' %}">
             {% csrf_token %}
             <div class="modal-body text-right">
                 <div class="row">
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-12">
                         <label for="password">رمز عبور</label>
-                        <input name="password" id="password" class="form-control" type="password" placeholder="رمز عبور">
+                        <input name="password" id="password" class="form-control" type="password" placeholder="رمز عبور" autocomplete="on">
                     </div>
                 </div>
                 <div class="row">
@@ -76,12 +76,12 @@
                                 <div class="user-menu">
                                     <ul>
                                         <li>
-                                            <a href="{% url 'dashboard' %}">
+                                            <a href="{% url 'market:dashboard' %}">
                                                 حساب کاربری
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'logoutRequest' %}">
+                                            <a href="{% url 'market:logoutRequest' %}">
                                                 خروج
                                             </a>
                                         </li>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6 text-center">
                     {% if request.user.is_authenticated %}
-                        <a href="{% url 'card' %}" class="cartbox btn btn-primary">
+                        <a href="{% url 'market:card' %}" class="cartbox btn btn-primary">
                             <i class="fas fa-shopping-cart"></i>
                             <span> سبد خرید - </span> <span id="total-price"> 3,290,000 </span> <span> تومان </span>
                         </a>

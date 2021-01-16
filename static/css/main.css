@@ -345,7 +345,6 @@ section.products-section .slider-slick .slider-slick-item .product-title {
 section.products-section .slider-slick .slider-slick-item .product-rate {
   font-size: 13px;
   color: #e0e0e0;
-  direction: ltr;
 }
 
 section.products-section .slider-slick .slider-slick-item .product-rate i.active {
@@ -608,7 +607,14 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   top: 30px;
   right: 0;
   font-size: 20px;
+}
+
+.product-base .product-preview .product-gallery .product-icon i {
   cursor: pointer;
+}
+
+.product-base .product-preview .product-gallery .product-icon.add-to-favorite .added {
+  color: #bd0000;
 }
 
 .product-base .product-preview .product-gallery .product-icon.add-to-compare {
@@ -652,6 +658,10 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   cursor: pointer;
 }
 
+.product-base .product-detail .product-detail-parts .product-detail-1st .product-rate i.active, .product-base .product-detail .product-detail-parts .product-detail-1st .post-rate i.active {
+  color: #FFD700;
+}
+
 .product-base .product-detail .product-detail-parts .product-detail-1st .product-rate .rating > input:checked ~ label,
 .product-base .product-detail .product-detail-parts .product-detail-1st .product-rate .rating:not(:checked) > label:hover,
 .product-base .product-detail .product-detail-parts .product-detail-1st .product-rate .rating:not(:checked) > label:hover ~ label, .product-base .product-detail .product-detail-parts .product-detail-1st .post-rate .rating > input:checked ~ label,
@@ -686,12 +696,14 @@ section.product-section .product-main .product-main-filter .filter-item.active {
 
 .product-base .product-detail .product-detail-parts .product-detail-3rd {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .product-base .product-detail .product-detail-parts .product-detail-3rd .product-color-selection-section {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .product-base .product-detail .product-detail-parts .product-detail-3rd .product-color-selection-section .product-color-selection-item {
@@ -728,7 +740,7 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   align-items: center;
 }
 
-.product-base .product-detail .product-detail-parts .product-detail-4th .product-prices .main-price {
+.product-base .product-detail .product-detail-parts .product-detail-4th .product-prices .main-price, .product-base .product-detail .product-detail-parts .product-detail-4th .product-prices .no-available {
   font-size: 20px;
   font-weight: bold;
   margin: 0 14px;
@@ -814,9 +826,12 @@ section.product-section .product-main .product-main-filter .filter-item.active {
 }
 
 .comments .comment .comment-like-reply .comment-like i {
-  cursor: pointer;
   font-size: 20px;
   margin-right: 5px;
+}
+
+.comments .comment .comment-like-reply .comment-like i.active {
+  cursor: pointer;
 }
 
 .comments .comment .comment-like-reply .comment-reply button {
@@ -844,7 +859,6 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   background-color: #f5f5f7;
   padding: 10px 30px;
   font-size: 14px;
-  margin-bottom: 5px;
 }
 
 .technical-detail .technical-detail-items .detail-value i.fa-check {
@@ -859,7 +873,7 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   margin: 20px 10px;
 }
 
-.expert-check h5 {
+.expert-check h5.main-title {
   margin-bottom: 80px;
 }
 
@@ -1037,7 +1051,7 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   max-height: 100px;
 }
 
-.information-card #save-information {
+.information-card #save-information, .information-card #cancel {
   display: none;
 }
 
@@ -1390,18 +1404,31 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   padding-bottom: 50px;
 }
 
-.compare-items-card .compare-items {
-  overflow-x: scroll;
+.compare-items-card table.compare-table td, .compare-items-card table.compare-table th {
+  padding: 15px 0;
+  vertical-align: middle;
+}
+
+.compare-items-card table.compare-table tr th {
+  background-color: #ddd;
+}
+
+.compare-items-card table.compare-table tr td:first-child {
+  padding-right: 30px;
+}
+
+.compare-items-card table.compare-table tr img {
+  width: 50%;
 }
 
 .add-compare-item {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  border-top-right-radius: 50%;
-  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
 }
 
 .add-compare-item i {

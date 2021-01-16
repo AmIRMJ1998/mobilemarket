@@ -3,6 +3,7 @@
 {% endblock %}
 
 {% load static %}
+{% load jformat %}
 
     <title>پیام | فروشگاه موبایل</title>
     </head>
@@ -17,7 +18,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="dashboard-item-title orders-title">
-                            <a href="{% url 'messages' %}">
+                            <a href="{% url 'market:messages' %}">
                                 <i class="fas fa-long-arrow-right"></i>
                             </a>
                             <h4>
@@ -30,7 +31,7 @@
                     <div class="col-12">
                         <div class="message-title">
                             <h5>
-                                عنوان عنوان عنوان
+                                {{message.title}}
                             </h5>
                         </div>
                     </div>
@@ -44,9 +45,7 @@
                             </span>
                             &nbsp;
                             <span class="value">
-                                1399/09/25
-                                &nbsp;
-                                12:40
+                                {{ message.datetime | jformat:"%H:%M %Y/%m/%d" }}
                             </span>
                         </div>
                     </div>
@@ -55,7 +54,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="message-text">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                            {{message.text}}
                         </div>
                     </div>
                 </div>
@@ -69,3 +68,38 @@
 {% block foot %}
 {% include "base/foot.html" %}
 {% endblock %}
+
+<script>
+    var message_id = '{{message.id}}';
+
+
+    $(document).ready( function () {
+        $.ajax (
+            {
+                type: 'POST',
+                url: '{% url "market:changeMessageStatus" %}',
+                data: {
+                    id: message_id,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log(json);
+                    console.log(json.status);
+                    if (json.status)
+                    {
+                        console.log(json.message);
+                    }
+                    else {
+                        console.log(json.error);
+                    }
+                },
+                error: function (json) {
+                    console.log(json);
+                    console.log(json.status);
+                    console.log(json.error);
+                }
+            }
+        )
+    })
+</script>

@@ -8,16 +8,30 @@ urlpatterns = [
     path('products/', views.products, name="products"),
     path('products/mobile', views.mobile, name="mobile"),
     path('products/tablet', views.tablet, name="tablet"),
-    path('products/mobile/<slug:slug>', views.product, name="product"),
+
+    path('products/mobile/<slug:Slug>', views.product, name="product"),
+    path('products/rate/mobile/', views.rate, name="Rate"),
+    path('products/comment/mobile/', views.createComment, name="createComment"),
+    path('products/comment/like/mobile/', views.likeComment, name="likeComment"),
+    path('products/comment/reply/mobile/', views.replyComment, name="replyComment"),
+    
+
     path('card/', views.card, name="card"),
     path('register/', views.register, name="register"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('dashboard/orders', views.orders, name="orders"),
     path('dashboard/orders/order', views.order, name="order"),
+
     path('dashboard/information', views.information, name="information"),
+    path('dashboard/information/change', views.changeInformation, name="changeInformation"),
+
     path('dashboard/favorites', views.favorites, name="favorites"),
+    path('dashboard/favorites/addtofavorite', views.addtofavorite, name="addtofavorite"),
+
     path('dashboard/messages', views.messages, name="messages"),
-    path('dashboard/messages/message-slug', views.message, name="message"),
+    path('dashboard/messages/<int:id>', views.message, name="message"),
+    path('dashboard/seen/message', views.changeMessageStatus, name="changeMessageStatus"),
+
     path('dashboard/comments', views.comments, name="comments"),
     path('compare/', views.compare, name="compare"),
     path('contact-us/', views.contactUs, name="contact-us"),

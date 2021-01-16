@@ -244,32 +244,18 @@ $("#pay-btn").click(function () {
 })
 
 //Submit Comment "sweetalert2"
-$(document).on('click' ,".send-comment", function () {
-    Swal.fire({
-        icon: 'success',
-        title: 'ثبت نظر',
-        text: 'نظر شما با موفقیت ثبت گردید',
-      })
-})
+// $(document).on('click' ,".send-comment", function () {
+//     Swal.fire({
+//         icon: 'success',
+//         title: 'ثبت نظر',
+//         text: 'نظر شما با موفقیت ثبت گردید',
+//       })
+// })
 
-//Make Reply Form in Comments
-$(".reply-btn").click(function (e) {
-    e.preventDefault();
-    $(".reply-form").remove();
-    var whichComment = $(this).attr('val');
-    // console.log('which comment? answer:', whichComment);
 
-    $(".comment[val='" + whichComment + "'").append(
-    '<div class="reply-form">' +
-        '<textarea name="comment" id="product-comment" class="form-control" cols="20" rows="7" placeholder="پاسخ خود را اینجا بنویسید..."></textarea>' +
-        '<div class="send-comment-btn text-left mt-3">' +
-            '<button class="btn btn-primary send-comment">ارسال</button>' +
-        '</div>' +
-    '</div>')
-})
 
 // Product Rate in Product Page
-$(".product-rate input").on('change', function () {
+productRateFnc = function () {
     var ProductRate;
     
     if ($("#check-1").prop("checked"))
@@ -292,45 +278,29 @@ $(".product-rate input").on('change', function () {
     {
         ProductRate = 5;
     }
-
-})
-$(".post-rate input").on('change', function () {
-    var PostRate;
-    
-    if ($("#check-1").prop("checked"))
-    {
-        PostRate = 1;
-    }
-    else if ($("#check-2").prop("checked"))
-    {
-        PostRate = 2;
-    }
-    else if ($("#check-3").prop("checked"))
-    {
-        PostRate = 3;
-    }
-    else if ($("#check-4").prop("checked"))
-    {
-        PostRate = 4;
-    }
-    else if ($("#check-5").prop("checked"))
-    {
-        PostRate = 5;
-    }
-})
+    return ProductRate;
+}
 
 //Edit information
-$("#edit-information").click(function () {
+$("#edit-information").click(function (e) {
+    e.preventDefault();
     $(".information-card-content fieldset").prop('disabled', false);
     $(this).hide();
     $("#save-information").show();
+    $("#cancel").show()
 })
 
-$("#save-information").click(function (){
+$("#cancel").click(function (e){
+    e.preventDefault();
     $(".information-card-content fieldset").prop('disabled', true);
     $(this).hide();
+    $("#save-information").hide()
     $("#edit-information").show();
 })
+
+$(document).on('click', '.close-message', function () {
+    $(this).parents('div.alert-message').fadeOut();
+});
 
 
 var minPrice = 0;

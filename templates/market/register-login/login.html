@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <form method="POST" action="{% url 'loginRequest' %}">
+                <form method="POST" action="{% url 'market:loginRequest' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12 mb-3">
@@ -50,7 +50,7 @@
                 <div class="row pb-3 unregistered-text">
                     تا به حال ثبت نام نکرده اید؟
                     &nbsp;
-                    <a class="" href="{% url 'register' %}">
+                    <a class="" href="{% url 'market:register' %}">
                         ثبت نام
                     </a>
                 </div>

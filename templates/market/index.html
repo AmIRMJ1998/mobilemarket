@@ -42,28 +42,28 @@
         <section class="main-brands">
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                    <a href="{% url 'products' %}">
+                    <a href="{% url 'market:products' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/sony-logo.png" %}" alt="sony-logo">
                         </div>
                     </a>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                    <a href="{% url 'products' %}">
+                    <a href="{% url 'market:products' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/samsung-logo.png" %}" alt="samsung-logo">
                         </div>
                     </a>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                    <a href="{% url 'products' %}">
+                    <a href="{% url 'market:products' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/huawei-logo.png" %}" alt="huawei-logo">
                         </div>
                     </a>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                    <a href="{% url 'products' %}">
+                    <a href="{% url 'market:products' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/lg-logo.png" %}" alt="lg-logo">
                         </div>
@@ -82,55 +82,43 @@
                 <div class="slider-slick product-slider">
                     {% for mobile in OffMobiles %}
                     <div class="slider-slick-item">
-                        <a href="{% url 'product' mobile.slug %}">
+                        <a href="{% url 'market:product' mobile.slug %}">
                             <img src="{{mobile.index_image.url}}" alt="محصول">
                             <div class="product-title">
                                 {{mobile.title}}
                             </div>
                         </a>
                         <div class="product-rate">
-                            {% if mobile.points >= 4.5 %}
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                            {% elif mobile.points >= 3.5 and mobile.points < 4.5 %}
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star"></i>
-                            {% elif mobile.points >= 2.5 and mobile.points < 3.5 %}
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            {% elif mobile.points >= 1.5 and mobile.points < 2.5 %}
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            {% elif mobile.points >= 0.5 and mobile.points < 1.5 %}
-                                <i class="fas fa-star active"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                            {% if mobile.total_point >= 4.5 %}
+                            <i class="fas fa-star active"></i>
                             {% else %}
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            {% endif %}
+                            {% if mobile.total_point >= 3.5 %}
+                            <i class="fas fa-star active"></i>
+                            {% else %}
+                            <i class="fas fa-star"></i>
+                            {% endif %}
+                            {% if mobile.total_point >= 2.5 %}
+                            <i class="fas fa-star active"></i>
+                            {% else %}
+                            <i class="fas fa-star"></i>
+                            {% endif %}
+                            {% if mobile.total_point >= 1.5 %}
+                            <i class="fas fa-star active"></i>
+                            {% else %}
+                            <i class="fas fa-star"></i>
+                            {% endif %}
+                            {% if mobile.total_point >= 0.5 %}
+                            <i class="fas fa-star active"></i>
+                            {% else %}
+                            <i class="fas fa-star"></i>
                             {% endif %}
                         </div>
                         <div class="product-prices">
                             <div class="product-price-off">
                                 <span class="split-number">
-                                    {{mobile.discount}}
+                                    {{mobile.real_price}}
                                 </span>
                                 <span>
                                     تومان
@@ -175,70 +163,64 @@
                 <div class="slider-slick product-slider">
                     {% for mobile in LatestMobiles %}
                         <div class="slider-slick-item">
-                            <a href="{% url 'product' mobile.slug %}">
+                            <a href="{% url 'market:product' mobile.slug %}">
                                 <img src="{{mobile.index_image.url}}" alt="محصول">
                                 <div class="product-title">
                                     {{mobile.title}}
                                 </div>
                             </a>
                             <div class="product-rate">
-                                {% if mobile.points >= 4.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                {% elif mobile.points >= 3.5 and mobile.points < 4.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                {% elif mobile.points >= 2.5 and mobile.points < 3.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                {% elif mobile.points >= 1.5 and mobile.points < 2.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                {% elif mobile.points >= 0.5 and mobile.points < 1.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                {% if mobile.total_point >= 4.5 %}
+                                <i class="fas fa-star active"></i>
                                 {% else %}
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 3.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 2.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 1.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 0.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
                                 {% endif %}
                             </div>
                             <div class="product-prices">
-                                {% if mobile.discount != 0 %}
-                                    <div class="product-price-off">
+                                {% if mobile.inventory != 0%}
+                                    {% if mobile.discount != '0' %}
+                                        <div class="product-price-off">
+                                            <span class="split-number">
+                                                {{mobile.real_price}}
+                                            </span>
+                                            <span>
+                                                تومان
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                    <div class="product-price">
                                         <span class="split-number">
-                                            {{mobile.discount}}
+                                            {{mobile.price}}
                                         </span>
                                         <span>
                                             تومان
                                         </span>
                                     </div>
+                                {% else %}
+                                    <div class="not-available">
+                                        ناموجود
+                                    </div>
                                 {% endif %}
-                                <div class="product-price">
-                                    <span class="split-number">
-                                        {{mobile.price}}
-                                    </span>
-                                    <span>
-                                        تومان
-                                    </span>
-                                </div>
                             </div>
                         </div> 
                     {% endfor %}
@@ -269,62 +251,50 @@
             <div class="slider-slick-base">
                 <div class="slider-slick-title">
                     <h6>
-                        محبوبترین
+                        محبوب ترین
                     </h6>
                 </div>
                 <div class="slider-slick product-slider">
                     {% for mobile in MostRateMobiles %}
                         <div class="slider-slick-item">
-                            <a href="{% url 'product' mobile.slug %}">
+                            <a href="{% url 'market:product' mobile.slug %}">
                                 <img src="{{mobile.index_image.url}}" alt="محصول">
                                 <div class="product-title">
                                     {{mobile.title}}
                                 </div>
                             </a>
                             <div class="product-rate">
-                                {% if mobile.points >= 4.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                {% elif mobile.points >= 3.5 and mobile.points < 4.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                {% elif mobile.points >= 2.5 and mobile.points < 3.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                {% elif mobile.points >= 1.5 and mobile.points < 2.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                {% elif mobile.points >= 0.5 and mobile.points < 1.5 %}
-                                    <i class="fas fa-star active"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                {% if mobile.total_point >= 4.5 %}
+                                <i class="fas fa-star active"></i>
                                 {% else %}
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 3.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 2.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 1.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
+                                {% endif %}
+                                {% if mobile.total_point >= 0.5 %}
+                                <i class="fas fa-star active"></i>
+                                {% else %}
+                                <i class="fas fa-star"></i>
                                 {% endif %}
                             </div>
                             <div class="product-prices">
-                                {% if mobile.discount != 0 %}
+                                {% if mobile.discount != '0' %}
                                     <div class="product-price-off">
                                         <span class="split-number">
-                                            {{mobile.discount}}
+                                            {{mobile.real_price}}
                                         </span>
                                         <span>
                                             تومان

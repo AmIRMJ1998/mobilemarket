@@ -4,21 +4,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.urls import reverse
+from django.utils.datastructures import MultiValueDictKeyError
+from django.db.models import Q
+from django.contrib.postgres.fields import ArrayField
+import jdatetime
 import threading
 
-from .models import Slider
-from .models import Mobile
-from .models import User
+from .models import Slider, Mobile, User, Message, Comment
 
-class GetUserInfo(threading.Thread):
-    def run(self, request):
-        this_user_profile = get_object_or_404(User, FK_User = request.user)
-        result = {
-            "user_profile": this_user_profile,
-        }
-        return result
 
+# Create your views here
 def index(request):
     slides = Slider.objects.all()
     offMobiles = Mobile.objects.filter(publish = True, inventory__gt = 0, discount__gt = 0).order_by('-id')[:15]
@@ -37,16 +34,236 @@ def products(request):
     return render(request, 'market/products.html')
 
 def mobile(request):
-    return render(request, 'market/products-mobile.html')
+    Mobiles = Mobile.objects.filter(publish = True)
+
+    context = {
+        'Mobiles': Mobiles
+    }
+    return render(request, 'market/products-mobile.html', context)
 
 def tablet(request):
     return render(request, 'market/products-tablet.html')
 
-def product(request, slug):
-    return render(request, 'market/product.html')
+def product(request, Slug):
+    #'samsung-galaxy-z-fold2-5g-dual-sim-256gb-ram-12gb-mobile-phone'
+    thisMobile = Mobile.objects.get(slug = Slug)
+    if request.user.is_authenticated:
+        favorite = False
+        favorites = request.user.favorite_list
+        if favorites is not None:
+            for item in favorites:
+                if item == thisMobile.id:
+                    favorite = True
+    else:
+        favorite = False
+
+    commentList = {}
+    if thisMobile.comments is not None:
+        for item in thisMobile.comments:
+            replies = []
+            relativecomment = Comment.objects.get(id = item)
+            if relativecomment.replay is not None:
+                for item in relativecomment.replay:
+                    reply = Comment.objects.get(id = item)
+                    replies.append(reply)
+            commentList[relativecomment] = replies
+
+    context = {
+        'mobile': thisMobile,
+        'favorite': favorite,
+        'commentList': commentList
+    }
+
+    return render(request, 'market/product.html', context)
+
+
+def rate(request):
+    res = {}
+    if request.user.is_authenticated:
+        try:
+            if request.method == 'POST':
+                try:
+                    ProductRate = request.POST["productRate"]
+                except MultiValueDictKeyError:
+                    ProductRate = ''
+
+                try:
+                    mobileID = request.POST["mobileID"]
+                except MultiValueDictKeyError:
+                    mobileID = ''
+
+                try:
+                    thisMobile = Mobile.objects.get(id = mobileID)
+                    userID = request.user.id
+                    thisMobile.product_rate_set(userID = userID, productRate = ProductRate)
+
+                    res['status'] = True
+                    res['message'] = ProductRate
+                    
+                    return JsonResponse(res)
+                except Exception as e:
+                    print (str(e))
+                    res['status'] = False
+                    res['error'] = str(e)
+
+                    return JsonResponse(res)
+                
+
+
+        except Exception as e:
+            print (str(e))
+            res['status'] = False
+            res['error'] = str(e)
+            return JsonResponse(res)
+    else:
+        return redirect("login")
+
+def createComment(request):
+    res = {}
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            try:
+                mobileID = request.POST["mobileID"]
+            except MultiValueDictKeyError:
+                mobileID = ''
+
+            try:
+                commentText = request.POST["commentText"]
+            except MultiValueDictKeyError:
+                commentText = ''
+
+            user = request.user
+
+            newComment = Comment()
+            newComment.FK_User = user
+            newComment.description = commentText
+            newComment.save()
+
+            thisMobile = Mobile.objects.get(id = mobileID)
+
+            try:
+                if thisMobile.comments is None:
+                    thisMobile.comments = [newComment.id,]
+                    thisMobile.save()
+                    res['status'] = True
+                    return JsonResponse(res)
+                else:
+                    newCommentID = int(newComment.id)
+                    thisMobile.comments.append(newCommentID,)
+                    thisMobile.save()
+                    res['status'] = True
+                    return JsonResponse(res)
+            except Exception as e:
+                print (e)
+                res['error'] = str(e)
+                res['status'] = False
+                return JsonResponse(res)
+    else:
+        return redirect("login")
+
+def likeComment(request):
+    res = {}
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            try:
+                commentID = request.POST["commentID"]
+            except MultiValueDictKeyError:
+                commentID = ''
+
+            userID = int(request.user.id)
+            thisComment = Comment.objects.get(id = commentID)
+            remove = 0
+
+            try:
+                if thisComment.likes is not None:
+                    for item in thisComment.likes:
+                        if item == userID:
+                            thisComment.likes.remove(userID)
+                            thisComment.save()
+                            res['likeCount'] = thisComment.like_count()
+                            res['remove'] = 1
+                            res['status'] = True
+                            return JsonResponse(res)
+                else:
+                    thisComment.likes = [userID,]
+                    thisComment.save()
+                    res['likeCount'] = thisComment.like_count()
+                    res['remove'] = 0
+                    res['status'] = True
+                    return JsonResponse(res)
+                if remove != 1:
+                    thisComment.likes.append(userID)
+                    thisComment.save()
+                    res['likeCount'] = thisComment.like_count()
+                    res['remove'] = 0
+                    res['status'] = True
+                    return JsonResponse(res)
+            except Exception as e:
+                res['error'] = str(e)
+                res['status'] = False
+                return JsonResponse(res)
+    else:
+        res['error'] = 'login'
+        res['status'] = False
+        return JsonResponse(res)
+
+def replyComment(request):
+    res = {}
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            try:
+                commentID = request.POST["commentID"]
+            except MultiValueDictKeyError:
+                commentID = ''
+
+            try:
+                commentText = request.POST["commentText"]
+            except MultiValueDictKeyError:
+                commentText = ''
+
+            user = request.user
+            thisComment = Comment.objects.get(id = commentID)
+
+            try:
+                newComment = Comment()
+                newComment.FK_User = user
+                newComment.description = commentText
+                newComment.save()
+            except Exception as e:
+                res['error'] = str(e)
+                res['status'] = False
+                return JsonResponse(res)
+
+            try:
+                if thisComment.replay is None:
+                    thisComment.replay = [newComment.id]
+                    thisComment.save()
+                    res['status'] = True
+                    return JsonResponse(res)
+                else:
+                    thisComment.replay.append(newComment.id)
+                    thisComment.save()
+                    res['status'] = True
+                    return JsonResponse(res)
+            except Exception as e:
+                res['error'] = str(e)
+                res['status'] = False
+                return JsonResponse(res)
+
 
 def card(request):
     return render(request, 'market/card.html')
+
+def addToCard(request):
+    res = {}
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            return
+    else:
+        return redirect('login')
 
 def register(request):
     return render(request, 'market/register-login/register.html')
@@ -65,30 +282,264 @@ def order(request):
 
 @login_required(login_url="login")
 def information(request):
-    # this_user = GetUserInfo().run(request)
-    # this_profile = this_user["user_profile"]
-    this_profile = request.user
-    
-    context = {
-            'User_Profile':this_profile,
+    return render(request, 'account/information.html')
+
+@login_required(login_url="login")
+def changeInformation(request):
+    res = {
+        'has_message': False,
+        'has_error': False
     }
 
-    return render(request, 'account/information.html', context)
+    if request.user.is_authenticated:
+        try:
+            if request.method == 'POST':
+                try:
+                    FirstName = request.POST["firstname"]
+                except MultiValueDictKeyError:
+                    FirstName = ''
+
+                try:
+                    LastName = request.POST["lastname"]
+                except MultiValueDictKeyError:
+                    LastName = ''
+
+                try:
+                    Email = request.POST["email"]
+                except MultiValueDictKeyError:
+                    Email = ''
+
+                # try:
+                #     birthday_day = request.POST["birthday-day"]
+                # except MultiValueDictKeyError:
+                #     birthday_day = ''
+
+                # try:
+                #     birthday_month = request.POST["birthday-month"]
+                # except MultiValueDictKeyError:
+                #     birthday_month = ''
+
+                # try:
+                #     birthday_year = request.POST["birthday-year"]
+                # except MultiValueDictKeyError:
+                #     birthday_year = ''
+
+                try:
+                    birthday = request.POST["birthday"]
+                except MultiValueDictKeyError:
+                    birthday = ''
+
+                try:
+                    MobileNumber = request.POST["mobilenumber"]
+                except MultiValueDictKeyError:
+                    MobileNumber = ''
+
+                try:
+                    PhoneNumber = request.POST["phonenumber"]
+                except MultiValueDictKeyError:
+                    PhoneNumber = ''
+
+                try:
+                    PrePhoneNumber = request.POST["prephonenumber"]
+                except MultiValueDictKeyError:
+                    PrePhoneNumber = ''
+
+                try:
+                    State = request.POST["state"]
+                except MultiValueDictKeyError:
+                    State = ''
+
+                try:
+                    City = request.POST["city"]
+                except MultiValueDictKeyError:
+                    City = ''
+
+                try:
+                    Address = request.POST["address"]
+                except MultiValueDictKeyError:
+                    Address = ''
+
+                try:
+                    PostalCode = request.POST["postalcode"]
+                except MultiValueDictKeyError:
+                    PostalCode = ''
+
+                if (FirstName != '') and (LastName != '') and (Email != ''):
+                    this_user = request.user
+
+                    # BirthDay = birthday_year + '-' + birthday_month + '-' + birthday_day
+
+                    this_user.first_name = FirstName
+                    this_user.last_name = LastName
+                    this_user.email = Email
+                    this_user.birthday = birthday
+                    this_user.mobile = MobileNumber
+                    this_user.phone = PhoneNumber
+                    this_user.citypercode = PrePhoneNumber
+                    this_user.user_address(this_state = State, this_city = City, this_zipcode = PostalCode, this_address = Address)
+
+
+                    res['has_message'] = True
+                    res['message'] = 'مشخصات شما با موفقیت تغییر یافت'
+                    # return redirect('information')
+                    return JsonResponse(res)
+
+                else:
+                    res['has_error'] = True
+                    res['error'] = 'مشخصات ضروری نمیتواند خالی باشد!'
+                    # return redirect('information')
+                    return JsonResponse(res)
+
+        except Exception as e:
+            res['has_error'] = True
+            res['error'] = str(e)
+            # return redirect('information')
+            return JsonResponse(res)
+    else:
+        return redirect("login")
 
 def favorites(request):
-    return render(request, 'account/favorites.html')
+    thisUser = request.user
+    favorites = thisUser.favorite_list
+    mobile = []
+    for item in favorites:
+        mobile.append(Mobile.objects.get(id = item))
 
+    context = {
+        'favoritemobiles': mobile
+    }
+
+    return render(request, 'account/favorites.html', context)
+
+def addtofavorite(request):
+    res = {}
+
+    if request.user.is_authenticated:
+        try:
+            if request.method == 'POST':
+                try:
+                    mobileID = request.POST["mobileID"]
+                except MultiValueDictKeyError:
+                    mobileID = ''
+
+                print (mobileID)
+                thisUser = request.user
+                remove = 0
+                print (thisUser)
+
+                if thisUser.favorite_list is not None:
+                    for favorite in thisUser.favorite_list:
+                        favorite = int(favorite)
+                        mobileID = int(mobileID)
+                        if favorite == mobileID:
+                            remove = 1
+                            thisUser.favorite_list.remove(favorite)
+                            thisUser.save()
+                            res['remove'] = 1
+                            res['status'] = True
+
+                if remove != 1:
+                    try:
+                        thisUser.favorite_list.append(mobileID)
+                        thisUser.save()
+                        res['remove'] = 0
+                        res['status'] = True
+                    except Exception as e:
+                        res['error'] = str(e)
+                        res['status'] = False
+
+            return JsonResponse(res)
+        except Exception as e:
+            res['error'] = str(e)
+            res['status'] = False
+            return JsonResponse(res)
+
+    else:
+        return redirect("login")
 def messages(request):
-    return render(request, 'account/messages.html')
+    userMessages = []
+    allmessages = Message.objects.all()
+    for message in allmessages:
+        for item in message.users:
+            if item["userID"] == request.user.id:
+                userMessages.append(message)
 
-def message(request):
-    return render(request, 'account/message.html')
+    context = {
+        'messages': userMessages
+    }
+                
+    return render(request, 'account/messages.html', context)
+
+def message(request, id):
+    message = Message.objects.get(id = id)
+    context = {
+        'message': message
+    }
+    return render(request, 'account/message.html', context)
+def changeMessageStatus(request):
+    res = {}
+
+    if request.user.is_authenticated:
+        if request.POST.get('action') == 'post':
+            messageID = request.POST["id"]
+            message = Message.objects.get(id = messageID)
+            userID = request.user.id
+
+            for item in message.users:
+                print (item['userID'])
+                if item['userID'] == userID:
+                    item['seen'] = "1"
+                    message.save()
+                    res['status'] = True
+    return JsonResponse(res)
+
 
 def comments(request):
     return render(request, 'account/comments.html')
 
 def compare(request):
+    # userID = request.user.id
+
+    # compareList = Compare.objects.get(FK_User = userID)
+
+    # mobiles = compareList.mobiles
+
+    # context = {
+    #     'mobiles': mobiles
+    # }
+    
     return render(request, 'market/compare.html')
+
+def addToCompare(request):
+    res = {}
+
+    # if request.user.is_authenticated:
+    #     if request.method == 'POST':
+
+    #         try:
+    #             mobileID = request.POST['mobileID']
+    #         except MultiValueDictKeyError:
+    #             mobileID = ''
+
+    #         userID = request.user.id
+
+    #         thisCompareList = Compare.objects.get(FK_User = userID)
+
+    #         try:
+    #             if thisCompareList in not None:
+    #                 thisCompareList.mobiles.append(mobileID)
+    #                 res['status']= True
+    #                 return JsonResponse(res)
+    #             else:
+    #                 thisCompareList.mobiles = [mobileID,]
+    #                 res['status']= True
+    #                 return JsonResponse(res)
+    #         except Exception as e:
+    #             res['status']= False
+    #             return JsonResponse(res)
+
+    # else:
+    #     return redirect ('login')
 
 def contactUs(request):
     return render(request, 'market/contact-us.html')
@@ -100,7 +551,7 @@ def loginRequest(request):
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('market:index')
         else:
             resp['error'] = 'نام کاربری یا رمز عبور اشتباه است!'
             return render(request, 'market/register-login/login.html', resp)
@@ -111,4 +562,4 @@ def loginRequest(request):
 
 def logoutRequest(request):
     logout(request)
-    return HttpResponseRedirect(reverse(index))
+    return HttpResponseRedirect(reverse('market:index'))
