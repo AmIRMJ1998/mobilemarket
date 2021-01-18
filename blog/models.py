@@ -31,17 +31,32 @@ class Post (models.Model):
             'slug': self.slug,
         })
 
-    # commnets function
-    def post_comments(self, this_comment_id):
-        if self.comments is None:
+    # points function
+    def post_points(self, user_id, this_point):
+        if self.points is None:
             data = {}
             data['list'] = []
-            data['list'].append(this_comment_id)
-            self.comments = data
+            this_point = {'user_id': user_id, 'point': this_point}
+            data['list'].append(this_point)
+            self.points = data
             self.save()
         else:
-            self.comments['list'] = this_comment_id
+            status = True
+            for item in self.points['list']:
+                if item.user_id == user_id:
+                    item.point = this_point
+                    status = False
+            if status:
+                this_point = {'user_id': user_id, 'point': this_point}
+                self.points['list'].append(this_point)
             self.save()
+  
+    # get total points
+    def get_total_points(self):
+        sum_points = 0.0
+        for item in self.points['list']:
+            sum_points += item.point
+        return sum_points
 
     def get_publishdate_to_jalali(self):
         date_format = "%Y-%m-%d"
