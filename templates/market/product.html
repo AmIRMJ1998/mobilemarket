@@ -108,62 +108,80 @@
                                         <div class="product-title">
                                             <h6>{{mobile.title}}</h6>
                                         </div>
-                                        <div class="product-rate">
-                                            <div class="rating">
-                                                <input id="check-5" type="radio" name="rateradio" hidden >
-                                                <label for="check-5">
-                                                    {% if mobile.total_point >= 4.5 %}
-                                                        <i class="fas fa-star active"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-star"></i>
-                                                    {% endif %}
-                                                </label>
-                                                <input id="check-4" type="radio" name="rateradio" hidden>
-                                                <label for="check-4">
-                                                    {% if mobile.total_point >= 3.5 %}
-                                                        <i class="fas fa-star active"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-star"></i>
-                                                    {% endif %}
-                                                </label>
-                                                <input id="check-3" type="radio" name="rateradio" hidden>
-                                                <label for="check-3">
-                                                    {% if mobile.total_point >= 2.5 %}
-                                                        <i class="fas fa-star active"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-star"></i>
-                                                    {% endif %}
-                                                </label>
-                                                <input id="check-2" type="radio" name="rateradio" hidden>
-                                                <label for="check-2">
-                                                    {% if mobile.total_point >= 1.5 %}
-                                                        <i class="fas fa-star active"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-star"></i>
-                                                    {% endif %}
-                                                </label>
-                                                <input id="check-1" type="radio" name="rateradio" hidden>
-                                                <label for="check-1">
-                                                    {% if mobile.total_point >= 0.5 %}
-                                                        <i class="fas fa-star active"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-star"></i>
-                                                    {% endif %}
-                                                </label>
+                                        {% if request.user.is_authenticated %}
+                                            <div class="product-rate">
+                                                <div class="rating">
+                                                    <input id="check-5" type="radio" name="rateradio" hidden >
+                                                    <label for="check-5">
+                                                        {% if mobile.total_point >= 4.5 %}
+                                                            <i class="fas fa-star active"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% endif %}
+                                                    </label>
+                                                    <input id="check-4" type="radio" name="rateradio" hidden>
+                                                    <label for="check-4">
+                                                        {% if mobile.total_point >= 3.5 %}
+                                                            <i class="fas fa-star active"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% endif %}
+                                                    </label>
+                                                    <input id="check-3" type="radio" name="rateradio" hidden>
+                                                    <label for="check-3">
+                                                        {% if mobile.total_point >= 2.5 %}
+                                                            <i class="fas fa-star active"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% endif %}
+                                                    </label>
+                                                    <input id="check-2" type="radio" name="rateradio" hidden>
+                                                    <label for="check-2">
+                                                        {% if mobile.total_point >= 1.5 %}
+                                                            <i class="fas fa-star active"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% endif %}
+                                                    </label>
+                                                    <input id="check-1" type="radio" name="rateradio" hidden>
+                                                    <label for="check-1">
+                                                        {% if mobile.total_point >= 0.5 %}
+                                                            <i class="fas fa-star active"></i>
+                                                        {% else %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% endif %}
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- <fieldset class="rating">
-                                            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="بی نظیر!"></label>
-                                            <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="خیلی عالی"></label>
-                                            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="عالی"></label>
-                                            <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="خیلی خوب"></label>
-                                            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="خوب"></label>
-                                            <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="متوسط"></label>
-                                            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="نسبتا بد"></label>
-                                            <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="بد"></label>
-                                            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="خیلی بد"></label>
-                                            <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="افتضاح!"></label>
-                                        </fieldset> -->
+                                        {% else %}
+                                            <div class="product-rate">
+                                                {% if mobile.total_point >= 4.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 3.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 2.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 1.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                                {% if mobile.total_point >= 0.5 %}
+                                                <i class="fas fa-star active"></i>
+                                                {% else %}
+                                                <i class="fas fa-star"></i>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -258,50 +276,36 @@
                                         </ul>
                                     </div>
                                 </div>
-                                {% if mobile.inventory != 0 %}
+                                {% if mobile.inventory_by_color != 0 %}
                                     <div class="row">
                                         <div class="col-12 product-detail-3rd">
-                                            رنگ :
+                                            رنگ : 
                                             <div class="product-color-selection-section">
                                                 {% for color in mobile.colors %}
                                                     {% for name, value in color.items %}
-                                                        {% if forloop.parentloop.counter == 1 %}
-                                                            <div class="product-color-selection-item active">
-                                                        {% else %}
-                                                            <div class="product-color-selection-item">
-                                                        {% endif %}
-                                                                <label for="color-{{forloop.parentloop.counter}}">
-                                                                    <div class="color-square" style="background:{{value}};"></div>
-                                                                    <div class="color-name">
-                                                                        {{name}}
-                                                                    </div>
-                                                                </label>
-                                                                {% if forloop.parentloop.counter == 1 %}
-                                                                    <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.counter}}" checked>
+                                                        {% for k, v in value.items %}
+                                                            {% if v != 0 %}
+                                                                {% if forloop.parentloop.parentloop.counter == 1 %}
+                                                                    <div class="product-color-selection-item active">
                                                                 {% else %}
-                                                                    <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.counter}}">
+                                                                    <div class="product-color-selection-item">
                                                                 {% endif %}
-                                                            </div>
+                                                                        <label for="color-{{forloop.parentloop.parentloop.counter}}">
+                                                                            <div class="color-square" style="background:{{k}};"></div>
+                                                                            <div class="color-name">
+                                                                                {{name}}
+                                                                            </div>
+                                                                        </label>
+                                                                        {% if forloop.parentloop.parentloop.counter == 1 %}
+                                                                            <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.parentloop.counter}}" checked>
+                                                                        {% else %}
+                                                                            <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.parentloop.counter}}">
+                                                                        {% endif %}
+                                                                    </div>
+                                                                {% endif %}
+                                                        {% endfor %}
                                                     {% endfor %}
                                                 {% endfor %}
-                                                <!-- <div class="product-color-selection-item">
-                                                    <label for="silver-color-radio">
-                                                        <div class="color-square silver-color-square"></div>
-                                                        <div class="color-name silver-color-name">
-                                                            نقره ای
-                                                        </div>
-                                                    </label>
-                                                    <input hidden type="radio" name="color-radio" id="silver-color-radio">
-                                                </div>
-                                                <div class="product-color-selection-item">
-                                                    <label for="blue-color-radio">
-                                                        <div class="color-square blue-color-square"></div>
-                                                        <div class="color-name blue-color-name">
-                                                            آبی
-                                                        </div>
-                                                    </label>
-                                                    <input hidden type="radio" name="color-radio" id="blue-color-radio">
-                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -327,7 +331,7 @@
                                 <div class="row">
                                     <div class="col-12 product-detail-4th">
                                         <div class="product-prices">
-                                            {% if mobile.inventory != 0 %}
+                                            {% if mobile.inventory_by_color != 0 %}
                                                 <div class="main-price">
                                                     <span class="split-number">
                                                         {{mobile.price}}
@@ -354,7 +358,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% if mobile.inventory != 0 %}
+                                {% if mobile.inventory_by_color != 0 %}
                                     <div class="row">
                                         <div class="col-12 product-detail-5th">
                                             <button class="btn btn-primary buy-button">

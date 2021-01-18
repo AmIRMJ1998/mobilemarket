@@ -38,42 +38,44 @@
                             </div>
                         </div>
                         <div class="card-product-detail">
-                            <div class="card-product-detail-item">
-                                <div class="row flex-nowrap align-items-center">
-                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
-                                        <a href="#">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
-                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        4,800,000 تومان
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
-                                        <div class="count-part">
-                                            <div class="add-sub add">
-                                                <i class="far fa-plus"></i>
-                                            </div>
-                                            <div class="main-count">
-                                                2
-                                            </div>
-                                            <div class="add-sub sub">
-                                                <i class="far fa-minus"></i>
+                            {.% for mobile in card %}
+                                <div val="{.{mobile.id}}" class="card-product-detail-item">
+                                    <div class="row flex-nowrap align-items-center">
+                                        <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                                            <a href="{.% url 'market:mobile' mobile.slug %}">
+                                                <img src="{.{mobile.image.url}}" alt="محصول">
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
+                                            {.{mobile.title}}
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                            <span class="split-number">{.{mobile.price}}</span>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                            <div class="count-part">
+                                                <div val="{.{mobile.id}}" class="add-sub add">
+                                                    <i class="far fa-plus"></i>
+                                                </div>
+                                                <div val="{.{mobile.id}}" class="main-count">
+                                                    {.{mobile.buycount}}
+                                                </div>
+                                                <div val="{.{mobile.id}}" class="add-sub sub">
+                                                    <i class="far fa-minus"></i>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        9,600,000 تومان
-                                    </div>
-                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                        <button class="btn btn-danger">
-                                            حذف
-                                        </button>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                            {.{mobile.sumprice}}
+                                        </div>
+                                        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                            <button val="{.{mobile.id}}" class="btn btn-danger delete-factor-item-btn">
+                                                حذف
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {.% endfor %.}
                             <div class="card-product-detail-item">
                                 <div class="row flex-nowrap align-items-center">
                                     <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
@@ -205,7 +207,11 @@
                                         جمع کل :
                                     </p>
                                     <p>
-                                        38,400,000 تومان
+                                        <span class="split-number">
+                                            38400000
+                                        </span>
+                                        تومان
+                                        {.{factor.totalprice}}
                                     </p>
                                 </div>
                             </div>
@@ -218,15 +224,22 @@
                                     <i class="fas fa-info-circle"></i>
                                     کاربر گرامی لطفاً توجه داشته باشید : 
                                     ثبت سفارش در هر زمان به معنی پذیرفتن کامل کلیه شرایط و قوانین از سوی کاربر است. برای مطالعه
-                                <a href="#">شرایط و قوانین</a>
+                                <a href="{% url 'market:rules' %}">شرایط و قوانین</a>
                                     کلیک کنید.
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
-                                <button class="btn btn-success w-100">
+                                {.% if factor.items.count != 0 %}
+                                <button class="btn btn-success w-100 submit-order">
                                     ثبت سفارش
                                     <i class="fal fa-angle-left"></i>
                                 </button>
+                                {.% else %}
+                                <button disabled class="btn btn-success w-100 submit-order">
+                                    ثبت سفارش
+                                    <i class="fal fa-angle-left"></i>
+                                </button>
+                                {.% endif %}
                             </div>
                         </div>
                     </div>
@@ -246,13 +259,13 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
                                     <label for="fname">نام</label>
-                                    <input id="fname" class="form-control" type="text" placeholder="نام">
+                                    <input value="{{request.user.first_name}}" id="fname" class="form-control" type="text" placeholder="نام">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item last">
                                     <label for="lname">نام خانوادگی</label>
-                                    <input id="lname" class="form-control" type="text" placeholder="نام خانوادگی">
+                                    <input value="{{request.user.last_name}}" id="lname" class="form-control" type="text" placeholder="نام خانوادگی">
                                 </div>
                             </div>
                         </div>
@@ -260,7 +273,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
                                     <label for="lname">استان</label>
-                                    <input id="state" class="form-control" type="text" placeholder="استان">
+                                    <input value="{{request.user.address.state}}" id="state" class="form-control" type="text" placeholder="استان">
                                 </div>
                             </div>
                             <!-- <div class="col-6">
@@ -270,7 +283,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item last">
                                     <label for="city">شهر</label>
-                                    <input id="city" class="form-control" type="text" placeholder="شهر">
+                                    <input value="{{request.user.address.city}}" id="city" class="form-control" type="text" placeholder="شهر">
                                 </div>
                             </div>
                         </div>
@@ -278,19 +291,19 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
                                     <label for="cell-number">شماره همراه</label>
-                                    <input id="cell-number" class="form-control" type="number" placeholder="شماره همراه">
+                                    <input value="{{request.user.mobile}}" id="cell-number" class="form-control" type="number" placeholder="شماره همراه">
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-8 col-8">
                                 <div class="information-item last">
                                     <label for="phone-number">شماره ثابت</label>
-                                    <input id="phone-number" class="form-control" type="number" placeholder="شماره ثابت">
+                                    <input value="{{request.user.phone}}" id="phone-number" class="form-control" type="number" placeholder="شماره ثابت">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 col-4">
                                 <div class="information-item last">
                                     <label for="pre-phone">پیش شماره</label>
-                                    <input id="pre-phone" class="form-control" type="number" placeholder="پیش شماره">
+                                    <input value="{{request.user.citypercode}}" id="pre-phone" class="form-control" type="number" placeholder="پیش شماره">
                                 </div>
                             </div>
                         </div>
@@ -298,7 +311,7 @@
                             <div class="col-12">
                                 <div class="information-item">
                                     <label for="address">آدرس</label>
-                                    <input id="address" class="form-control" type="text" placeholder="آدرس">
+                                    <input value="{{request.user.address.address}}" id="address" class="form-control" type="text" placeholder="آدرس">
                                 </div>
                             </div>
                         </div>
@@ -306,7 +319,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
                                     <label for="postal-code">کد پستی</label>
-                                    <input id="postal-code" class="form-control" type="number" placeholder="کد پستی">
+                                    <input value="{{request.user.zipcode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 text-left">
@@ -343,18 +356,30 @@
                                         <div class="card-product-detail-item">
                                             <div class="row align-items-center">
                                                 <div class="col-4">
-                                                    <div class="factor-table-col">
-                                                        4,800,000 تومان
+                                                    <div class="factor-table-col factor-items-price">
+                                                       <span class="split-number">
+                                                        4800000
+                                                        </span>
+                                                        تومان
+                                                           <!-- {.{factor.items_price}} -->
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <div class="factor-table-col">
-                                                        29,000 تومان
+                                                    <div class="factor-table-col factor-post-price">
+                                                        <span class="split-number">
+                                                            29000
+                                                        </span>
+                                                        تومان
+                                                        <!-- {.{factor.post_price}} -->
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <div class="factor-table-col total-price-col">
-                                                        4,829,000 تومان
+                                                    <div class="factor-table-col total-price-col factor-total-price">
+                                                        <span class="split-number">
+                                                            4829000
+                                                        </span>
+                                                        تومان
+                                                        <!-- {.{factor.total_price}} -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -372,22 +397,30 @@
                                     <div class="pay-post-options">
                                         <div class="radio pay-post-option">
                                             <label>
-                                                <input type="radio" name="postradio" checked>
+                                                <input id="fast-post" type="radio" name="postradio" checked>
                                                 <span>
                                                     پست پیشتاز : تحویل 2 الی 3 روزه
                                                     <br>
-                                                    هزینه ارسال : 29,000 تومان
+                                                    هزینه ارسال : 
+                                                    <span class="split-number">
+                                                        29000
+                                                    </span>
+                                                    تومان
                                                 </span>
                                             </label>
                                             <i class="fal fa-plane"></i>
                                         </div>
                                         <div class="radio pay-post-option">
                                             <label>
-                                                <input type="radio" name="postradio">
+                                                <input id="normal-post" type="radio" name="postradio">
                                                 <span>
                                                     پست معمولی : تحویل طی 5 روز کاری
                                                     <br>
-                                                    هزینه ارسال : 12,000 تومان
+                                                    هزینه ارسال :
+                                                     <span class="split-number">
+                                                         12000 
+                                                    </span>
+                                                     تومان
                                                 </span>
                                             </label>
                                             <i class="fal fa-truck-moving"></i>
@@ -431,7 +464,11 @@
                             <div class="col-12">
                                 <div class="final-price">
                                     <p>
-                                        جمع کل با احتساب هزینه ارسال : 4,829,000 تومان
+                                        جمع کل با احتساب هزینه ارسال : 
+                                       <span class="split-number">
+                                           4829000 
+                                        </span>
+                                        تومان
                                     </p>
                                     <button id="pay-btn" class="btn btn-success">
                                         پرداخت
@@ -452,3 +489,116 @@
 {% block foot %}
 {% include "base/foot.html" %}
 {% endblock %}
+
+<script>
+    // $(".add-sub .add").click(function(){
+    //     var mobileID = $(this).attr('val');
+    //     var factorID = '{.{factor.id}}';
+
+    //     $.ajax (
+    //         {
+    //             method: 'POST',
+    //             url: '{.% url "market:addFactorItem" %}',
+    //             data: {
+    //                 factorID: factorID,
+    //                 mobileID: mobileID,
+    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    //                 action: 'post'
+    //             },
+    //             success: function (json) {
+    //                 $(".main-count[val='" + mobileID + "'").val(json.count)
+    //             },
+    //             error: function (json) {
+    //                 console.log(json.error)
+    //             }
+    //         }
+    //     )
+    // })
+    // $(".add-sub .sub").click(function(){
+    //     var mobileID = $(this).attr('val');
+    //     var factorID = '{.{factor.id}}';
+
+    //     $.ajax (
+    //         {
+    //             method: 'POST',
+    //             url: '{.% url "market:subFactorItem" %}',
+    //             data: {
+    //                 factorID: factorID,
+    //                 mobileID: mobileID,
+    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    //                 action: 'post'
+    //             },
+    //             success: function (json) {
+    //                 $(".main-count[val='" + mobileID + "'").val(json.count)
+    //             },
+    //             error: function (json) {
+    //                 console.log(json.error)
+    //             }
+    //         }
+    //     )
+    // })
+    // $(".delete-factor-item-btn").click(function () {
+    //     mobileID = $(this).attr('val');
+    //     factorID = '{.{factor.id}}';
+
+    //     $.ajax (
+    //         {
+    //             method: 'POST',
+    //             url: '{.% url "market:removeFactorItem" %}',
+    //             data: {
+    //                 factorID: factorID,
+    //                 mobileID: mobileID,
+    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    //                 action: 'post'
+    //             },
+    //             success: function (json) {
+    //                 $(".card-product-detail-item[val='" + mobileID + "'").remove();
+    //                  if (factor.item.count == 0)
+    //                  {
+    //                      $(".submit-order").prop('disabled', true);
+    //                  }
+    //             },
+    //             error: function (json) {
+    //                 console.log(json.error)
+    //             }
+    //         }
+    //     )
+    // })
+    $("input[type=radio][name=postradio]").on('change', function () {
+        console.log('hey')
+                    $(".factor-post-price").html('<span class="split-number">' +
+                        12000
+                                                        </span>
+                                                        تومان
+                                                        );
+                    var totalPrice = parseInt(12000) + parseInt(4800000);
+                    $(".factor-total-price").html(totalPrice);
+    //     factorID = '{.{factor.id}}';
+
+    //     $.ajax (
+    //         {
+    //             method: 'POST',
+    //             url: '{.% url "market:changePostPriceFactorItem" %}',
+    //             data: {
+    //                 factorID: factorID,
+    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    //                 action: 'post'
+    //             },
+    //             success: function (json) {
+    //                 $(".factor-post-price").html('<span class="split-number">' +
+    //                      json.postPrice
+    //                  );
+    //                 var totalPrice = parseInt(json.postPrice) + parseInt($(".factor-items-price").val())
+    //                 $(".factor-post-price").html('<span class="split-number">' +
+    //                      totalPrice
+    //                  );
+    //                 $(".split-number").digits();
+    //             },
+    //             error: function (json) {
+    //                 console.log(json.error)
+    //             }
+    //         }
+    //     )
+    })
+        
+</script>

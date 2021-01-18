@@ -55,14 +55,12 @@
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 text-center">
-                    <form action="">
-                        <div class="search-bar">
-                            <input type="text" class="form-control" name="searchbar" placeholder="جستجو ...">
-                            <button class="btn btn-primary searchbtn">
-                                <i class="fal fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" class="form-control" name="searchbar" placeholder="جستجو ...">
+                        <button class="btn btn-primary searchbtn">
+                            <i class="fal fa-search"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-6 text-center">
                     <div class="account">
@@ -99,7 +97,7 @@
                     {% if request.user.is_authenticated %}
                         <a href="{% url 'market:card' %}" class="cartbox btn btn-primary">
                             <i class="fas fa-shopping-cart"></i>
-                            <span> سبد خرید - </span> <span id="total-price"> 3,290,000 </span> <span> تومان </span>
+                            <span> سبد خرید - </span> <span class="split-number" id="total-price"> 0 </span> <span> تومان </span>
                         </a>
                     {% else %}
                         <a href="" class="btn btn-primary cartbox"  data-toggle="modal" data-target="#login-register-modal">
@@ -135,8 +133,54 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'market:contact-us' %}">تماس با ما</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'market:rules' %}">قوانین و ضوابط</a>
+                    </li>
                 </ul>
             </div>
         </nav>
     </div>
 </menu>
+
+<script>
+    // $(document).ready(function (){
+        // $.ajax (
+        //     {
+        //         method: 'POST',
+        //         url: '{.% url "market:SSSSS" %.}',
+        //         data: {
+        //             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        //             action: 'post'
+        //         },
+        //         success: function(json) {
+        //             $("#total-price").val() = json.totalPrice;
+        //         },
+        //         error: function(json) {
+        //             console.log(json.error)
+        //         }
+        //     }
+        // )
+    // })
+
+    // $(".searchbtn").click(function (){
+    //     var searchText = $("#search-input").val();
+
+    //     $.ajax (
+    //         {
+    //             method: 'POST',
+    //             url: '{.% url "market:SSSSS" %.}',
+    //             data: {
+    //                 searchText: searchText,
+    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    //                 action: 'post'
+    //             },
+    //             success: function(json) {
+    //                 console.log(json)
+    //             },
+    //             error: function(json) {
+    //                 console.log(json.error)
+    //             }
+    //         }
+    //     )
+    // })
+</script>

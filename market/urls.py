@@ -5,9 +5,9 @@ app_name = 'market'
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('products/', views.products, name="products"),
+    # path('products/', views.products, name="products"),
     path('products/mobile', views.mobile, name="mobile"),
-    path('products/tablet', views.tablet, name="tablet"),
+    # path('products/tablet', views.tablet, name="tablet"),
 
     path('products/mobile/<slug:Slug>', views.product, name="product"),
     path('products/rate/mobile/', views.rate, name="Rate"),
@@ -33,10 +33,17 @@ urlpatterns = [
     path('dashboard/seen/message', views.changeMessageStatus, name="changeMessageStatus"),
 
     path('dashboard/comments', views.comments, name="comments"),
+
     path('compare/', views.compare, name="compare"),
+    path('compare/mobiles-by-brand', views.findMobileByBrand, name="findMobileByBrand"),
+    path('compare/add-to-compare', views.addToCompare, name="addToCompare"),
+    path('compare/do-compare', views.doCompare, name="doCompare"),
+
     path('contact-us/', views.contactUs, name="contact-us"),
+    path('rules/', views.rules, name="rules"),
     path('login/', views.loginPage, name='login'),
 
+    path('last-comments/', views.lastComments, name="lastComments"),
 
     path('loginRequest/', views.loginRequest, name='loginRequest'),
     path('logout/', views.logoutRequest, name='logoutRequest')

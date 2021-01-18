@@ -30,8 +30,8 @@ def index(request):
     }
     return render(request, 'market/index.html', context)
 
-def products(request):
-    return render(request, 'market/products.html')
+# def products(request):
+#     return render(request, 'market/products.html')
 
 def mobile(request):
     Mobiles = Mobile.objects.filter(publish = True)
@@ -41,11 +41,10 @@ def mobile(request):
     }
     return render(request, 'market/products-mobile.html', context)
 
-def tablet(request):
-    return render(request, 'market/products-tablet.html')
+# def tablet(request):
+#     return render(request, 'market/products-tablet.html')
 
 def product(request, Slug):
-    #'samsung-galaxy-z-fold2-5g-dual-sim-256gb-ram-12gb-mobile-phone'
     thisMobile = Mobile.objects.get(slug = Slug)
     if request.user.is_authenticated:
         favorite = False
@@ -498,51 +497,200 @@ def comments(request):
     return render(request, 'account/comments.html')
 
 def compare(request):
-    # userID = request.user.id
 
-    # compareList = Compare.objects.get(FK_User = userID)
+    brands = []
 
-    # mobiles = compareList.mobiles
+    mobiles = Mobile.objects.all()
 
-    # context = {
-    #     'mobiles': mobiles
-    # }
+    for mobile in mobiles:
+        
+        if len(brands) == 0:
+            brands.append(mobile.brand)
+        else: 
+            find = False
+            brandslen = len(brands)
+            iteration = 0
+            for brand in brands:
+                iteration += 1
+                if brand == mobile.brand:
+                    find = True
+                elif find == False and iteration == brandslen:
+                    brands.append(mobile.brand)
+
+    context = {
+        'brands': brands
+    }
     
-    return render(request, 'market/compare.html')
+    return render(request, 'market/compare.html', context)
+
+def findMobileByBrand(request):
+    res = {}
+
+    if request.method == 'POST':
+        try:
+            brand = request.POST['brand']
+        except MultiValueDictKeyError:
+            brand = ''
+
+        try:
+            thisBrandMobiles = Mobile.objects.filter(brand = brand)
+            if thisBrandMobiles is None:
+                res['error'] = 'محصولی با این برند ثبت نشده است!'
+                res['status'] = False
+                return JsonResponse(res)
+            thisBrandMobilesList = []
+            for mobile in thisBrandMobiles:
+                thisBrandMobilesList.append({mobile.id: mobile.title})
+            res['thisBrandMobiles'] = thisBrandMobilesList
+            res['status'] = True
+            return JsonResponse(res)
+
+        except Exception as e:
+            res['error'] = str(e)
+            res['status'] = False
+            return JsonResponse(res)
 
 def addToCompare(request):
     res = {}
 
-    # if request.user.is_authenticated:
-    #     if request.method == 'POST':
+    if request.method == 'POST':
 
-    #         try:
-    #             mobileID = request.POST['mobileID']
-    #         except MultiValueDictKeyError:
-    #             mobileID = ''
+        try:
+            mobileID = request.POST['mobileID']
+        except MultiValueDictKeyError:
+            mobileID = ''
 
-    #         userID = request.user.id
+        try:
+            mobile = Mobile.objects.get(id = mobileID)
+            if mobile is not None:
+                res['id'] = mobile.id
+                res['title'] = mobile.title
+                res['slug'] = mobile.slug
+                res['image'] = mobile.index_image.url
+                res['status']= True
+                return JsonResponse(res)
+            else:
+                res['error']= 'این محصول وجود ندارد!'
+                res['status']= False
+                return JsonResponse(res)
+        except Exception as e:
+            res['error']= str(e)
+            res['status']= False
+            return JsonResponse(res)
 
-    #         thisCompareList = Compare.objects.get(FK_User = userID)
+def doCompare(request):
+    res = {}
+    finalList1 = []
+    finalList2 = []
 
-    #         try:
-    #             if thisCompareList in not None:
-    #                 thisCompareList.mobiles.append(mobileID)
-    #                 res['status']= True
-    #                 return JsonResponse(res)
-    #             else:
-    #                 thisCompareList.mobiles = [mobileID,]
-    #                 res['status']= True
-    #                 return JsonResponse(res)
-    #         except Exception as e:
-    #             res['status']= False
-    #             return JsonResponse(res)
+    if request.method == 'POST':
+        try:
+            mobid1 = request.POST['mobileid1']
+        except MultiValueDictKeyError:
+            mobid1 = request.POST['mobileid1']
 
-    # else:
-    #     return redirect ('login')
+        try:
+            mobid2 = request.POST['mobileid2']
+        except MultiValueDictKeyError:
+            mobid2 = request.POST['mobileid2']
+
+        mobile1 = Mobile.objects.get(id = mobid1)
+        mobile2 = Mobile.objects.get(id = mobid2)
+        res['title1'] = mobile1.title
+        res['title2'] = mobile2.title
+        res['slug1'] = mobile1.slug
+        res['slug2'] = mobile2.slug
+        res['image1'] = mobile1.index_image.url
+        res['image2'] = mobile2.index_image.url
+        res['price1'] = mobile1.price
+        res['price2'] = mobile2.price
+        res['inventory1'] = mobile1.inventory
+        res['inventory2'] = mobile2.inventory
+
+        for item in mobile1.technical_details:
+            for key, value in item.items():
+                jsonvar1 = {key: {}}
+                arraym = []
+                for x, y in value.items():
+                    arraym.append({x: [y]})
+                jsonvar1[key] = arraym
+                finalList1.append(jsonvar1)
+
+        for item in mobile2.technical_details:
+            for key, value in item.items():
+                jsonvar1 = {key: {}}
+                arraym = []
+                for x, y in value.items():
+                    arraym.append({x: [y]})
+                jsonvar1[key] = arraym
+                finalList2.append(jsonvar1)
+
+        for tarikhtarahijs1 in finalList1:
+            found = False
+            for tarikhtarahi1, miladishamsilist1 in tarikhtarahijs1.items():
+                iteration = 0
+                finalList2len = len(finalList2)
+                for tarikhtarahijs2 in finalList2:
+                    iteration += 1
+                    for tarikhtarahi2, miladishamsilist2 in tarikhtarahijs2.items():
+                        if tarikhtarahi2 == tarikhtarahi1:
+                            found = True
+                            for miladishamsijs1 in miladishamsilist1:
+                                find = False
+                                for miladishamsi1, shahrivarnovemberlist1 in miladishamsijs1.items():
+                                    iterate = 0
+                                    miladishamsilist2len = len(miladishamsilist2)
+                                    for miladishamsijs2 in miladishamsilist2:
+                                        iterate += 1
+                                        for miladishamsi2, shahrivarnovemberlist2 in miladishamsijs2.items():
+                                            if miladishamsi1 == miladishamsi2:
+                                                for shahrivarnovember2 in shahrivarnovemberlist2:
+                                                    shahrivarnovemberlist1.append(shahrivarnovember2)
+                                                    find = True
+                                            elif iterate == miladishamsilist2len and find == False:
+                                                shahrivarnovemberlist1.append("------")
+                        elif iteration == finalList2len and found == False:
+                            for miladishamsijs1 in miladishamsilist1:
+                                for miladishamsi1, shahrivarnovemberlist1 in miladishamsijs1.items():
+                                    shahrivarnovemberlist1.append("------")
+
+        for tarikhtarahijs2 in finalList2:
+            sfound = False
+            for tarikhtarahi2, miladishamsilist2 in tarikhtarahijs2.items():
+                siteration = 0
+                finalList1len = len(finalList1)
+                for tarikhtarahijs1 in finalList1:
+                    siteration += 1
+                    for tarikhtarahi1, miladishamsilist1 in tarikhtarahijs1.items():
+                        if tarikhtarahi2 == tarikhtarahi1:
+                            sfound = True
+                            for miladishamsijs2 in miladishamsilist2:
+                                sfind = False
+                                for miladishamsi2, shahrivarnovemberlist2 in miladishamsijs2.items():
+                                    siterate = 0
+                                    miladishamsilist1len = len(miladishamsilist1)
+                                    for miladishamsijs1 in miladishamsilist1:
+                                        siterate += 1
+                                        for miladishamsi1, shahrivarnovemberlist1 in miladishamsijs1.items():
+                                            if miladishamsi2 == miladishamsi1:
+                                                sfind = True
+                                            elif siterate == miladishamsilist1len and sfind == False:
+                                                shahrivarnovemberlist2.insert(0, '------')
+                                                miladishamsilist1.append({miladishamsi2: shahrivarnovemberlist2})
+                        elif siteration == finalList1len and sfound == False:
+                            for miladishamsijs2 in miladishamsilist2:
+                                for miladishamsi2, shahrivarnovemberlist2 in miladishamsijs2.items():
+                                    shahrivarnovemberlist2.insert(0, '------')
+                            finalList1.append({tarikhtarahi2: miladishamsilist2})
+        res['compareList'] = finalList1
+        return JsonResponse(res)
+
 
 def contactUs(request):
     return render(request, 'market/contact-us.html')
+
+def rules(request):
+    return render(request, 'market/rules.html')
 
 def loginRequest(request):
     resp = {}
@@ -563,3 +711,16 @@ def loginRequest(request):
 def logoutRequest(request):
     logout(request)
     return HttpResponseRedirect(reverse('market:index'))
+
+def lastComments(request):
+    res = {}
+    if request.method == 'POST':
+        comments = Comment.objects.order_by('-id')[:3]
+
+        commentsList = []
+        for comment in comments:
+            commentsJS = {}
+            commentsJS[comment.FK_User.username] = comment.description
+            commentsList.append(commentsJS)
+        res['comments'] = commentsList
+        return JsonResponse(res)

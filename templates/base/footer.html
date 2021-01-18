@@ -16,11 +16,11 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-4">
                         <div class="useful-links">
                             <h6>لینک های مفید</h6>
-                            <a href="#">لینک1</a>
-                            <a href="#">لینک2</a>
-                            <a href="#">لینک3</a>
-                            <a href="#">لینک4</a>
-                            <a href="#">لینک5</a>
+                            <a href="{{BASE_URL}}/">خانه</a>
+                            <a href="{% url 'blog:blog_index' %}">وبلاگ</a>
+                            <a href="{% url 'market:compare' %}">مقایسه</a>
+                            <a href="{% url 'market:rules' %}">قوانین و ضوابط</a>
+                            <a href="{% url 'market:contact-us' %}">تماس با ما</a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-4">
@@ -49,7 +49,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-4">
                         <div class="last-comments">
                             <h6>آخرین نظرات</h6>
-                            <a href="#">
+                            <!-- <a href="#">
                                 <p class="comment-summary">
                                     <i class="fal fa-comment"></i>
                                     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم ...
@@ -78,7 +78,7 @@
                                     <i class="fas fa-user"></i>
                                     Username
                                 </p>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 social-network">
@@ -103,3 +103,70 @@
         </div>
     </div>
 </footer>
+
+<script>
+    $(document).ready(function () {
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:lastComments" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    for (var item of json.comments)
+                    {
+                        jQuery.each(item , function(key, val) {
+                            var summaryval = val.substring(0, 50);
+                            $(".last-comments").append('' +
+                            '<p class="comment-summary">' +
+                                '<i class="fal fa-comment"></i>' +
+                                    val + '...' +
+                            '</p>' +
+                            '<p class="comment-user">' +
+                                '<i class="fas fa-user"></i>' +
+                                key +
+                            '</p>'
+                            )
+                        })
+                    }
+                },
+                error: function (json) {
+                    console.log(json)
+                }
+            }
+        )
+        // $.ajax (
+        //     {
+        //         method: 'POST',
+                // url: '{.% url "market:lastBlogPosts" %.}',
+        //         data: {
+        //             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        //             action: 'post'
+        //         },
+        //         success: function (json) {
+        //             for (var item of json.comments)
+        //             {
+        //                 jQuery.each(item , function(key, val) {
+        //                     var summaryval = val.substring(0, 50);
+        //                     $(".last-comments").append('' +
+        //                     '<p class="comment-summary">' +
+        //                         '<i class="fal fa-comment"></i>' +
+        //                             val + '...' +
+        //                     '</p>' +
+        //                     '<p class="comment-user">' +
+        //                         '<i class="fas fa-user"></i>' +
+        //                         key +
+        //                     '</p>'
+        //                     )
+        //                 })
+        //             }
+        //         },
+        //         error: function (json) {
+        //             console.log(json)
+        //         }
+        //     }
+        // )
+    })
+</script>

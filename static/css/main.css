@@ -252,6 +252,8 @@ menu .navbar {
   position: absolute;
   top: 50%;
   left: 50%;
+  font-size: 27px;
+  font-weight: bold;
   transform: translate(-50%, -50%);
   color: #fff;
 }
@@ -287,7 +289,7 @@ section.main-brands {
 section.main-brands .main-brand {
   display: flex;
   width: 100%;
-  background-color: #000;
+  background: linear-gradient(180deg, #3054a7, #0f2454, #3054a7);
   height: 150px;
   align-items: center;
   justify-content: center;
@@ -371,7 +373,7 @@ section.blog-banner-section {
 }
 
 section.blog-banner-section .blog-banner {
-  background-color: #000;
+  background: linear-gradient(180deg, #3054a7, #0f2454, #3054a7);
   padding: 150px 100px;
   color: #fff;
   font-size: 30px;
@@ -384,7 +386,7 @@ section.social-links-section {
 }
 
 section.social-links-section .social-link {
-  background-color: #000;
+  background: linear-gradient(180deg, #3054a7, #0f2454, #3054a7);
   padding: 100px 100px;
   color: #fff;
   font-size: 30px;
@@ -1399,14 +1401,64 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   text-align: right;
 }
 
-.compare-items-card {
+.add-compare-item-section {
   position: relative;
+}
+
+.add-compare-item-section .selected-mobile-image {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.add-compare-item-section .selected-mobile-image img {
+  width: 100%;
+}
+
+.add-compare-item-section .compare-item-image img {
+  width: 60%;
+}
+
+.add-compare-item-section .compare-item-image i {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.add-compare-item-section .deactive img {
+  filter: grayscale(100%) opacity(0.5);
+}
+
+.add-compare-item-section .add-compare-item i {
+  vertical-align: middle;
+}
+
+.add-compare-item-section #do-compare i {
+  vertical-align: middle;
+}
+
+.compare-items-card {
+  display: none;
   padding-bottom: 50px;
+}
+
+.compare-items-card .back-to-add-to-compare-item-section i {
+  vertical-align: middle;
 }
 
 .compare-items-card table.compare-table td, .compare-items-card table.compare-table th {
   padding: 15px 0;
   vertical-align: middle;
+}
+
+.compare-items-card table.compare-table td i.fa-check, .compare-items-card table.compare-table th i.fa-check {
+  color: #5ac25a;
+}
+
+.compare-items-card table.compare-table td i.fa-times, .compare-items-card table.compare-table th i.fa-times {
+  color: #bb0000;
 }
 
 .compare-items-card table.compare-table tr th {
@@ -1419,20 +1471,6 @@ section.product-section .product-main .product-main-filter .filter-item.active {
 
 .compare-items-card table.compare-table tr img {
   width: 50%;
-}
-
-.add-compare-item {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
-}
-
-.add-compare-item i {
-  vertical-align: middle;
 }
 
 .filter-products-section {
@@ -1802,6 +1840,10 @@ input.empty {
   padding: 20px 190px;
 }
 
+.rules {
+  line-height: 2.3;
+}
+
 .color-square.black-color-square {
   background-color: black;
 }
@@ -1881,6 +1923,9 @@ input.empty {
   .banner-slider {
     height: 230px;
   }
+  .banner-slider .slide .text-and-link {
+    font-size: 19px;
+  }
   section.main-brands .main-brand {
     height: 100px;
   }
@@ -1917,6 +1962,15 @@ input.empty {
   .login .whole-card {
     margin: 20px 120px;
   }
+  .add-compare-item-section {
+    font-size: 14px;
+  }
+  .add-compare-item-section select {
+    font-size: 14px;
+  }
+  .add-compare-item-section .add-compare-item-row {
+    margin-top: 20px;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -1940,6 +1994,10 @@ input.empty {
   }
   .banner-slider {
     height: 170px;
+  }
+  .banner-slider .slide .text-and-link {
+    font-size: 15px;
+    font-weight: 600;
   }
   section.main-brands .main-brand {
     height: 80px;
@@ -1978,6 +2036,15 @@ input.empty {
   .login .whole-card {
     margin: 20px 40px;
   }
+  .add-compare-item-section {
+    font-size: 13px;
+  }
+  .add-compare-item-section select, .add-compare-item-section button {
+    font-size: 13px;
+  }
+  .add-compare-item-section .add-compare-item-row {
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 575px) {
@@ -2001,6 +2068,10 @@ input.empty {
   }
   .banner-slider {
     height: 150px;
+  }
+  .banner-slider .slide .text-and-link {
+    font-size: 14px;
+    font-weight: 500;
   }
   section.main-brands .main-brand {
     height: 65px;
@@ -2053,6 +2124,18 @@ input.empty {
   }
   .login .whole-card {
     margin: 20px 10px;
+  }
+  .add-compare-item-section {
+    font-size: 13px;
+  }
+  .add-compare-item-section select, .add-compare-item-section button {
+    font-size: 13px;
+  }
+  .add-compare-item-section .add-compare-item-row, .add-compare-item-section .mobile-select-row {
+    margin-top: 20px;
+  }
+  .compare-items-card {
+    font-size: 13px;
   }
 }
 

@@ -213,6 +213,25 @@ class Mobile (models.Model):
                         self.points.append({'userID': userID, 'productRate': productRate},)
                         self.save()
 
+    # @property
+    def inventory_by_color(self):
+        inventory = 0
+        for color in self.colors:
+            for _, value in color.items():
+                for __, invent in value.items():
+                    inventory += invent
+
+    #     return inventory
+
+    # def save(self, *args, **kwargs):
+    #     inventory = 0
+    #     for color in self.colors:
+    #         for _, value in color.items():
+    #             for __, invent in value.items():
+    #                 inventory += invent
+    #     self.inventory = inventory
+    #     super(Mobile, self).save(*args, **kwargs)
+
     # def get_absolute_url(self):
     #     return reverse("nakhll_market:ProductsDetail", kwargs={
     #         'shop_slug': self.FK_Shop.Slug,
@@ -258,6 +277,10 @@ class Comment(models.Model):
         for _ in self.likes:
             pointCount += 1
         return pointCount
+
+    def summary(self):
+        return str(self.description)[:50] + '...'
+
 
 # --------------------------------------------------------------------------------------------------------------------------------------
 
