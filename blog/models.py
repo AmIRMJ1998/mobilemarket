@@ -3,6 +3,8 @@ from django.db.models import JSONField
 from django.shortcuts import reverse
 from datetime import datetime
 from django.db import models
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 import os, jdatetime
 
 # --------------------------------------------------------------------------------------------------------------------------------------
@@ -11,7 +13,8 @@ import os, jdatetime
 class Post (models.Model):
     title = models.CharField(verbose_name = 'عنوان', max_length = 255)
     slug = models.SlugField(verbose_name = 'شناسه', unique = True)
-    text = models.TextField(verbose_name = 'متن')
+    # text = models.TextField(verbose_name = 'متن')
+    description = RichTextUploadingField(verbose_name = 'متن', blank = True, null = True)
     index_image = models.ImageField(verbose_name = 'عکس اصلی', upload_to = 'media/images/blog/', null = True, blank = True)
     slider_image = models.ImageField(verbose_name = 'عکس اسلایدر', upload_to = 'media/images/blog/', null = True, blank = True)
     points = JSONField(verbose_name = 'امتیازات', null = True, blank = True)

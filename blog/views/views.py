@@ -18,7 +18,7 @@ def blogPost(request, slug):
     # get this post
     this_post = get_object_or_404(Post, slug = slug, publish = True)
     comments = Comment.objects.filter(id__in = this_post.comments)
-    print(comments.count)
+    # print(this_post.get_total_point())
 
     content = {
         "ThisPost": this_post,

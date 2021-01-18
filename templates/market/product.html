@@ -1280,9 +1280,9 @@
 
 <script>
     $(".product-rate input").on('change', function () {
-        productRate = productRateFnc();
+        var productRate = productRateFnc();
         $(".product-rate").find('i').removeClass('active');
-        mobileID = '{{mobile.id}}';
+        var mobileID = '{{mobile.id}}';
         $.ajax (
             {
                 method: 'POST',
@@ -1320,7 +1320,7 @@
     })
 
     $(".add-to-favorite i").click(function () {
-        mobileID = '{{mobile.id}}';
+        var mobileID = '{{mobile.id}}';
         $.ajax (
             {
                 method: 'POST',
@@ -1375,7 +1375,7 @@
     $(document).on("click", ".send-comment", function () {
         var commentID = $(this).attr('val');
         var commentText;
-        mobileID = '{{mobile.id}}';
+        var mobileID = '{{mobile.id}}';
         if (commentID == '0')
         {
             if ($("#product-comment").val().length != 0)

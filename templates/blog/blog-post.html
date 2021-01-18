@@ -23,8 +23,83 @@
                                 <div class="d-flex justify-content-between post-first-row">
                                     <div class="post-title">
                                         <h4>{{ThisPost.title}}</h4>
+                                        <!-- {{ThisPost.get_total_points}.} -->
                                     </div>
-                                    <div class="post-rate">
+                                    {% if request.user.is_authenticated %}
+                                        <div class="post-rate">
+                                            <div class="rating">
+                                                <input id="check-5" type="radio" name="rateradio" hidden >
+                                                <label for="check-5">
+                                                    {% if ThisPost.get_total_points >= 4.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
+                                                </label>
+                                                <input id="check-4" type="radio" name="rateradio" hidden>
+                                                <label for="check-4">
+                                                    {% if ThisPost.get_total_points >= 3.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
+                                                </label>
+                                                <input id="check-3" type="radio" name="rateradio" hidden>
+                                                <label for="check-3">
+                                                    {% if ThisPost.get_total_points >= 2.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
+                                                </label>
+                                                <input id="check-2" type="radio" name="rateradio" hidden>
+                                                <label for="check-2">
+                                                    {% if ThisPost.get_total_points >= 1.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
+                                                </label>
+                                                <input id="check-1" type="radio" name="rateradio" hidden>
+                                                <label for="check-1">
+                                                    {% if ThisPost.get_total_points >= 0.5 %}
+                                                        <i class="fas fa-star active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% endif %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="post-rate">
+                                            {% if ThisPost.get_total_points >= 4.5 %}
+                                            <i class="fas fa-star active"></i>
+                                            {% else %}
+                                            <i class="fas fa-star"></i>
+                                            {% endif %}
+                                            {% if ThisPost.get_total_points >= 3.5 %}
+                                            <i class="fas fa-star active"></i>
+                                            {% else %}
+                                            <i class="fas fa-star"></i>
+                                            {% endif %}
+                                            {% if ThisPost.get_total_points >= 2.5 %}
+                                            <i class="fas fa-star active"></i>
+                                            {% else %}
+                                            <i class="fas fa-star"></i>
+                                            {% endif %}
+                                            {% if ThisPost.get_total_points >= 1.5 %}
+                                            <i class="fas fa-star active"></i>
+                                            {% else %}
+                                            <i class="fas fa-star"></i>
+                                            {% endif %}
+                                            {% if ThisPost.get_total_points >= 0.5 %}
+                                            <i class="fas fa-star active"></i>
+                                            {% else %}
+                                            <i class="fas fa-star"></i>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    <!-- <div class="post-rate">
                                         <div class="rating">
                                             <input id="check-5" type="radio" name="rateradio" hidden >
                                             <label for="check-5">
@@ -47,7 +122,7 @@
                                                 <i class="fas fa-star"></i>
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -56,7 +131,7 @@
                                 <div class="post-content-img">
                                     <img src="{{ThisPost.slider_image.url}}" alt="عکس پست وبلاگ">
                                 </div>
-                                {{ThisPost.text}}
+                                {{ThisPost.description | safe}}
                             </div>
                             <div class="post-date text-left">
                                 {{ThisPost.publishdate|to_jalali_month}}
@@ -142,3 +217,47 @@
 
 </body>
 </html>
+
+<script>
+    $(".post-rate input").on('change', function () {
+        var postRate = productRateFnc();
+        $(".product-rate").find('i').removeClass('active');
+        var postID = '{{ThisPost.id}}';
+        console.log(postID, postRate);
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "blog:add_point_in_post" %}',
+                data: {
+                    point: postRate,
+                    id: postID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    if (json.status)
+                    {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'موفق',
+                            text: 'رای شما با موفقیت ثبت گردید',
+                        })
+                    }
+                    else
+                    {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ناموفق',
+                            text: 'رای شما با مشکل مواجه گردید',
+                        })
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error);
+                }
+            }
+        )
+    })
+    
+</script>
