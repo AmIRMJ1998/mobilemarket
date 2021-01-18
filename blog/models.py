@@ -58,8 +58,8 @@ class Post (models.Model):
     def get_total_points(self):
         sum_points = 0.0
         for item in self.points['list']:
-            sum_points += item.point
-        return sum_points
+            sum_points += int(item['point'])
+        return sum_points / len(self.points['list'])
 
     def get_publishdate_to_jalali(self):
         date_format = "%Y-%m-%d"
