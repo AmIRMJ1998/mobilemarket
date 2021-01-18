@@ -31,8 +31,8 @@ class ContactAdmin(admin.ModelAdmin):
 # Comment Admin Section
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('FK_User', 'title', 'datecreate')
-    search_fields = ['title', 'description', 'FK_User']
+    list_display = ('FK_User', 'datecreate')
+    search_fields = ['description', 'FK_User']
     ordering = ['id', 'datecreate']
 # Message Admin Section
 @admin.register(Message)

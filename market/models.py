@@ -239,14 +239,13 @@ class Mobile (models.Model):
 # Comment (نظر) Model
 class Comment(models.Model):
     FK_User = models.ForeignKey(User, verbose_name = 'کاربر', related_name = 'user_comment', on_delete = models.SET_NULL, null = True)
-    title = models.CharField(verbose_name = 'عنوان', max_length = 225, null=True, blank=True)
     description = models.TextField(verbose_name = 'توضیحات')
-    likes = ArrayField(models.BigIntegerField(verbose_name='لایک'), verbose_name = 'لایک ها', null = True, blank = True)
-    replay = ArrayField(models.BigIntegerField(verbose_name='لایک'), verbose_name = 'ریپلای ها', null = True, blank = True)
+    likes = ArrayField(models.BigIntegerField(verbose_name ='لایک'), verbose_name = 'لایک ها', null = True, blank = True)
+    replay = ArrayField(models.BigIntegerField(verbose_name ='لایک'), verbose_name = 'ریپلای ها', null = True, blank = True)
     datecreate = jmodels.jDateTimeField(verbose_name = 'تاریخ ثبت', auto_now_add = True)
 
     def __str__(self):
-        return "{}".format(self.title)
+        return "{} : {}".format(self.FK_User, self.datecreate)
 
     class Meta:
         ordering = ('id', 'datecreate')   
@@ -354,6 +353,27 @@ class Factor(models.Model):
 
     def __str__(self):
         return "{} ({})".format(self.number, self.FK_User)
+
+
+    # # add item in factor function
+    # def add_item(self, this_mobile):
+    #     if self.items is None:
+    #         data = {}
+    #         data['items'] = []
+    #         this_item = {'id': user_id, 'title': this_point, 'price': , 'total_price': , 'color': }
+    #         data['list'].append(this_point) 
+    #         self.points = data
+    #         self.save()
+    #     else:
+    #         status = True
+    #         for item in self.points['list']:
+    #             if item.user_id == user_id:
+    #                 item.point = this_point
+    #                 status = False
+    #         if status:
+    #             this_point = {'user_id': user_id, 'point': this_point}
+    #             self.points['list'].append(this_point)
+    #         self.save()
 
     class Meta:
         ordering = ('id', 'orderdate')
