@@ -132,15 +132,13 @@ class User (AbstractBaseUser):
         return ' '.join([self.first_name, self.last_name])
 
     # address function
-    def user_address(self, this_state = None, this_bigcity = None, this_city = None, this_zipcode = None, this_address = None):
+    def user_address(self, this_state = None, this_city = None, this_zipcode = None, this_address = None):
         if self.address is None:
-            self.address = {'state' : this_state, 'bigcity' : this_bigcity, 'city' : this_city, 'zipcode' : this_zipcode, 'address' : this_address}
+            self.address = {'state' : this_state, 'city' : this_city, 'zipcode' : this_zipcode, 'address' : this_address}
             self.save()
         else:
             if this_state is not None:
                 self.address['state'] = this_state
-            if this_bigcity is not None:
-                self.address['bigcity'] = this_bigcity
             if this_city is not None:
                 self.address['city'] = this_city
             if this_zipcode is not None:
@@ -220,6 +218,10 @@ class Mobile (models.Model):
             for _, value in color.items():
                 for __, invent in value.items():
                     inventory += invent
+
+
+    def get_total_price(self, this_count):
+        return int(self.price) * int(this_count)
 
     #     return inventory
 
@@ -359,8 +361,8 @@ class Factor(models.Model):
     FK_User = models.ForeignKey(User, verbose_name = 'کاربر', on_delete = models.SET_NULL, related_name = 'user_factor', null = True)
     address = JSONField(verbose_name = 'آدرس', blank = True, null = True)
     items = JSONField(verbose_name = 'محصولات', blank = True, null = True)
-    post_price = models.CharField(verbose_name = 'هزینه پست', max_length = 15)
-    total_price = models.CharField(verbose_name = 'هزینه کل', max_length = 15)
+    post_price = models.CharField(verbose_name = 'هزینه پست', max_length = 15, default = '0') 
+    total_price = models.CharField(verbose_name = 'هزینه کل', max_length = 15, default = '0')
     PAYMENT_STATUS = (
         (True,'پرداخت شد'),
         (False,'پرداخت نشده'),
@@ -368,35 +370,48 @@ class Factor(models.Model):
     payment_status = models.BooleanField(verbose_name = 'وضعیت پرداخت', choices = PAYMENT_STATUS, default = False)
     orderdate = models.DateTimeField(verbose_name = 'تاریخ و زمان ثبت', auto_now_add = True)
     FACTOR_STATUS = (
-        (0,'فاکتور در حال آماده سازی'),
-        (1,'سفارش آماده است'),
-        (2,'سفارش ارسال شده است'),
+        (0,'فاکتور پرداخت نشده است'),
+        (1,'فاکتور در حال آماده سازی'),
+        (2,'سفارش آماده است'),
+        (3,'سفارش ارسال شده است'),
+        (4,'فاکتور لغو شده است'),
     )
     status = models.PositiveSmallIntegerField(verbose_name = 'وضعیت فاکتور', choices = FACTOR_STATUS, default = 0)
 
     def __str__(self):
         return "{} ({})".format(self.number, self.FK_User)
 
+    # add item in factor function
+    def add_item(self, this_mobile, this_count, this_color, this_color_value):
+        if self.items is None:
+            data = {}
+            data['items'] = []
+            this_item = {'id': this_mobile.id, 'title': this_mobile.title, 'price': this_mobile.price, 'total_price': this_mobile.get_total_price(this_count), 'count': this_count, 'color': this_color, 'color_value': this_color_value}
+            data['items'].append(this_item) 
+            self.items = data
+            self.save()
+        else:
+            status = True
+            for item in self.items['items']:
+                if (item.id == this_mobile.id) and (item.color == this_mobile.this_color):
+                    item.count = this_count
+                    status = False
+            if status:
+                this_item = {'id': this_mobile.id, 'title': this_mobile.title, 'price': this_mobile.price, 'total_price': this_mobile.get_total_price(this_count), 'count': this_count, 'color': this_color, 'color_value': this_color_value}
+                self.items['items'].append(this_item) 
+                self.items = data
+            self.save()
 
-    # # add item in factor function
-    # def add_item(self, this_mobile):
-    #     if self.items is None:
-    #         data = {}
-    #         data['items'] = []
-    #         this_item = {'id': user_id, 'title': this_point, 'price': , 'total_price': , 'color': }
-    #         data['list'].append(this_point) 
-    #         self.points = data
-    #         self.save()
-    #     else:
-    #         status = True
-    #         for item in self.points['list']:
-    #             if item.user_id == user_id:
-    #                 item.point = this_point
-    #                 status = False
-    #         if status:
-    #             this_point = {'user_id': user_id, 'point': this_point}
-    #             self.points['list'].append(this_point)
-    #         self.save()
+   # address function
+    def add_address(self, this_state, this_city, this_zipcode, this_address, this_phone, this_per_city_code, this_mobile):
+        self.address = {'state' : this_state, 'city' : this_city, 'zipcode' : this_zipcode, 'address' : this_address, 'phone' : this_phone, 'per_city_code' : this_per_city_code, 'mobile': this_mobile}
+        self.save()
+
+    def grt_total_price(self):
+        total_sum = 0
+        for item in self.items['items']:
+            total_sum += item.total_price
+        return total_sum
 
     class Meta:
         ordering = ('id', 'orderdate')

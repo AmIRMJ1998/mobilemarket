@@ -12,7 +12,7 @@ from django.contrib.postgres.fields import ArrayField
 import jdatetime
 import threading
 
-from .models import Slider, Mobile, User, Message, Comment
+from market.models import Slider, Mobile, User, Message, Comment
 
 
 # Create your views here
