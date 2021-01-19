@@ -32,13 +32,15 @@
                                 برند
                             </h5>
                             <div class="filter-checkbox filter-brand">
-                                <div>
-                                    <input id="samsung-brand" type="checkbox" name="brand-check">
-                                    <label for="samsung-brand">
-                                        سامسونگ | Samsung
-                                    </label>
-                                </div>
-                                <div>
+                                {% for item in MobileBrands %}
+                                    <div class="single-brand-filter">
+                                        <label for="brand-{{forloop.counter}}">
+                                            {{item}}
+                                        </label>
+                                        <input val="{{item}}" id="brand-{{forloop.counter}}" type="checkbox" name="brand-check">
+                                    </div>
+                                {% endfor %}
+                                <!-- <div>
                                     <input id="sony-brand" type="checkbox" name="brand-check">
                                     <label for="sony-brand">
                                         سونی | Sony
@@ -85,7 +87,7 @@
                                     <label for="lg-brand">
                                         ال جی | LG
                                     </label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="product-types filter-price filter-products">
@@ -104,14 +106,18 @@
                                 رنگ
                             </h5>
                             <div class="filter-checkbox filter-color">
-                                <div>
-                                    <input id="black-color" type="checkbox" name="color-check">
-                                    <label for="black-color">
-                                        مشکی
-                                        <div class="color-square black-color-square"></div>
-                                    </label>
-                                </div>
-                                <div>
+                                {% for item in MobilesColors%}
+                                    {% for key, value in item.items %}
+                                        <div>
+                                            <label for="color-{{forloop.parentloop.counter}}">
+                                                {{key}}
+                                                <div class="color-square" style="background-color: {{value}};"></div>
+                                            </label>
+                                            <input val="{{key}}" id="color-{{forloop.parentloop.counter}}" type="checkbox" name="color-check">
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                                <!-- <div>
                                     <input id="brown-color" type="checkbox" name="color-check">
                                     <label for="brown-color">
                                         قهوه ای
@@ -166,7 +172,7 @@
                                         بنفش
                                         <div class="color-square purple-color-square"></div>
                                     </label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="product-types filter-products">
@@ -205,13 +211,15 @@
                                 حافظه داخلی
                             </h5>
                             <div class="filter-checkbox filter-memory">
-                                <div>
-                                    <input id="gb-1-memory" type="checkbox" name="memory-check">
-                                    <label for="gb-1-memory">
-                                        1 گیگابایت و کمتر
-                                    </label>
-                                </div>
-                                <div>
+                                {% for item in MobileMemories%}
+                                    <div>
+                                        <label for="memory-{{forloop.counter}}">
+                                            {{item}}
+                                        </label>
+                                        <input val="{{item}}" id="memory-{{forloop.counter}}" type="checkbox" name="memory-check">
+                                    </div>
+                                {% endfor %}
+                                <!-- <div>
                                     <input id="gb-2-memory" type="checkbox" name="memory-check">
                                     <label for="gb-2-memory">
                                         2 گیگابایت
@@ -264,7 +272,7 @@
                                     <label for="gb-512-memory">
                                         512 گیگابایت و بیشتر
                                     </label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="product-types filter-products">
@@ -272,13 +280,16 @@
                                 حافظه RAM
                             </h5>
                             <div class="filter-checkbox filter-ram">
-                                <div>
-                                    <input id="gb-1-ram" type="checkbox" name="ram-check">
-                                    <label for="gb-1-ram">
-                                        1 گیگابایت و کمتر
-                                    </label>
-                                </div>
-                                <div>
+                                {% for item in MobileMemories%}
+                                    <div>
+                                        <label for="ram-{{forloop.counter}}">
+                                            {{item}}
+                                            <input val="{{item}}" id="ram-{{forloop.counter}}" type="checkbox" name="ram-check">
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                
+                                <!-- <div>
                                     <input id="gb-2-ram" type="checkbox" name="ram-check">
                                     <label for="gb-2-ram">
                                         2 گیگابایت
@@ -301,68 +312,7 @@
                                     <label for="gb-16-ram">
                                         16 گیگابایت و بیشتر
                                     </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-types filter-products">
-                            <h5>
-                                کیفیت دوربین
-                            </h5>
-                            <div class="filter-checkbox filter-camera">
-                                <div>
-                                    <input id="px-5-camera" type="checkbox" name="camera-check">
-                                    <label for="px-5-camera">
-                                        5 پیکسل و کمتر
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-8-camera" type="checkbox" name="camera-check">
-                                    <label for="px-8-camera">
-                                        8 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-12-camera" type="checkbox" name="camera-check">
-                                    <label for="px-12-camera">
-                                        12 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-13-camera" type="checkbox" name="camera-check">
-                                    <label for="px-13-camera">
-                                        13 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-16-camera" type="checkbox" name="camera-check">
-                                    <label for="px-16-camera">
-                                        16 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-20-camera" type="checkbox" name="camera-check">
-                                    <label for="px-20-camera">
-                                        20 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-24-camera" type="checkbox" name="camera-check">
-                                    <label for="px-24-camera">
-                                        24 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-40-camera" type="checkbox" name="camera-check">
-                                    <label for="px-40-camera">
-                                        40 پیکسل
-                                    </label>
-                                </div>
-                                <div>
-                                    <input id="px-no-camera" type="checkbox" name="camera-check">
-                                    <label for="px-no-camera">
-                                        فاقد دوربین
-                                    </label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="product-types filter-products">
@@ -380,37 +330,6 @@
                                     <input id="ios-os" type="checkbox" name="os-check">
                                     <label for="ios-os">
                                         ios
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-types filter-products">
-                            <h5>
-                                باتری قابل تعویض
-                            </h5>
-                            <div class="filter-changable-battery">
-                                <div>
-                                    <label>
-                                        <input id="both-change" type="radio" name="changable-battery-radio" checked>
-                                        <span>
-                                            هر دو
-                                        </span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input id="yes-change" type="radio" name="changable-battery-radio">
-                                        <span>
-                                            بله
-                                        </span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input id="no-change" type="radio" name="changable-battery-radio">
-                                        <span>
-                                            خیر
-                                        </span>
                                     </label>
                                 </div>
                             </div>
@@ -434,7 +353,7 @@
                                 <div class="product-main-filter">
                                     <p>مرتب سازی بر اساس :</p>
                                     <div val="favorite" class="filter-item active">محبوب ترین</div>
-                                    <div val="mostsell" class="filter-item">پرفروش ترین</div>
+                                    <div val="mostsell" class="filter-item">جدیدترین</div>
                                     <div val="mostexpensive" class="filter-item">گران ترین</div>
                                     <div val="cheapest" class="filter-item">ارزان ترین</div>
                                 </div>
@@ -506,6 +425,27 @@
                                     </div>
                                 {% endfor%}
                             </div>
+                            <div class="row justify-content-center mt-5">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        {% if Mobiles.has_previous %}
+                                            <li class="page-item"><a class="page-link" href="?page=1">اولی</a></li>
+                                            <li class="page-item"><a class="page-link" href="?page={{Mobiles.previous_page_number}}">قبلی</a></li>
+                                        {% endif %}
+                                        {% for num in Mobiles.paginator.page_range %}
+                                            {% if num == Mobiles.number %}
+                                                <li class="page-item"><a class="page-link" href="?page={{num}}"><strong>{{num}}</strong></a></li>
+                                            {% elif num > Mobiles.number|add:'-3' and num < Mobiles.number|add:'3' %}
+                                                <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if Mobiles.has_next %}
+                                            <li class="page-item"><a class="page-link" href="?page={{Mobiles.next_page_number}}">بعدی</a></li>
+                                            <li class="page-item"><a class="page-link" href="?page={{Mobiles.paginator.num_pages}}">آخری</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -524,6 +464,29 @@
     {% endblock %}
 
     <script>
+        $(document).ready(function () {
+            var minimumPrice = parseInt('{{minPrice}}');
+            var maximumPrice = parseInt('{{maxPrice}}');
+
+            $( function() {
+                $( "#filter-price-range" ).slider({
+                range: true,
+                min: minimumPrice,
+                max: maximumPrice,
+                values: [ minimumPrice, maximumPrice ],
+                slide: function( event, ui ) {
+                    minPrice = ui.values[0];
+                    maxPrice = ui.values[1];
+                    $( "#amount" ).val( ui.values[ 1 ].toLocaleString() + " تومان" + " - " + ui.values[ 0 ].toLocaleString() + " تومان" );
+                }
+                });
+                $( "#amount" ).val($( "#filter-price-range" ).slider( "values", 1 ).toLocaleString() +
+                " تومان" +
+                " - " + $( "#filter-price-range" ).slider( "values", 0 ).toLocaleString() +
+                " تومان");
+            } );
+        })
+
         // $(".product-main-filter .filter-item").click(function (){
         //     $(".mobiles-list").css('opacity', 0.5)
 
@@ -623,10 +586,20 @@
         $("#do-filters-btn").click(function () {
             var availableFilter = $("#available-filter-switch").prop('checked') ? '1' : '0';
             //Brands
+            var brands = [];
+            $.each($("input[name='brand-check']:checked"), function(){
+                brands.push($(this).attr('val'));
+            });
+
+
             var bottomRangePrice = $('#filter-price-range').slider("values")[0];
             var topRangePrice = $('#filter-price-range').slider("values")[1];
-            console.log(bottomRangePrice, topRangePrice)
-            //colors
+
+            var colors = [];
+            $.each($("input[name='color-check']:checked"), function(){
+                colors.push($(this).attr('val'));
+            });
+            
             var simcardFilter;
             if( $("#couple-sim").prop('checked'))
             {
@@ -639,8 +612,18 @@
             else {
                 simcardFilter = '0'
             }
+            
+            var internalMemory = [];
+            
+            $.each($("input[name='memory-check']:checked"), function(){
+                internalMemory.push($(this).attr('val'));
+            });
 
-            //memory
+            var ramMemory = [];
+            
+            $.each($("input[name='ram-check']:checked"), function(){
+                ramMemory.push($(this).attr('val'));
+            });
 
             var os;
             if ( $("#android-os").prop('checked') && !$("#ios-os").prop('checked'))
@@ -654,17 +637,24 @@
                 os = '0';
             }
 
-            var changableBattery;
-            if( $("#yes-change").prop('checked'))
-            {
-                changableBattery = '2';
-            }
-            else if ( $("#no-change").prop('checked'))
-            {
-                changableBattery = '1'
-            }
-            else {
-                changableBattery = '0'
-            }
+            $.ajax(
+                {
+                    method:'POST',
+                    url: '{% url "market:mobileFilter" %}',
+                    data: {
+                        available: availableFilter,
+                        brands: brands,
+                        min: bottomRangePrice,
+                        max: topRangePrice,
+                        colors: colors,
+                        simcard: simcardFilter,
+                        internalMemory: internalMemory,
+                        ram: ramMemory,
+                        os: os,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                        action: 'post'
+                    },
+                }
+            )
         })
     </script>

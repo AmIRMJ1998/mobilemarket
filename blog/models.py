@@ -46,8 +46,8 @@ class Post (models.Model):
         else:
             status = True
             for item in self.points['list']:
-                if item.user_id == user_id:
-                    item.point = this_point
+                if item['user_id'] == user_id:
+                    item['point'] = this_point
                     status = False
             if status:
                 this_point = {'user_id': user_id, 'point': this_point}

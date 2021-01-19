@@ -162,7 +162,7 @@ class Mobile (models.Model):
     # description = models.TextField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
     description = RichTextUploadingField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
     index_image = models.ImageField(verbose_name = 'عکس اصلی', upload_to = 'media/images/mobile/', blank = True, null = True)
-    gallery = ArrayField(models.ImageField(verbose_name = 'عکس', upload_to = 'media/images/mobile/'), verbose_name = 'گالری', blank = True, null = True)
+    # gallery = ArrayField(models.ImageField(verbose_name = 'عکس', upload_to = 'media/images/mobile/'), verbose_name = 'گالری', blank = True, null = True)
     points = JSONField(verbose_name = 'امتیازات', null = True, blank = True)
     price = models.CharField(verbose_name = 'قیمت', max_length = 15)
     discount = models.CharField(verbose_name = 'تخفیف', max_length = 15, default='0')
@@ -382,24 +382,28 @@ class Factor(models.Model):
         return "{} ({})".format(self.number, self.FK_User)
 
     # add item in factor function
-    def add_item(self, this_mobile, this_count, this_color, this_color_value):
+    def add_item(self, this_mobile, this_count, this_color, this_color_value, this_guarantee):
         if self.items is None:
             data = {}
             data['items'] = []
-            this_item = {'id': this_mobile.id, 'title': this_mobile.title, 'price': this_mobile.price, 'total_price': this_mobile.get_total_price(this_count), 'count': this_count, 'color': this_color, 'color_value': this_color_value}
+            this_item = {'id': this_mobile.id, 'title': this_mobile.title, 'price': this_mobile.price, 'total_price': this_mobile.get_total_price(this_count), 'count': this_count, 'color': this_color, 'color_value': this_color_value, 'guarantee': this_guarantee}
             data['items'].append(this_item) 
             self.items = data
             self.save()
         else:
             status = True
             for item in self.items['items']:
-                if (item.id == this_mobile.id) and (item.color == this_mobile.this_color):
-                    item.count = this_count
-                    status = False
+                if (item['id'] == this_mobile.id) and (item['color'] == this_color) and (item['guarantee'] == this_guarantee):
+                    if int(item['count']) + 1 > this_mobile.inventory:
+                        status = False
+                    else:
+                        item['count'] += this_count
+                        item['total_price'] = this_mobile.get_total_price(item['count'])
+                        status = False
             if status:
-                this_item = {'id': this_mobile.id, 'title': this_mobile.title, 'price': this_mobile.price, 'total_price': this_mobile.get_total_price(this_count), 'count': this_count, 'color': this_color, 'color_value': this_color_value}
+                this_item = {'id': this_mobile.id, 'title': this_mobile.title, 'price': this_mobile.price, 'total_price': this_mobile.get_total_price(this_count), 'count': this_count, 'color': this_color, 'color_value': this_color_value, 'guarantee': this_guarantee}
                 self.items['items'].append(this_item) 
-                self.items = data
+                # self.items = data
             self.save()
 
    # address function
@@ -407,10 +411,10 @@ class Factor(models.Model):
         self.address = {'state' : this_state, 'city' : this_city, 'zipcode' : this_zipcode, 'address' : this_address, 'phone' : this_phone, 'per_city_code' : this_per_city_code, 'mobile': this_mobile}
         self.save()
 
-    def grt_total_price(self):
+    def get_total_price(self):
         total_sum = 0
         for item in self.items['items']:
-            total_sum += item.total_price
+            total_sum += item['total_price']
         return total_sum
 
     class Meta:

@@ -3,6 +3,7 @@ from django.contrib.sessions.models import Session
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 import datetime
 # get model
 from market.models import Mobile, Factor, User
@@ -10,6 +11,7 @@ from market.models import Mobile, Factor, User
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # add new item in factor
+@login_required(login_url="login")
 def add_new_item_in_factor(request):
     response_data = {}
     try:
@@ -17,126 +19,154 @@ def add_new_item_in_factor(request):
         this_mobile_id = request.POST.get("id")
         this_color = request.POST.get("color")
         this_color_value = request.POST.get("color_value")
+        this_guarantee = request.POST.get("guarantee")
         # check repete data
         if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
             # add date
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
-            this_factor.add_item(this_mobile, 1, this_color, this_color_value)
+            this_factor.add_item(this_mobile, 1, this_color, this_color_value, this_guarantee)
 
             response_data['status'] = True
+            response_data['total_price'] = this_factor.get_total_price()
             return JsonResponse(response_data)
         else:
             # create new object
             this_factor = Factor.objects.create(FK_User = request.user)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
-            this_factor.add_item(this_mobile, 1, this_color, this_color_value)
+            this_factor.add_item(this_mobile, 1, this_color, this_color_value, this_guarantee)
 
+            response_data['total_price'] = this_factor.get_total_price()
             response_data['status'] = True
             return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
-        response_data['message'] = str(e)
+        response_data['error'] = str(e)
         return JsonResponse(response_data)
 
 
-# add singel item count
-def add_singel_item_count(request):
+# add single item count
+@login_required(login_url="login")
+def add_single_item_count(request):
     response_data = {}
     try:
         # get data
         this_mobile_id = request.POST.get("id")
         this_color = request.POST.get("color")
+        this_guarantee = request.POST.get("guarantee")
         # check repete data
         if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
-            for item in this_factor.items:
-                if (item.id == this_mobile.id) and (item.color == this_color) and (this_mobile.inventory > 0):
-                    item.count += 1
-                    item.total_price = this_mobile.get_total_price(item.count + 1)
+            for item in this_factor.items['items']:
+                if (item['id'] == this_mobile.id) and (item['color'] == this_color) and (item['guarantee'] == this_guarantee) and (this_mobile.inventory > 0) and (int(item['count']) + 1 <= this_mobile.inventory):
+                    item['count'] += 1
+                    item['total_price'] = this_mobile.get_total_price(item['count'])
                     this_factor.save()
+                    response_data['count'] = item['count']
+                    response_data['total_price'] = item['total_price']
+                    response_data['total_factor_price'] = this_factor.get_total_price()
+
 
                     response_data['status'] = True
                     return JsonResponse(response_data)
-                else:
-                    response_data['status'] = False
-                    return JsonResponse(response_data)
+            else:
+                response_data['status'] = False
+                response_data['error'] = 'There is no item with this info in your factor!'
+                return JsonResponse(response_data)
         else:
+            response_data['error'] = 'There is no factor with this info in your card!'
             response_data['status'] = False
             return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
-        response_data['message'] = str(e)
+        response_data['error'] = str(e)
         return JsonResponse(response_data)
 
 
-# remove singel item count
-def remove_singel_item_count(request):
+# remove single item count
+@login_required(login_url="login")
+def remove_single_item_count(request):
     response_data = {}
     try:
         # get data
         this_mobile_id = request.POST.get("id")
         this_color = request.POST.get("color")
+        this_guarantee = request.POST.get("guarantee")
         # check repete data
         if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
-            for item in this_factor.items:
-                if (item.id == this_mobile.id) and (item.color == this_color):
-                    if item.count - 1 != 0:
-                        item.count -= 1
-                        item.total_price = this_mobile.get_total_price(item.count - 1)
+            for item in this_factor.items['items']:
+                if (item['id'] == this_mobile.id) and (item['color'] == this_color) and (item['guarantee'] == this_guarantee):
+                    if item['count'] - 1 != 0:
+                        item['count'] -= 1
+                        item['total_price'] = this_mobile.get_total_price(item['count'])
                         this_factor.save()
+                        response_data['remove'] = False
+                        response_data['count'] = item['count']
+                        response_data['total_price'] = item['total_price']
+                        response_data['total_factor_price'] = this_factor.get_total_price()
                     else:
+                        response_data['remove'] = True
                         this_factor.items['items'].remove(item)
+                        response_data['total_factor_price'] = this_factor.get_total_price()
                         this_factor.save()
 
                     response_data['status'] = True
                     return JsonResponse(response_data)
-                else:
-                    response_data['status'] = False
-                    return JsonResponse(response_data)
+            else:
+                response_data['status'] = False
+                response_data['error'] = 'There is no item with this info in your factor!'
+                return JsonResponse(response_data)
         else:
             response_data['status'] = False
+            response_data['error'] = 'There is no factor with this info in your card!'
             return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
-        response_data['message'] = str(e)
+        response_data['error'] = str(e)
         return JsonResponse(response_data)
 
 
 # remove item in factor
+@login_required(login_url="login")
 def remove_item_in_factor(request):
     response_data = {}
     try:
         # get data
         this_mobile_id = request.POST.get("id")
         this_color = request.POST.get("color")
+        this_guarantee = request.POST.get("guarantee")
         # check repete data
         if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
-            for item in this_factor.items:
-                if (item.id == this_mobile.id) and (item.color == this_color):
+            for item in this_factor.items['items']:
+                if (item['id'] == this_mobile.id) and (item['color'] == this_color) and (item['guarantee'] == this_guarantee):
                     this_factor.items['items'].remove(item)
                     this_factor.save()
 
                     response_data['status'] = True
+                    response_data['total_factor_price'] = this_factor.get_total_price()
+                    response_data['item_count'] = len(this_factor.items['items'])
                     return JsonResponse(response_data)
-                else:
-                    response_data['status'] = False
-                    return JsonResponse(response_data)
+            else:
+                response_data['status'] = False
+                response_data['error'] = 'There is no item with this info in your factor!'
+                return JsonResponse(response_data)
         else:
             response_data['status'] = False
+            response_data['error'] = 'There is no factor with this info in your card!'
             return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
-        response_data['message'] = str(e)
+        response_data['error'] = str(e)
         return JsonResponse(response_data)
 
 
 # add information in factor
+@login_required(login_url="login")
 def add_information_in_factor(request):
     response_data = {}
     try:
@@ -157,18 +187,20 @@ def add_information_in_factor(request):
             this_factor.save()
 
             response_data['status'] = True
+            response_data['total_price'] = this_factor.get_total_price()
             return JsonResponse(response_data)
         else:
             response_data['status'] = False
             return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
-        response_data['message'] = str(e)
+        response_data['error'] = str(e)
         return JsonResponse(response_data)
 
 
 # check out factor
-def set_session(request):
+@login_required(login_url="login")
+def payCard(request):
     response_data = {}
     try:
         # get data
@@ -178,7 +210,7 @@ def set_session(request):
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
             # add date
             this_factor.post_price = this_post_price
-            this_factor.total_price = this_factor.grt_total_price() + int(this_post_price)
+            this_factor.total_price = this_factor.get_total_price() + int(this_post_price)
             this_factor.payment_status = True
             this_factor.orderdate = timezone.now()
             this_factor.status = 1
@@ -191,5 +223,25 @@ def set_session(request):
             return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
-        response_data['message'] = str(e)
+        response_data['error'] = str(e)
+        return JsonResponse(response_data)
+
+def cardTotalPrice(request):
+    response_data = {}
+    try:
+        if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
+            this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
+
+            response_data['total_price'] = this_factor.get_total_price()
+            response_data['status'] = True
+            return JsonResponse(response_data)
+
+        else:
+            response_data['status'] = False
+            response_data['total_price'] = 0
+            return JsonResponse(response_data)
+
+    except Exception as e:
+        response_data['status'] = False
+        response_data['error'] = str(e)
         return JsonResponse(response_data)

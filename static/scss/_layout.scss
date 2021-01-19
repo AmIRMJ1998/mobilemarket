@@ -801,6 +801,10 @@ section.product-section {
     }
 }
 
+.card-sections {
+    display: none;
+}
+
 .whole-card {
     background-color: $color-white;
     box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.1);
@@ -908,7 +912,6 @@ section.product-section {
     }
 
     .submit-order {
-        padding: 20px 0 0 0;
         border-top: 1px solid $color-5th;
 
         .warning-message {
@@ -1836,8 +1839,16 @@ input.empty {
 
         .first-row {
             border-bottom: 2px solid $color-light;
-            i {
+            
+            .post-rate {
                 color: $color-light;
+                word-spacing: -4px;
+                
+                i {
+                    &.active {
+                        color: $color-yellow-1st;
+                    }
+                }
             }
         }
         .image-of-post {
@@ -1857,6 +1868,7 @@ input.empty {
             }
         }
     }
+    
     .blog-sidebar {
         .blog-sidebar-title {
             margin-bottom: 20px;
@@ -1879,6 +1891,10 @@ input.empty {
             
             i {
                 cursor: pointer;
+
+                &.active {
+                    color: $color-yellow-1st;
+                }
             }
             
             .rating > input:checked ~ label,

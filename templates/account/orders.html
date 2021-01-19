@@ -250,19 +250,20 @@
                                         </div>
                                     </div>
                                     <!-- else -->
-                                    <!-- <div class="no-order">
+                                    <div class="no-order">
                                         <div class="warning-message">
                                             <p>
                                                 سفارش فعالی در این بخش وجود ندارد!
                                             </p>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="progress" role="tabpanel" aria-labelledby="progress-tab">
                                 <h5>
                                     در حال پردازش
                                 </h5>
+                                {% if  %}
                                 <div class="orders-list">
                                     <div class="no-order">
                                         <div class="warning-message">
@@ -272,6 +273,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endif %}
                             </div>
                             <div class="tab-pane fade show" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
                                 <h5>
@@ -284,7 +286,12 @@
                                                 <div class="row">
                                                     <div class="col-12 d-flex">
                                                         <div class="order-des order-id">
-                                                            DKC-301863866
+                                                            <span>
+                                                                نام فاکتور: 
+                                                            </span>
+                                                            <span>
+
+                                                            </span>
                                                         </div>
                                                         <div class="order-des order-date">
                                                             25 فروردین 1399

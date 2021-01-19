@@ -892,6 +892,10 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   line-height: 2.5;
 }
 
+.card-sections {
+  display: none;
+}
+
 .whole-card {
   background-color: #fff;
   box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.1);
@@ -997,7 +1001,6 @@ section.product-section .product-main .product-main-filter .filter-item.active {
 }
 
 .whole-card .submit-order {
-  padding: 20px 0 0 0;
   border-top: 1px solid #ccc;
 }
 
@@ -1751,8 +1754,13 @@ input.empty {
   border-bottom: 2px solid #e0e0e0;
 }
 
-.blog .blog-post-preview .first-row i {
+.blog .blog-post-preview .first-row .post-rate {
   color: #e0e0e0;
+  word-spacing: -4px;
+}
+
+.blog .blog-post-preview .first-row .post-rate i.active {
+  color: #FFD700;
 }
 
 .blog .blog-post-preview .image-of-post img {
@@ -1792,6 +1800,10 @@ input.empty {
 
 .blog-post .post-first-row .post-rate i {
   cursor: pointer;
+}
+
+.blog-post .post-first-row .post-rate i.active {
+  color: #FFD700;
 }
 
 .blog-post .post-first-row .post-rate .rating > input:checked ~ label,

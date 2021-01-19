@@ -55,12 +55,16 @@
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 text-center">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" class="form-control" name="searchbar" placeholder="جستجو ...">
-                        <button class="btn btn-primary searchbtn">
-                            <i class="fal fa-search"></i>
-                        </button>
-                    </div>
+                    <form method="POST" action="{% url "market:mobile" %}">
+                        {% csrf_token %}
+                        <div class="search-bar">
+                            <input type="text" id="search-input" class="form-control" name="search" placeholder="جستجو ...">
+                            <input hidden name="mood" value="search">
+                            <button class="btn btn-primary searchbtn">
+                                <i class="fal fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-xl-2 col-lg-2 col-md-2 col-sm-6 col-6 text-center">
                     <div class="account">
@@ -143,24 +147,33 @@
 </menu>
 
 <script>
-    // $(document).ready(function (){
-        // $.ajax (
-        //     {
-        //         method: 'POST',
-        //         url: '{.% url "market:SSSSS" %.}',
-        //         data: {
-        //             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-        //             action: 'post'
-        //         },
-        //         success: function(json) {
-        //             $("#total-price").val() = json.totalPrice;
-        //         },
-        //         error: function(json) {
-        //             console.log(json.error)
-        //         }
-        //     }
-        // )
-    // })
+    var oldTotalPrice;
+    $(document).ready(function (){
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:cardTotalPrice" %}',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function(json) {
+                    if (json.status)
+                    {
+                        $("#total-price").text(json.total_price).digits();
+                        oldTotalPrice = json.total_price;
+                    }
+                    else
+                    {
+                        console.log(json.error)
+                    }
+                },
+                error: function(json) {
+                    console.log(json.error)
+                }
+            }
+        )
+    })
 
     // $(".searchbtn").click(function (){
     //     var searchText = $("#search-input").val();

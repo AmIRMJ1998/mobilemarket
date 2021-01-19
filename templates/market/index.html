@@ -260,45 +260,45 @@
                 <div class="slider-slick product-slider">
                     {% for mobile in MostRateMobiles %}
                         <div class="slider-slick-item">
-                            <a href="{% url 'market:product' mobile.slug %}">
-                                <img src="{{mobile.index_image.url}}" alt="محصول">
+                            <a href="{% url 'market:product' mobile.mobile.slug %}">
+                                <img src="{{mobile.mobile.index_image.url}}" alt="محصول">
                                 <div class="product-title">
-                                    {{mobile.title}}
+                                    {{mobile.mobile.title}}
                                 </div>
                             </a>
                             <div class="product-rate">
-                                {% if mobile.total_point >= 4.5 %}
+                                {% if mobile.mobile.total_point >= 4.5 %}
                                 <i class="fas fa-star active"></i>
                                 {% else %}
                                 <i class="fas fa-star"></i>
                                 {% endif %}
-                                {% if mobile.total_point >= 3.5 %}
+                                {% if mobile.mobile.total_point >= 3.5 %}
                                 <i class="fas fa-star active"></i>
                                 {% else %}
                                 <i class="fas fa-star"></i>
                                 {% endif %}
-                                {% if mobile.total_point >= 2.5 %}
+                                {% if mobile.mobile.total_point >= 2.5 %}
                                 <i class="fas fa-star active"></i>
                                 {% else %}
                                 <i class="fas fa-star"></i>
                                 {% endif %}
-                                {% if mobile.total_point >= 1.5 %}
+                                {% if mobile.mobile.total_point >= 1.5 %}
                                 <i class="fas fa-star active"></i>
                                 {% else %}
                                 <i class="fas fa-star"></i>
                                 {% endif %}
-                                {% if mobile.total_point >= 0.5 %}
+                                {% if mobile.mobile.total_point >= 0.5 %}
                                 <i class="fas fa-star active"></i>
                                 {% else %}
                                 <i class="fas fa-star"></i>
                                 {% endif %}
                             </div>
                             <div class="product-prices">
-                                {% if mobile.inventory_by_color != 0%}
-                                    {% if mobile.discount != '0' %}
+                                {% if mobile.mobile.inventory_by_color != 0%}
+                                    {% if mobile.mobile.discount != '0' %}
                                         <div class="product-price-off">
                                             <span class="split-number">
-                                                {{mobile.real_price}}
+                                                {{mobile.mobile.real_price}}
                                             </span>
                                             <span>
                                                 تومان
@@ -307,7 +307,7 @@
                                     {% endif %}
                                     <div class="product-price">
                                         <span class="split-number">
-                                            {{mobile.price}}
+                                            {{mobile.mobile.price}}
                                         </span>
                                         <span>
                                             تومان

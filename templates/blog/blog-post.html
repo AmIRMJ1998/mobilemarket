@@ -1,6 +1,8 @@
 {% load i18n static %}
 {% load filters %}
 
+{% load jformat %}
+
 {% block head %}
     {% include "base/head.html" %}
 {% endblock %}
@@ -141,23 +143,33 @@
                         <div class="comments">
                             <div class="approved-comments">
                                 <h5 class="comment-section-title">نظرات</h5>
-                                {% for item in Comments %}
+                                {% for item, replylist in Comments.items %}
                                     <div class="comment" val="{{item.id}}">
                                         <div class="commenter-user-name">
-                                            {{item.FK_User.get_fullname}}
+                                            {{item.FK_User.username}}
                                         </div>
                                         <div class="comment-date">
-                                            {{item.datecreate|to_jalali_month}}
+                                            {{item.datecreate | jformat:"%Y/%m/%d ساعت %H:%M" }}
                                         </div>
                                         <div class="comment-main">
                                             {{item.description}}
                                         </div>
                                         <div class="comment-like-reply">
                                             <div class="comment-like">
-                                                {{item.likes|length}}
-                                                {% if request.user.is_authenticated %}
+                                                {% if item.likes|length %}
+                                                        {{item.like_count}}
+                                                    {% else %}
+                                                        0
+                                                    {% endif %}
+                                                    {% if request.user.is_authenticated %}
+                                                        <i val="{{item.id}}" class="fas fa-thumbs-up active"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-thumbs-up"></i>
+                                                    {% endif %}
+                                                <!-- {.{item.likes|length}}
+                                                {.% if request.user.is_authenticated %}
                                                     <i class="fas fa-thumbs-up"></i>
-                                                {% endif %}
+                                                {.% endif %} -->
                                             </div>
                                             {% if request.user.is_authenticated %}
                                                 <div class="comment-reply">
@@ -167,25 +179,29 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <div class="comment">
-                                            <div class="commenter-user-name">
-                                                Username
-                                            </div>
-                                            <div class="comment-date">
-                                                25 تیر 1399 ساعت 17:45
-                                            </div>
-                                            <div class="comment-main">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                                            </div>
-                                        
-                                            <div class="comment-like-reply">
-                                                <div class="comment-like">
-                                                    0
-                                                    {% if request.user.is_authenticated %}
-                                                        <i class="fas fa-thumbs-up"></i>
-                                                    {% endif %}
+                                        {% for reply in replylist %}
+                                                <div class="comment">
+                                                    <div class="commenter-user-name">
+                                                        {{reply.FK_User.username}}
+                                                    </div>
+                                                    <div class="comment-date">
+                                                        {{ reply.datecreate | jformat:"%Y/%m/%d ساعت %H:%M" }}
+                                                    </div>
+                                                    <div class="comment-main">
+                                                        {{ reply.description }}
+                                                    </div>
+                                                    <div class="comment-like-reply">
+                                                        <div class="comment-like">
+                                                            {{reply.likes|length}}
+                                                            {% if request.user.is_authenticated %}
+                                                                <i val="{{reply.id}}" class="fas fa-thumbs-up active"></i>
+                                                            {% else %}
+                                                                <i class="fas fa-thumbs-up"></i>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -194,9 +210,9 @@
                                 <div class="comment-form">
                                     <h5>نظر شما</h5>
                                     <p>نظر خود را از طریق بخش زیر برای ما ارسال کنید.</p>
-                                    <textarea name="comment" id="product-comment" class="form-control" cols="20" rows="7" placeholder="نظر خود را در اینجا بنویسید..."></textarea>
+                                    <textarea val="0" name="comment" id="product-comment" class="form-control" cols="20" rows="7" placeholder="نظر خود را در اینجا بنویسید..."></textarea>
                                     <div class="send-comment-btn text-left mt-3">
-                                        <button class="btn btn-primary send-comment">ارسال</button>
+                                        <button val="0" class="btn btn-primary send-comment">ارسال</button>
                                     </div>
                                 </div>
                             {% endif %}
@@ -221,7 +237,7 @@
 <script>
     $(".post-rate input").on('change', function () {
         var postRate = productRateFnc();
-        $(".product-rate").find('i').removeClass('active');
+        $(".post-rate").find('i').removeClass('active');
         var postID = '{{ThisPost.id}}';
         console.log(postID, postRate);
         $.ajax (
@@ -260,4 +276,137 @@
         )
     })
     
+    $(document).on("click", ".send-comment", function (){
+        var whichComment = $(this).attr('val');
+        var postSlug = '{{ThisPost.slug}}';
+        var commentDescription = $("textarea[val='" + whichComment + "'").val();
+        
+        if (whichComment == '0')
+        {
+            if ($("#product-comment").val().length != 0)
+            {
+                $.ajax (
+                    {
+                        method: 'POST',
+                        url: '{% url "blog:ajax_add_new_comment" %}',
+                        data: {
+                            slug: postSlug,
+                            description: commentDescription,
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                            action: 'post',
+                        },
+                        success: function(json) {
+                            console.log(json.status);
+                            if (json.status)
+                            {
+                                
+                            }
+                            else
+                            {
+                                console.log(json.error);
+                            }
+                        },
+                        error: function (json) {
+                            console.log(json.error);
+                        }
+                    }
+                )
+            }
+            else
+            {
+                alert('por kon')
+            }
+        }
+        else
+        {
+            if ($("textarea[val='" + whichComment + "'").val().length != 0)
+            {
+                commentText = $("textarea[val='" + whichComment + "'").val();
+                $.ajax (
+                    {
+                        method: 'POST',
+                        url: '{% url "blog:replyComment" %}',
+                        data: {
+                            commentID: whichComment,
+                            commentText: commentText,
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                            action: 'post',
+                        },
+                        success: function (json) {
+                            console.log(json.status);
+                            if (json.status)
+                            {
+
+                            }
+                            else
+                            {
+                                console.log(json.error)
+                            }
+                        },
+                        error: function (json) {
+                            console.log(json.status)
+                            console.log(json.error)
+                        }
+                    }
+                )
+            }
+            else
+            {
+                alert('por kon haji')
+            }
+        }
+    })
+    $(".reply-btn").click(function (e) {
+        e.preventDefault();
+        $(".reply-form").remove();
+        var whichComment = $(this).attr('val');
+
+        $(".comment[val='" + whichComment + "'").append(
+        '<div class="reply-form">' +
+            '<textarea val="' + whichComment + '" name="comment" class="form-control" cols="20" rows="7" placeholder="پاسخ خود را اینجا بنویسید..."></textarea>' +
+            '<div class="send-comment-btn text-left mt-3">' +
+                '<button val="' + whichComment + '" class="btn btn-primary send-comment">ارسال</button>' +
+            '</div>' +
+        '</div>')
+    })
+    $(document).on("click", ".comment-like i.active", function () {
+        var commentID = $(this).attr('val');
+        console.log(commentID)
+
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "blog:like_or_dislike_comment"%}',
+                data: {
+                    id: commentID,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    if (json.status)
+                    {
+                        console.log(json.likeCount)
+                        console.log(json.remove)
+                        if (json.remove == 0)
+                        {
+                            console.log('add')
+                        }
+                        else if (json.remove == 1)
+                        {
+                            console.log('remove')
+                        }
+                    }
+                    else
+                    {
+                        console.log(json.error)
+                    }
+                },
+                error: function (json) {
+                    console.log(json.status)
+                    console.log(json.error)
+                }
+            }
+        )
+    })
 </script>

@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="whole-card">
+                <div class="section-1 whole-card">
                     <div class="row">
                         <div class="col-12">
                             <div class="card-title">
@@ -38,157 +38,65 @@
                             </div>
                         </div>
                         <div class="card-product-detail">
-                            {.% for mobile in card %}
-                                <div val="{.{mobile.id}}" class="card-product-detail-item">
-                                    <div class="row flex-nowrap align-items-center">
-                                        <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
-                                            <a href="{.% url 'market:mobile' mobile.slug %}">
-                                                <img src="{.{mobile.image.url}}" alt="محصول">
-                                            </a>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
-                                            {.{mobile.title}}
-                                        </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                            <span class="split-number">{.{mobile.price}}</span>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
-                                            <div class="count-part">
-                                                <div val="{.{mobile.id}}" class="add-sub add">
-                                                    <i class="far fa-plus"></i>
+                            {%if factorItems|length != 0%}
+                                {% for item in factorItems %}
+                                    <div val="{{item.id.id}}" val2="{{item.color}}" val3="{{item.guarantee}}" class="card-product-detail-item">
+                                        <div class="row flex-nowrap align-items-center">
+                                            <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                                                <a href="{% url 'market:product' item.id.slug %}">
+                                                    <img src="{{item.id.index_image.url}}" alt="محصول">
+                                                </a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
+                                                {{item.title}} -
+                                                {{item.color}} -
+                                                {{item.guarantee}}
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                                <span class="split-number">{{item.price}}</span><span> تومان</span>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
+                                                <div class="count-part">
+                                                    <div val="{{item.id.id}}" val2="{{item.color}}" val3="{{item.guarantee}}" class="add-sub add">
+                                                        <i class="far fa-plus"></i>
+                                                    </div>
+                                                    <div val="{{item.id.id}}" val2="{{item.color}}" val3="{{item.guarantee}}" class="main-count">
+                                                        {{item.count}}
+                                                    </div>
+                                                    <div val="{{item.id.id}}" val2="{{item.color}}" val3="{{item.guarantee}}" class="add-sub sub">
+                                                        <i class="far fa-minus"></i>
+                                                    </div>
                                                 </div>
-                                                <div val="{.{mobile.id}}" class="main-count">
-                                                    {.{mobile.buycount}}
-                                                </div>
-                                                <div val="{.{mobile.id}}" class="add-sub sub">
-                                                    <i class="far fa-minus"></i>
-                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                                                <span val="{{item.id.id}}" val2="{{item.color}}" val3="{{item.guarantee}}" class="total-price-num split-number">{{item.total_price}}</span><span> تومان</span>
+                                            </div>
+                                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                                <button val="{{item.id.id}}" val2="{{item.color}}" val3="{{item.guarantee}}" class="btn btn-danger delete-factor-item-btn">
+                                                    حذف
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                            {.{mobile.sumprice}}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert-message error-message back mt-3 mb-3">
+                                    <div class="alert-message-content error-content">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <div class="alert-message-text error-text">
+                                            هیچ محصولی درون سبد خرید وجود ندارد!
                                         </div>
-                                        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                            <button val="{.{mobile.id}}" class="btn btn-danger delete-factor-item-btn">
-                                                حذف
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="close-message close-error-message">
+                                        <i class="fas fa-times"></i>
                                     </div>
                                 </div>
-                            {.% endfor %.}
-                            <div class="card-product-detail-item">
-                                <div class="row flex-nowrap align-items-center">
-                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
-                                        <a href="#">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
-                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        4,800,000 تومان
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
-                                        <div class="count-part">
-                                            <div class="add-sub add">
-                                                <i class="far fa-plus"></i>
-                                            </div>
-                                            <div class="main-count">
-                                                2
-                                            </div>
-                                            <div class="add-sub sub">
-                                                <i class="far fa-minus"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        9,600,000 تومان
-                                    </div>
-                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                        <button class="btn btn-danger">
-                                            حذف
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-product-detail-item">
-                                <div class="row flex-nowrap align-items-center">
-                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
-                                        <a href="#">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
-                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        4,800,000 تومان
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
-                                        <div class="count-part">
-                                            <div class="add-sub add">
-                                                <i class="far fa-plus"></i>
-                                            </div>
-                                            <div class="main-count">
-                                                2
-                                            </div>
-                                            <div class="add-sub sub">
-                                                <i class="far fa-minus"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        9,600,000 تومان
-                                    </div>
-                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                        <button class="btn btn-danger">
-                                            حذف
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-product-detail-item">
-                                <div class="row flex-nowrap align-items-center">
-                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
-                                        <a href="#">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="محصول">
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-3 col-sm-3 col-3">
-                                        گوشی موبایل سامسونگ گلکسی A51 دوسیم کارت ظرفیت 8/128 گیگابایت
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        4,800,000 تومان
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-4">
-                                        <div class="count-part">
-                                            <div class="add-sub add">
-                                                <i class="far fa-plus"></i>
-                                            </div>
-                                            <div class="main-count">
-                                                2
-                                            </div>
-                                            <div class="add-sub sub">
-                                                <i class="far fa-minus"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                        9,600,000 تومان
-                                    </div>
-                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                        <button class="btn btn-danger">
-                                            حذف
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endif %}        
                         </div>
                     </div>
                     <div class="off-code total-price">
                         <div class="row align-items-center justify-content-center">
-                            <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 col-12">
+                            <!-- <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="off-code-title">
                                     <span>
                                         در صورت در اختیار داشتن کد تخفیف در کادر مقابل وارد نموده و اعمال کنید:
@@ -200,25 +108,24 @@
                                     <input type="text" class="form-control" name="off-code" placeholder="کد تخفیف">
                                     <button class="btn btn-info">اعمال کد تخفیف</button>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                                 <div class="total-price-div">
                                     <p>
                                         جمع کل :
                                     </p>
                                     <p>
-                                        <span class="split-number">
-                                            38400000
+                                        <span class="split-number total-factor-price">
+                                            {{totalFactorPrice}}
                                         </span>
                                         تومان
-                                        {.{factor.totalprice}}
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="submit-order">
-                        <div class="row justify-content-end text-left align-items-center">
+                        <div class="row justify-content-end text-left align-items-center mt-3">
                             <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12">
                                 <div class="warning-message">
                                     <i class="fas fa-info-circle"></i>
@@ -229,22 +136,22 @@
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
-                                {.% if factor.items.count != 0 %}
+                                {% if factorItems|length != 0 %}
                                 <button class="btn btn-success w-100 submit-order">
                                     ثبت سفارش
                                     <i class="fal fa-angle-left"></i>
                                 </button>
-                                {.% else %}
+                                {% else %}
                                 <button disabled class="btn btn-success w-100 submit-order">
                                     ثبت سفارش
                                     <i class="fal fa-angle-left"></i>
                                 </button>
-                                {.% endif %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="whole-card information-card text-right">
+                <div class="card-sections section-2 whole-card information-card text-right">
                     <div class="information-card-content">
                         <div class="row">
                             <div class="col-12">
@@ -256,15 +163,30 @@
                             </div>
                         </div>
                         <div class="form-row information-form-row justify-content-center">
+                            <div class="col-12">
+                                <div class="alert-message error-message front mt-3 mb-3 empty-info">
+                                    <div class="alert-message-content error-content">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <div class="alert-message-text error-text">
+                                            اطلاعات الزامی را تکمیل نمائید!
+                                        </div>
+                                    </div>
+                                    <div class="close-message close-error-message">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row information-form-row justify-content-center">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
-                                    <label for="fname">نام</label>
+                                    <label for="fname">نام</label><code>*</code>
                                     <input value="{{request.user.first_name}}" id="fname" class="form-control" type="text" placeholder="نام">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item last">
-                                    <label for="lname">نام خانوادگی</label>
+                                    <label for="lname">نام خانوادگی</label><code>*</code>
                                     <input value="{{request.user.last_name}}" id="lname" class="form-control" type="text" placeholder="نام خانوادگی">
                                 </div>
                             </div>
@@ -272,7 +194,7 @@
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
-                                    <label for="lname">استان</label>
+                                    <label for="lname">استان</label><code>*</code>
                                     <input value="{{request.user.address.state}}" id="state" class="form-control" type="text" placeholder="استان">
                                 </div>
                             </div>
@@ -282,7 +204,7 @@
                             </div> -->
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item last">
-                                    <label for="city">شهر</label>
+                                    <label for="city">شهر</label><code>*</code>
                                     <input value="{{request.user.address.city}}" id="city" class="form-control" type="text" placeholder="شهر">
                                 </div>
                             </div>
@@ -290,7 +212,7 @@
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
-                                    <label for="cell-number">شماره همراه</label>
+                                    <label for="cell-number">شماره همراه</label><code>*</code>
                                     <input value="{{request.user.mobile}}" id="cell-number" class="form-control" type="number" placeholder="شماره همراه">
                                 </div>
                             </div>
@@ -310,7 +232,7 @@
                         <div class="form-row information-form-row justify-content-center">
                             <div class="col-12">
                                 <div class="information-item">
-                                    <label for="address">آدرس</label>
+                                    <label for="address">آدرس</label><code>*</code>
                                     <input value="{{request.user.address.address}}" id="address" class="form-control" type="text" placeholder="آدرس">
                                 </div>
                             </div>
@@ -318,12 +240,12 @@
                         <div class="form-row information-form-row justify-content-between align-items-end">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
-                                    <label for="postal-code">کد پستی</label>
+                                    <label for="postal-code">کد پستی</label><code>*</code>
                                     <input value="{{request.user.zipcode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 text-left">
-                                <button class="btn btn-success w-100">
+                                <button class="btn btn-success w-100 information-next">
                                     مرحله بعد
                                     <i class="fal fa-angle-left"></i>
                                 </button>
@@ -331,7 +253,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="whole-card">
+                <div class="card-sections section-3 whole-card">
                     <div class="row">
                         <div class="col-12">
                             <div class="card-title">
@@ -358,10 +280,9 @@
                                                 <div class="col-4">
                                                     <div class="factor-table-col factor-items-price">
                                                        <span class="split-number">
-                                                        4800000
+                                                        
                                                         </span>
                                                         تومان
-                                                           <!-- {.{factor.items_price}} -->
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
@@ -370,7 +291,6 @@
                                                             29000
                                                         </span>
                                                         تومان
-                                                        <!-- {.{factor.post_price}} -->
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
@@ -379,7 +299,6 @@
                                                             4829000
                                                         </span>
                                                         تومان
-                                                        <!-- {.{factor.total_price}} -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -397,7 +316,7 @@
                                     <div class="pay-post-options">
                                         <div class="radio pay-post-option">
                                             <label>
-                                                <input id="fast-post" type="radio" name="postradio" checked>
+                                                <input id="fast-post" type="radio" name="postradio" val="29000" checked>
                                                 <span>
                                                     پست پیشتاز : تحویل 2 الی 3 روزه
                                                     <br>
@@ -412,7 +331,7 @@
                                         </div>
                                         <div class="radio pay-post-option">
                                             <label>
-                                                <input id="normal-post" type="radio" name="postradio">
+                                                <input id="normal-post" type="radio" val="12000" name="postradio">
                                                 <span>
                                                     پست معمولی : تحویل طی 5 روز کاری
                                                     <br>
@@ -491,114 +410,292 @@
 {% endblock %}
 
 <script>
-    // $(".add-sub .add").click(function(){
-    //     var mobileID = $(this).attr('val');
-    //     var factorID = '{.{factor.id}}';
+    $(".add-sub.add").click(function(){
+        var mobileID = $(this).attr('val');
+        var color = $(this).attr('val2');
+        var guarantee = $(this).attr('val3');
 
-    //     $.ajax (
-    //         {
-    //             method: 'POST',
-    //             url: '{.% url "market:addFactorItem" %}',
-    //             data: {
-    //                 factorID: factorID,
-    //                 mobileID: mobileID,
-    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-    //                 action: 'post'
-    //             },
-    //             success: function (json) {
-    //                 $(".main-count[val='" + mobileID + "'").val(json.count)
-    //             },
-    //             error: function (json) {
-    //                 console.log(json.error)
-    //             }
-    //         }
-    //     )
-    // })
-    // $(".add-sub .sub").click(function(){
-    //     var mobileID = $(this).attr('val');
-    //     var factorID = '{.{factor.id}}';
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:add_single_item_count" %}',
+                data: {
+                    id: mobileID,
+                    color: color,
+                    guarantee: guarantee,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    if (json.status)
+                    {
+                        $(".main-count[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").text(json.count);
+                        $(".total-price-num[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").text(json.total_price);
+                        $(".total-factor-price").text(json.total_factor_price)
+                        $("#total-price").text(json.total_factor_price).digits();
+                        $(".split-number").digits();
+                    }
+                    else {
+                        console.log(json.error)
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error)
+                }
+            }
+        )
+    })
+    $(".add-sub.sub").click(function(){
+        var mobileID = $(this).attr('val');
+        var color = $(this).attr('val2');
+        var guarantee = $(this).attr('val3');
 
-    //     $.ajax (
-    //         {
-    //             method: 'POST',
-    //             url: '{.% url "market:subFactorItem" %}',
-    //             data: {
-    //                 factorID: factorID,
-    //                 mobileID: mobileID,
-    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-    //                 action: 'post'
-    //             },
-    //             success: function (json) {
-    //                 $(".main-count[val='" + mobileID + "'").val(json.count)
-    //             },
-    //             error: function (json) {
-    //                 console.log(json.error)
-    //             }
-    //         }
-    //     )
-    // })
-    // $(".delete-factor-item-btn").click(function () {
-    //     mobileID = $(this).attr('val');
-    //     factorID = '{.{factor.id}}';
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:remove_single_item_count" %}',
+                data: {
+                    id: mobileID,
+                    color: color,
+                    guarantee: guarantee,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    console.log(json.remove)
+                    if (json.status) {
+                        if (!json.remove)
+                        {
+                            $(".main-count[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").text(json.count);
+                            $(".total-price-num[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").text(json.total_price);
+                            $(".total-factor-price").text(json.total_factor_price)
+                            $("#total-price").text(json.total_factor_price).digits();
+                        }
+                        else
+                        {
+                            $(".card-product-detail-item[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").remove();
+                            $(".total-factor-price").text(json.total_factor_price)
+                            $("#total-price").text(json.total_factor_price).digits();
+                        }
+                        $(".split-number").digits();
+                    }
+                    else {
+                        console.log(json.error)
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error)
+                }
+            }
+        )
+    })
 
-    //     $.ajax (
-    //         {
-    //             method: 'POST',
-    //             url: '{.% url "market:removeFactorItem" %}',
-    //             data: {
-    //                 factorID: factorID,
-    //                 mobileID: mobileID,
-    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-    //                 action: 'post'
-    //             },
-    //             success: function (json) {
-    //                 $(".card-product-detail-item[val='" + mobileID + "'").remove();
-    //                  if (factor.item.count == 0)
-    //                  {
-    //                      $(".submit-order").prop('disabled', true);
-    //                  }
-    //             },
-    //             error: function (json) {
-    //                 console.log(json.error)
-    //             }
-    //         }
-    //     )
-    // })
+    $(".delete-factor-item-btn").click(function () {
+        var mobileID = $(this).attr('val');
+        var color = $(this).attr('val2');
+        var guarantee = $(this).attr('val3');
+
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:remove_item_in_factor" %}',
+                data: {
+                    id: mobileID,
+                    color: color,
+                    guarantee: guarantee,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    $(".card-product-detail-item[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").remove();
+                    $(".total-factor-price").text(json.total_factor_price)
+                    $("#total-price").text(json.total_factor_price).digits();
+                     if (json.item_count == 0)
+                     {
+                         $(".submit-order").prop('disabled', true);
+                     }
+                },
+                error: function (json) {
+                    console.log(json.error)
+                }
+            }
+        )
+    })
+
+    $(".submit-order").click(function () {
+        $(".section-1").remove();
+        $(".section-2").show();
+    })
+
+
+    var totalPriceFinal;
+    $(".information-next").click(function (){
+        var fname = $("#fname").val();
+        var lname = $("#lname").val();
+        var state = $("#state").val();
+        var city = $("#city").val();
+        var mobile = $("#cell-number").val();
+        var phone = $("#phone-number").val();
+        var pre_phone = $("#pre-phone").val();
+        var address = $("#address").val();
+        var zipcode = $("#postal-code").val();
+
+        var check = true;
+        if (fname.length == 0)
+        {
+            $("#fname").addClass('empty');
+            check = false;
+        }
+        if (lname.length == 0)
+        {
+            $("#lname").addClass('empty');
+            check = false;
+        }
+        if (state.length == 0)
+        {
+            $("#state").addClass('empty');
+            check = false;
+        }
+        if (city.length == 0)
+        {
+            $("#city").addClass('empty');
+            check = false;
+        }
+        if (mobile.length == 0)
+        {
+            $("#cell-number").addClass('empty');
+            check = false;
+        }
+        if (address.length == 0)
+        {
+            $("#address").addClass('empty');
+            check = false;
+        }
+        if (zipcode.length == 0)
+        {
+            $("#postal-code").addClass('empty');
+            check = false;
+        }
+
+        if (check == false)
+        {
+            $(".alert-message.empty-info").show();
+            return;
+        }
+        else {
+            $.ajax (
+                {
+                    method: 'POST',
+                    url: '{% url "market:add_information_in_factor" %}',
+                    data: {
+                        state: state,
+                        city: city,
+                        mobile: mobile,
+                        phone: phone,
+                        per_city_phone: pre_phone,
+                        address: address,
+                        zipcode: zipcode,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                        action: 'post'
+                    },
+                    success: function(json) {
+                        console.log(json.status);
+                        totalPriceFinal = json.total_price
+                        $(".factor-items-price .split-number").html(json.total_price);
+                        var totalPrice = parseInt(29000) + parseInt(json.total_price);
+                        $(".factor-total-price .split-number").html(totalPrice);
+                        $(".final-price .split-number").html(totalPrice)
+                        $(".split-number").digits();
+                        $(".section-2").remove();
+                        $(".section-3").show();
+                    },
+                    error: function(json) {
+                        console.log(json.error);
+                    }
+                }
+            )
+        }
+    })
+
+
     $("input[type=radio][name=postradio]").on('change', function () {
-        console.log('hey')
-                    $(".factor-post-price").html('<span class="split-number">' +
-                        12000
-                                                        </span>
-                                                        تومان
-                                                        );
-                    var totalPrice = parseInt(12000) + parseInt(4800000);
-                    $(".factor-total-price").html(totalPrice);
-    //     factorID = '{.{factor.id}}';
+        if ($("#normal-post").prop('checked'))
+        {
+            $(".factor-post-price .split-number").html('<span class="split-number">' + 12000 + '</span>');
+            var totalPrice = parseInt(12000) + parseInt(totalPriceFinal);
+            $(".factor-total-price .split-number").html(totalPrice);
+            $(".final-price .split-number").html(totalPrice)
+        }
+        else if ($("#fast-post").prop('checked'))
+        {
+            $(".factor-post-price .split-number").html('<span class="split-number">' + 29000 + '</span>');
+            var totalPrice = parseInt(29000) + parseInt(totalPriceFinal);
+            $(".factor-total-price .split-number").html(totalPrice);
+            $(".final-price .split-number").html(totalPrice)
+        }
+        $(".split-number").digits();
+    })
 
-    //     $.ajax (
-    //         {
-    //             method: 'POST',
-    //             url: '{.% url "market:changePostPriceFactorItem" %}',
-    //             data: {
-    //                 factorID: factorID,
-    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-    //                 action: 'post'
-    //             },
-    //             success: function (json) {
-    //                 $(".factor-post-price").html('<span class="split-number">' +
-    //                      json.postPrice
-    //                  );
-    //                 var totalPrice = parseInt(json.postPrice) + parseInt($(".factor-items-price").val())
-    //                 $(".factor-post-price").html('<span class="split-number">' +
-    //                      totalPrice
-    //                  );
-    //                 $(".split-number").digits();
-    //             },
-    //             error: function (json) {
-    //                 console.log(json.error)
-    //             }
-    //         }
-    //     )
+    $("#pay-btn").click(function () {
+        var postPrice = $("#normal-post").prop('checked') ? 12000 : 29000;
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+            confirmButton: 'btn btn-success ml-3',
+            cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'وضعیت پرداخت',
+        text: "پرداخت موفقیت آمیز بود؟",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'خیر',
+        reverseButtons: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax(
+            {
+                method: 'POST',
+                url: '{% url "market:pay-card" %}',
+                data: {
+                    post_price: postPrice,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    swalWithBootstrapButtons.fire({
+                        title: 'موفق',
+                        text: 'سفارش با موفقیت ثبت شد',
+                        icon: 'success',
+                        confirmButtonText: 'باشه',
+                    })
+                },
+                error: function (json) {
+                    console.log(json.error)
+                }
+            }
+        )
+          
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: 'نا موفق',
+            text: 'پرداخت با مشکل مواجه شد!',
+            icon: 'error',
+            confirmButtonText: 'باشه',
+            })
+        }
+      })
+        
     })
         
 </script>

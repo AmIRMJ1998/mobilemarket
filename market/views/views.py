@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
@@ -12,7 +13,7 @@ from django.contrib.postgres.fields import ArrayField
 import jdatetime
 import threading
 
-from market.models import Slider, Mobile, User, Message, Comment
+from market.models import Slider, Mobile, User, Message, Comment, Factor
 
 
 # Create your views here
@@ -20,26 +21,248 @@ def index(request):
     slides = Slider.objects.all()
     offMobiles = Mobile.objects.filter(publish = True, inventory__gt = 0, discount__gt = 0).order_by('-id')[:15]
     latestMobiles = Mobile.objects.filter(publish = True, inventory__gt = 0).order_by('-id')[:15]
-    mostRateMobiles = Mobile.objects.filter(publish = True, inventory__gt = 0).order_by('-id')[:15]
+
+    mobiles = Mobile.objects.filter(publish = True, inventory__gt = 0)
+
+    class Items:
+        def __init__(self, thisMobile, thisPoint):
+            self.mobile = thisMobile
+            self.point = thisPoint
+
+    ItemsList = []
+
+    for item in mobiles:
+        totalPoint = 0
+        if item.points is not None:
+            for point in item.points:
+                totalPoint += float(point['productRate'])
+            item = Items(item, totalPoint)
+            ItemsList.append(item)
+
+
+    def GetPoint(item):
+        return int(item.point)
+    
+    ItemsList.sort(reverse = True, key = GetPoint)
+
+    ItemsList = ItemsList[:15]
+    print(str(len(ItemsList)))
+    
+    # mostRateMobiles = Mobile.objects.filter(publish = True, inventory__gt = 0).order_by('-id')[:15]
 
     context = {
         'Slides': slides,
         'OffMobiles': offMobiles,
         'LatestMobiles': latestMobiles,
-        'MostRateMobiles': mostRateMobiles,
+        'MostRateMobiles': ItemsList,
     }
     return render(request, 'market/index.html', context)
 
 # def products(request):
 #     return render(request, 'market/products.html')
+def mobileFilter(request):
+            try:
+                available = request.POST['available']
+            except MultiValueDictKeyError:
+                available = ''
+                
+            try:
+                brands = request.POST.getlist('brands[]')
+            except MultiValueDictKeyError:
+                brands = ''
+                
+            try:
+                Max = request.POST['max']
+            except MultiValueDictKeyError:
+                Max = ''
+                
+            try:
+                Min = request.POST['min']
+            except MultiValueDictKeyError:
+                Min = ''
+                
+            try:
+                colors = request.POST['colors']
+            except MultiValueDictKeyError:
+                colors = ''
+                
+            try:
+                simcard = request.POST['simcard']
+            except MultiValueDictKeyError:
+                simcard = ''
+                
+            try:
+                internalMemory = request.POST['internalMemory']
+            except MultiValueDictKeyError:
+                internalMemory = ''
+                
+            try:
+                ram = request.POST['ram']
+            except MultiValueDictKeyError:
+                ram = ''
+                
+            try:
+                os = request.POST['os']
+            except MultiValueDictKeyError:
+                os = ''
+                
+            Mobiles = Mobile.objects.filter(publish = True)
+
+            if available == '1':
+                Mobiles = Mobiles.filter(inventory__gt = 0)
+            #     for item in Mobiles:
+            #         if item.inventory > 0 :
+            #             mobiles.append(item)
+            # else:
+            #     for item in Mobiles:
+            #         mobiles.append(item)
+            
+            if len(brands) != 0:
+                Mobiles = Mobiles.filter(brand__in = brands)
+                # for brand in brands:
+                #     for item in mobiles:
+                #         if item.brand == brand:
+                #             mobiles.append(item)
+            mobileList = list(Mobiles)
+           
+        #    for item in mobileList:
+        #         if len(colors) != 0:
+        #             for single_color in colors:
+        #                 for item in mobiles:
+        #                     for color, _ in item.colors[0].items():
+        #                         if single_color == color:
+        #                             mobiles.append(item)
+
+        #     if simcard == '1':
+        #         for item in mobiles:
+        #             for key, value in item.technical_details[0].items():
+        #                 if key == 'طراحی':
+        #                     for k, v in value:
+        #                         if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'تک سیم کارت' or v == 'تک سیمکارت' or v == 'یک سیمکارت' or v == 'یک سیم کارت'):
+        #                             mobiles.append(item)
+                                    
+        #     elif simcard == '2':
+        #         for item in mobiles:
+        #             for key, value in item.technical_details[0].items():
+        #                 if key == 'طراحی':
+        #                     for k, v in value:
+        #                         if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'دو سیم کارت' or v == 'دو سیمکارت'):
+        #                             mobiles.append(item)
+
+        #     if internalMemory != '':
+        #         for item in mobiles:
+        #             for key, value in item.technical_details[0].items():
+        #                 if key == 'حافظه':
+        #                     for k, v in value:
+        #                         if k == 'حافظه داخلی' and v == internalMemory:
+        #                             mobiles.append(item)
+
+        #     if Max != '' or Min != '':
+        #         Mobiles = Mobiles.filter(price__gt = Min, price__lt = Max)
+        #         # for item in mobiles:
+        #         #     if item.price > Min and item.price < Max:
+        #         #         mobiles.append(item)
+            mobilePaginator = Paginator (Mobiles, 20)
+            page = request.GET.get('page')
+            Mobiles = mobilePaginator.get_page(page)
+
+            context = {
+                'Mobiles': Mobiles
+            }
+            
+            return render(request, 'market/products-mobile.html', context)
 
 def mobile(request):
-    Mobiles = Mobile.objects.filter(publish = True)
+    if request.method == 'POST':
+        try:
+            words = request.POST["search"]
+            words = words.split(' ')
+            words = list(filter(lambda i: i!='', words))
+            search_words = []
+            for word in words:
+                search_word = list(map(lambda x: x + '\s*', word.replace(' ','')[:-1]))
+                search_word = ''.join(search_word) + word[-1]
+                search_words.append(search_word)
+            search_word = r'.*'.join(search_words)
+        except:
+            word = False
 
-    context = {
-        'Mobiles': Mobiles
-    }
-    return render(request, 'market/products-mobile.html', context)
+        mobiles = Mobile.objects.filter(Q(title__regex = search_word) | Q(slug__regex = search_word) | Q(brand__regex = search_word), publish = True )
+
+        mobilePaginator = Paginator (mobiles, 20)
+        page = request.GET.get('page')
+        mobiles = mobilePaginator.get_page(page)
+
+        context = {
+            'Mobiles': mobiles
+        }
+        return render(request, 'market/products-mobile.html', context)
+
+    else:
+        Mobiles = Mobile.objects.filter(publish = True)
+
+
+        MobilesBrands = []
+        for item in Mobiles:
+            if MobilesBrands is None:
+                MobilesBrands.append(item.brand)
+            else:
+                if item.brand not in MobilesBrands:
+                    MobilesBrands.append(item.brand)
+
+        priceList = []
+        for item in Mobiles:
+            priceList.append(item.price)
+        
+        minPrice = min(priceList)
+        maxPrice = max(priceList)
+
+        MobilesColors = []
+        for item in Mobiles:
+            find = False
+            for key, value in item.colors[0].items():
+                if len(MobilesColors) != 0:
+                    for ky, _ in MobilesColors[0].items():
+                        if key == ky:
+                            find = True
+                if find == False:        
+                    for k, _ in value.items():
+                        MobilesColors.append({key:k})
+
+
+        MobileMemories = []
+        for item in Mobiles:
+            for a in item.technical_details:
+                for key, value in a.items():
+                    if key == 'حافظه':
+                        for k, v in value.items():
+                            if k == 'حافظه داخلی':
+                                if v not in MobileMemories:
+                                    MobileMemories.append(v)
+                                    
+        MobileRamMemories = []
+        for item in Mobiles:
+            for a in item.technical_details:
+                for key, value in a.items():
+                    if key == 'حافظه':
+                        for k, v in value.items():
+                            if k == 'مقدار RAM':
+                                if v not in MobileRamMemories:
+                                    MobileRamMemories.append(v)
+
+        mobilePaginator = Paginator (Mobiles, 20)
+        page = request.GET.get('page')
+        Mobiles = mobilePaginator.get_page(page)
+
+        context = {
+            'Mobiles': Mobiles,
+            'MobileBrands': MobilesBrands,
+            'MobilesColors': MobilesColors,
+            'MobileMemories': MobileMemories,
+            'minPrice': minPrice,
+            'maxPrice': maxPrice
+        }
+        return render(request, 'market/products-mobile.html', context)
 
 # def tablet(request):
 #     return render(request, 'market/products-tablet.html')
@@ -75,7 +298,7 @@ def product(request, Slug):
 
     return render(request, 'market/product.html', context)
 
-
+@login_required(login_url="login")
 def rate(request):
     res = {}
     if request.user.is_authenticated:
@@ -117,6 +340,7 @@ def rate(request):
     else:
         return redirect("login")
 
+@login_required(login_url="login")
 def createComment(request):
     res = {}
 
@@ -161,6 +385,7 @@ def createComment(request):
     else:
         return redirect("login")
 
+@login_required(login_url="login")
 def likeComment(request):
     res = {}
     if request.user.is_authenticated:
@@ -207,6 +432,7 @@ def likeComment(request):
         res['status'] = False
         return JsonResponse(res)
 
+@login_required(login_url="login")
 def replyComment(request):
     res = {}
 
@@ -251,18 +477,29 @@ def replyComment(request):
                 res['status'] = False
                 return JsonResponse(res)
 
-
+@login_required(login_url="login")
 def card(request):
-    return render(request, 'market/card.html')
+    if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
+        factor = Factor.objects.get(FK_User = request.user, payment_status = False)
 
-def addToCard(request):
-    res = {}
+        totalFactorPrice = factor.get_total_price()
+        for item in factor.items['items']:
+            mobileID = item['id']
+            thisMobile = Mobile.objects.get(id = mobileID)
+            item['id'] = thisMobile
 
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            return
+        factorItems = factor.items['items']
     else:
-        return redirect('login')
+        factorItems = []
+        totalFactorPrice = ''
+
+    context = {
+        'factorItems': factorItems,
+        'totalFactorPrice': totalFactorPrice
+    }
+
+    return render(request, 'market/card.html', context)
+
 
 def register(request):
     return render(request, 'market/register-login/register.html')
@@ -270,12 +507,15 @@ def register(request):
 def loginPage(request):
     return render(request, 'market/register-login/login.html')
 
+@login_required(login_url="login")
 def dashboard(request):
     return render(request, 'account/dashboard.html')
 
+@login_required(login_url="login")
 def orders(request):
     return render(request, 'account/orders.html')
 
+@login_required(login_url="login")
 def order(request):
     return render(request, 'account/order.html')
 
@@ -397,6 +637,7 @@ def changeInformation(request):
     else:
         return redirect("login")
 
+@login_required(login_url="login")
 def favorites(request):
     thisUser = request.user
     favorites = thisUser.favorite_list
@@ -410,6 +651,7 @@ def favorites(request):
 
     return render(request, 'account/favorites.html', context)
 
+@login_required(login_url="login")
 def addtofavorite(request):
     res = {}
 
@@ -455,6 +697,8 @@ def addtofavorite(request):
 
     else:
         return redirect("login")
+
+@login_required(login_url="login")
 def messages(request):
     userMessages = []
     allmessages = Message.objects.all()
@@ -469,12 +713,15 @@ def messages(request):
                 
     return render(request, 'account/messages.html', context)
 
+@login_required(login_url="login")
 def message(request, id):
     message = Message.objects.get(id = id)
     context = {
         'message': message
     }
     return render(request, 'account/message.html', context)
+
+@login_required(login_url="login")
 def changeMessageStatus(request):
     res = {}
 
@@ -493,8 +740,8 @@ def changeMessageStatus(request):
     return JsonResponse(res)
 
 
-def comments(request):
-    return render(request, 'account/comments.html')
+# def comments(request):
+#     return render(request, 'account/comments.html')
 
 def compare(request):
 

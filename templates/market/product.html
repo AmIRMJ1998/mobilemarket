@@ -297,9 +297,9 @@
                                                                             </div>
                                                                         </label>
                                                                         {% if forloop.parentloop.parentloop.counter == 1 %}
-                                                                            <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.parentloop.counter}}" checked>
+                                                                            <input val="{{name}}" val2="{{k}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.parentloop.counter}}" checked>
                                                                         {% else %}
-                                                                            <input val="{{name}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.parentloop.counter}}">
+                                                                            <input val="{{name}}" val2="{{k}}" hidden type="radio" name="color-radio" id="color-{{forloop.parentloop.parentloop.counter}}">
                                                                         {% endif %}
                                                                     </div>
                                                                 {% endif %}
@@ -319,9 +319,7 @@
                                         <div class="value">
                                             <select class="form-control" name="guarantee" id="guarantee">
                                                 {% for guarantee in mobile.guarantees %}
-                                                    <option value="{{forloop.counter}}">
-                                                        {{guarantee}}
-                                                    </option>
+                                                    <option value="{{forloop.counter}}">{{guarantee}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -1499,5 +1497,65 @@
                 '<button val="' + whichComment + '" class="btn btn-primary send-comment">ارسال</button>' +
             '</div>' +
         '</div>')
+    })
+
+    $(".buy-button").click(function (){
+        var mobileID = '{{mobile.id}}';
+        var colorName = $('input[name="color-radio"]:checked').attr('val');
+        var colorValue = $('input[name="color-radio"]:checked').attr('val2');
+        var guarantee = $("#guarantee option:selected").text();
+        if (guarantee == '') {
+            guarantee = 'بدون گارانتی';
+        }
+        console.log(oldTotalPrice);
+
+        $.ajax (
+            {
+                method: 'POST',
+                url: '{% url "market:add_new_item_in_factor" %}',
+                data: {
+                    id: mobileID,
+                    color: colorName,
+                    color_value: colorValue,
+                    guarantee: guarantee,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                success: function (json) {
+                    console.log(json.status)
+                    if (json.status) {
+                        $("#total-price").text(json.total_price).digits();
+                        if (json.total_price > oldTotalPrice)
+                        {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'موفق',
+                                text: 'محصول با موفقیت ثبت گردید به سبد خرید افزوده شد',
+                            })
+                        }
+                        else
+                        {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'اتمام موجودی',
+                                text: 'موجودی موبایل به اتمام رسید!',
+                            })
+                        }
+                        oldTotalPrice = json.total_price;
+                    }
+                    else {
+                        console.log(json.error)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ناموفق',
+                            text: 'افزودن به سبد خرید با مشکل مواجه گردید!',
+                        })
+                    }
+                },
+                error: function (json) {
+                    console.log(json.error)
+                }
+            }
+        )
     })
 </script>

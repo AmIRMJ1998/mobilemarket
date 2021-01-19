@@ -204,44 +204,6 @@ $(".logged-in").click(function () {
 // })
 
 //When Pay Button Clicked "sweetalert2"
-$("#pay-btn").click(function () {
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success ml-3',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      })
-      
-      swalWithBootstrapButtons.fire({
-        title: 'وضعیت پرداخت',
-        text: "پرداخت موفقیت آمیز بود؟",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'بله',
-        cancelButtonText: 'خیر',
-        reverseButtons: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire({
-            title: 'موفق',
-            text: 'سفارش با موفقیت ثبت شد',
-            icon: 'success',
-            confirmButtonText: 'باشه',
-          })
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire({
-            title: 'نا موفق',
-            text: 'پرداخت با مشکل مواجه شد!',
-            icon: 'error',
-            confirmButtonText: 'باشه',
-            })
-        }
-      })
-})
 
 //Submit Comment "sweetalert2"
 // $(document).on('click' ,".send-comment", function () {
@@ -302,27 +264,6 @@ $(document).on('click', '.close-message', function () {
     $(this).parents('div.alert-message').fadeOut();
 });
 
-
-var minPrice = 0;
-var maxPrice = 51000000;
-
-$( function() {
-    $( "#filter-price-range" ).slider({
-      range: true,
-      min: 0,
-      max: 51000000,
-      values: [ 0, 51000000 ],
-      slide: function( event, ui ) {
-        minPrice = ui.values[0];
-        maxPrice = ui.values[1];
-        $( "#amount" ).val( ui.values[ 1 ].toLocaleString() + " تومان" + " - " + ui.values[ 0 ].toLocaleString() + " تومان" );
-      }
-    });
-    $( "#amount" ).val($( "#filter-price-range" ).slider( "values", 1 ).toLocaleString() +
-    " تومان" +
-    " - " + $( "#filter-price-range" ).slider( "values", 0 ).toLocaleString() +
-    " تومان");
-  } );
 
   $(".product-color-selection-item").click(function () {
     $(".product-color-selection-item").removeClass('active');
