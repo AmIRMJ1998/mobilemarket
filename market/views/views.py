@@ -14,6 +14,7 @@ import jdatetime
 import threading
 
 from market.models import Slider, Mobile, User, Message, Comment, Factor
+from blog.models import Post
 
 
 # Create your views here
@@ -970,4 +971,18 @@ def lastComments(request):
             commentsJS[comment.FK_User.username] = comment.description
             commentsList.append(commentsJS)
         res['comments'] = commentsList
+        return JsonResponse(res)
+
+
+def lastPosts(request):
+    res = {}
+    if request.method == 'POST':
+        postsList = []
+        for item in Post.objects.order_by('-publishdate')[:3]:
+            postsJS = {}
+            # url = str(item.get_url)
+            url = item.get_url()
+            postsJS[url] = item.get_title()
+            postsList.append(postsJS)
+        res['posts'] = postsList
         return JsonResponse(res)

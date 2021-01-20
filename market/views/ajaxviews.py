@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 import datetime
 # get model
-from market.models import Mobile, Factor, User
+from market.models import Mobile, Factor, User, Contact
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -241,6 +241,31 @@ def cardTotalPrice(request):
             response_data['total_price'] = 0
             return JsonResponse(response_data)
 
+    except Exception as e:
+        response_data['status'] = False
+        response_data['error'] = str(e)
+        return JsonResponse(response_data)
+
+
+# add connect us
+def add_new_connectus(request):
+    response_data = {}
+    try:
+        # get data
+        this_title = request.POST.get("this_title")
+        this_mobile = request.POST.get("this_mobile")
+        this_email = request.POST.get("this_email")
+        this_message = request.POST.get("this_message")
+        # check data
+        if (len(this_title) > 0) and ((len(this_mobile) > 0) or (len(this_email) > 0)) and (len(this_message) > 0):
+            # create new connect us
+            Contact.objects.create(mobilenumber = this_mobile, email = this_email, title = this_title, description = this_message)
+            response_data['status'] = True
+            return JsonResponse(response_data)
+        else:
+            response_data['status'] = False
+            response_data['message'] = 'نام، شماره موبایل، ایمیل و متن نمی تواند خالی باشد.'
+            return JsonResponse(response_data)
     except Exception as e:
         response_data['status'] = False
         response_data['error'] = str(e)
