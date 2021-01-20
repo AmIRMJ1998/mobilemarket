@@ -6,13 +6,13 @@
 
 <title>تماس با ما | فروشگاه موبایل</title>
 </head>
-<body>
 
-    
-    {% block header %}
+
+{% block header %}
     {% include "base/header.html" %}
-    {% endblock %}
+{% endblock %}
 
+<body>
     <div class="container">
         <div class="contact-us">
             <div class="row">
@@ -23,45 +23,88 @@
                                 تماس با ما
                             </h5>
                         </div>
-                        <div class="form-row contact-us-form-row justify-content-center mb-3">
-                            <div class="col-12">
-                                <label for="title">عنوان پیام</label>
-                                <input id="title" class="form-control" type="text" placeholder="عنوان پیام" autocomplete="off">
+                        <form>
+                            {% csrf_token %}
+                            <div class="form-row contact-us-form-row justify-content-center mb-3">
+                                <div class="col-12">
+                                    <label for="input_title">عنوان پیام</label>
+                                    <input id="input_title" class="form-control" type="text" placeholder="عنوان پیام" autocomplete="off">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row contact-us-form-row justify-content-center mb-3">
-                            <div class="col-12">
-                                <label for="phone-number">شماره تماس</label>
-                                <input id="phone-number" class="form-control" type="text" placeholder="شماره تماس" autocomplete="off">
+                            <div class="form-row contact-us-form-row justify-content-center mb-3">
+                                <div class="col-12">
+                                    <label for="input_mobile">شماره تماس</label>
+                                    <input id="input_mobile" class="form-control" type="text" placeholder="شماره تماس" autocomplete="off">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row contact-us-form-row justify-content-center mb-3">
-                            <div class="col-12">
-                                <label for="email">ایمیل</label>
-                                <input id="email" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
+                            <div class="form-row contact-us-form-row justify-content-center mb-3">
+                                <div class="col-12">
+                                    <label for="input_useremail">ایمیل</label>
+                                    <input id="input_useremail" class="form-control" type="email" placeholder="ایمیل" autocomplete="off">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row contact-us-form-row justify-content-center mb-3">
-                            <div class="col-12">
-                                <label for="text-message">متن پیام</label>
-                                <textarea name="text-message" id="text-message" class="form-control" cols="20" rows="7" placeholder="پیام خود را اینجا بنویسید..."></textarea>
+                            <div class="form-row contact-us-form-row justify-content-center mb-3">
+                                <div class="col-12">
+                                    <label for="input_message">متن پیام</label>
+                                    <textarea name="text-message" id="input_message" class="form-control" cols="20" rows="7" placeholder="پیام خود را اینجا بنویسید..."></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="send-message">
-                            <button class="btn btn-primary w-100" id="send-message">
-                                ارسال
-                            </button>
-                        </div>
+                            <div class="send-message">
+                                <button class="btn btn-primary w-100" id="send-message">
+                                    ارسال
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {% block footer %}
+
+{% block footer %}
     {% include "base/footer.html" %}
-    {% endblock %}
+{% endblock %}
     
 {% block foot %}
-{% include "base/foot.html" %}
+    {% include "base/foot.html" %}
 {% endblock %}
+
+<!-- Ajax -->
+<script text="javascripts">
+	$("#send-message").on("click", function (e) {
+        e.preventDefault();
+		var  thisuser_title = $('#input_title').val();
+		var  thisuser_mobile = $('#input_mobile').val();
+		var  thisuser_email = $('#input_useremail').val();
+		var  thisuser_message = $('#input_message').val();
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: '{% url "market:create_new_connectus" %}',
+                data: {
+                    this_title: thisuser_title,
+                    this_mobile: thisuser_mobile,
+                    this_email: thisuser_email,
+                    this_message: thisuser_message,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (json) {
+                    if (json.status == true) {
+                        alert('پیام شما ثبت شد.');
+                    }else{
+                        alert(json.message);
+                    }
+                },
+                error: function (xhr) {
+                    alert('خطایی رخ داده است.');
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            }
+        );  
+	})
+</script>
+
+</body>
+</html>

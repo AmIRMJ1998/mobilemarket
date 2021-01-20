@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 import datetime
 # get model
-from market.models import Mobile, Factor, User
+from market.models import Mobile, Factor, User, Contact
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

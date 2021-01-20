@@ -26,6 +26,7 @@ urlpatterns = [
     path('products/comment/like/mobile/', views.likeComment, name="likeComment"),
     path('products/comment/reply/mobile/', views.replyComment, name="replyComment"),
     
+    path('add/connesct-us/', ajaxviews.add_new_connectus , name = 'create_new_connectus'),
 
     path('card/', views.card, name="card"),
 
@@ -58,6 +59,7 @@ urlpatterns = [
     path('login/', views.loginPage, name='login'),
 
     path('last-comments/', views.lastComments, name="lastComments"),
+    path('last-posts/', views.lastPosts, name="lastPosts"),
 
     path('loginRequest/', views.loginRequest, name='loginRequest'),
     path('logout/', views.logoutRequest, name='logoutRequest')

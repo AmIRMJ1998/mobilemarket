@@ -1,12 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import User, UserManager, Mobile, Comment, Contact, Message, Slider, Factor
+from .models import User, UserManager, Mobile, Comment, Contact, Message, Slider, Factor, Gallery
 from blog.models import Post
 
 User = get_user_model()
 # Main Section Title
 admin.site.site_header = 'Mobile Market'
 # --------------------------------
+# Gallery Admin Section
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ('image',)
+    ordering = ['id',]
 # Post Admin Section
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
