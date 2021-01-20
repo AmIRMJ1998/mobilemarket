@@ -162,7 +162,7 @@ class Mobile (models.Model):
     # description = models.TextField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
     description = RichTextUploadingField(verbose_name = 'بررسی تخصصی', blank = True, null = True)
     index_image = models.ImageField(verbose_name = 'عکس اصلی', upload_to = 'media/images/mobile/', blank = True, null = True)
-    # gallery = ArrayField(models.ImageField(verbose_name = 'عکس', upload_to = 'media/images/mobile/'), verbose_name = 'گالری', blank = True, null = True)
+    gallery = models.ManyToManyField('Gallery', verbose_name = 'گالری ها', related_name = 'mobile_gallery', blank = True)
     points = JSONField(verbose_name = 'امتیازات', null = True, blank = True)
     price = models.CharField(verbose_name = 'قیمت', max_length = 15)
     discount = models.CharField(verbose_name = 'تخفیف', max_length = 15, default='0')
@@ -254,6 +254,20 @@ class Mobile (models.Model):
         ordering = ('id','datecreate',)   
         verbose_name = "موبایل"
         verbose_name_plural = "موبایل ها"
+
+#----------------------------------------------------------------------------------------------------------------------------------------
+
+# Gallery (گالری) Model
+class Gallery (models.Model):
+    image = models.ImageField(verbose_name = 'عکس', upload_to = 'media/images/mobile/', blank = True, null = True)
+
+    def __str__(self):
+        return "{}".format(self.image)
+
+    class Meta:
+        ordering = ('id',)   
+        verbose_name = "گالری"
+        verbose_name_plural = "گالری ها"
 
 #----------------------------------------------------------------------------------------------------------------------------------------
 
