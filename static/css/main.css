@@ -827,6 +827,10 @@ section.product-section .product-main .product-main-filter .filter-item.active {
   margin-left: 20px;
 }
 
+.comments .comment .comment-like-reply .comment-like.nowliked {
+  color: #4c83ff;
+}
+
 .comments .comment .comment-like-reply .comment-like i {
   font-size: 20px;
   margin-right: 5px;

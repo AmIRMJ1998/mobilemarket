@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from market.models import Comment
 from blog.models import Post
 
@@ -31,6 +32,10 @@ def blogindex(request):
         return int(item.point)
     
     ItemsList.sort(reverse = True, key = GetPoint)
+
+    blogPaginator = Paginator (post_list, 7)
+    page = request.GET.get('page')
+    post_list = blogPaginator.get_page(page)
 
     content = {
         "PostList": post_list,

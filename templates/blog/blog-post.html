@@ -155,21 +155,19 @@
                                             {{item.description}}
                                         </div>
                                         <div class="comment-like-reply">
-                                            <div class="comment-like">
-                                                {% if item.likes|length %}
+                                            <div val="{{item.id}}" class="comment-like">
+                                                <span val="{{item.id}}" class="comment-like-count">
+                                                    {% if item.likes|length %}
                                                         {{item.like_count}}
                                                     {% else %}
                                                         0
                                                     {% endif %}
-                                                    {% if request.user.is_authenticated %}
-                                                        <i val="{{item.id}}" class="fas fa-thumbs-up active"></i>
-                                                    {% else %}
-                                                        <i class="fas fa-thumbs-up"></i>
-                                                    {% endif %}
-                                                <!-- {.{item.likes|length}}
-                                                {.% if request.user.is_authenticated %}
+                                                </span>
+                                                {% if request.user.is_authenticated %}
+                                                    <i val="{{item.id}}" class="fas fa-thumbs-up active"></i>
+                                                {% else %}
                                                     <i class="fas fa-thumbs-up"></i>
-                                                {.% endif %} -->
+                                                {% endif %}
                                             </div>
                                             {% if request.user.is_authenticated %}
                                                 <div class="comment-reply">
@@ -191,8 +189,10 @@
                                                         {{ reply.description }}
                                                     </div>
                                                     <div class="comment-like-reply">
-                                                        <div class="comment-like">
-                                                            {{reply.likes|length}}
+                                                        <div val="{{reply.id}}" class="comment-like">
+                                                            <span val="{{reply.id}}" class="comment-like-count">
+                                                                {{reply.likes|length}}
+                                                            </span>
                                                             {% if request.user.is_authenticated %}
                                                                 <i val="{{reply.id}}" class="fas fa-thumbs-up active"></i>
                                                             {% else %}
@@ -203,13 +203,24 @@
                                                 </div>
                                             {% endfor %}
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
                             </div>
                             {% if request.user.is_authenticated %}
                                 <div class="comment-form">
                                     <h5>نظر شما</h5>
                                     <p>نظر خود را از طریق بخش زیر برای ما ارسال کنید.</p>
+                                    <div val="0" class="alert-message error-message front text-right mb-3">
+                                        <div class="alert-message-content error-content">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <div class="alert-message-text error-text">
+                                                لطفا فیلد مورد نظر را تکمیل نمائید.
+                                            </div>
+                                        </div>
+                                        <div class="close-message close-error-message">
+                                            <i class="fas fa-times"></i>
+                                        </div>
+                                    </div>
                                     <textarea val="0" name="comment" id="product-comment" class="form-control" cols="20" rows="7" placeholder="نظر خود را در اینجا بنویسید..."></textarea>
                                     <div class="send-comment-btn text-left mt-3">
                                         <button val="0" class="btn btn-primary send-comment">ارسال</button>
@@ -299,7 +310,15 @@
                             console.log(json.status);
                             if (json.status)
                             {
-                                
+                                $("#product-comment").val('');
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'موفق',
+                                    text: 'نظر شما با موفقیت ثبت گردید',
+                                })
+                                setTimeout (function() {
+                                    location.reload();
+                                }, 2000)
                             }
                             else
                             {
@@ -314,7 +333,7 @@
             }
             else
             {
-                alert('por kon')
+                $(".alert-message.error-message[val='0'").show();
             }
         }
         else
@@ -336,7 +355,15 @@
                             console.log(json.status);
                             if (json.status)
                             {
-
+                                $("textarea[val='" + whichComment + "'").val('');
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'موفق',
+                                    text: 'نظر شما با موفقیت ثبت گردید',
+                                })
+                                setTimeout (function() {
+                                    location.reload();
+                                }, 2000)
                             }
                             else
                             {
@@ -352,7 +379,7 @@
             }
             else
             {
-                alert('por kon haji')
+                $(".alert-message.error-message[val='" + whichComment + "'").show();
             }
         }
     })
@@ -363,6 +390,17 @@
 
         $(".comment[val='" + whichComment + "'").append(
         '<div class="reply-form">' +
+            '<div val="' + whichComment + '" class="alert-message error-message front text-right mb-3">' +
+                '<div class="alert-message-content error-content">' +
+                    '<i class="fas fa-exclamation-circle"></i>' +
+                    '<div class="alert-message-text error-text">' +
+                        'لطفا فیلد مورد نظر را تکمیل نمائید.' +
+                    '</div>' +
+                '</div>' +
+                '<div class="close-message close-error-message">' +
+                    '<i class="fas fa-times"></i>' +
+                '</div>' +
+            '</div>' +
             '<textarea val="' + whichComment + '" name="comment" class="form-control" cols="20" rows="7" placeholder="پاسخ خود را اینجا بنویسید..."></textarea>' +
             '<div class="send-comment-btn text-left mt-3">' +
                 '<button val="' + whichComment + '" class="btn btn-primary send-comment">ارسال</button>' +
@@ -371,7 +409,6 @@
     })
     $(document).on("click", ".comment-like i.active", function () {
         var commentID = $(this).attr('val');
-        console.log(commentID)
 
         $.ajax (
             {
@@ -390,11 +427,13 @@
                         console.log(json.remove)
                         if (json.remove == 0)
                         {
-                            console.log('add')
+                            $(".comment-like-count[val='" + commentID + "']").text(json.likeCount);
+                            $(".comment-like[val='" + commentID + "']").addClass('nowliked');
                         }
                         else if (json.remove == 1)
                         {
-                            console.log('remove')
+                            $(".comment-like-count[val='" + commentID + "']").text(json.likeCount);
+                            $(".comment-like[val='" + commentID + "']").removeClass('nowliked');
                         }
                     }
                     else

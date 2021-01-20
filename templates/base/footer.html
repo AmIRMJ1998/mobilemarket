@@ -29,19 +29,16 @@
                             <a href="#">
                                 <p>
                                     <i class="fal fa-blog"></i>
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...
                                 </p>
                             </a>
                             <a href="#">
                                 <p>
                                     <i class="fal fa-blog"></i>
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...
                                 </p>
                             </a>
                             <a href="#">
                                 <p>
                                     <i class="fal fa-blog"></i>
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده...
                                 </p>
                             </a>
                         </div>
@@ -49,36 +46,6 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-4">
                         <div class="last-comments">
                             <h6>آخرین نظرات</h6>
-                            <!-- <a href="#">
-                                <p class="comment-summary">
-                                    <i class="fal fa-comment"></i>
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم ...
-                                </p>
-                                <p class="comment-user">
-                                    <i class="fas fa-user"></i>
-                                    Username
-                                </p>
-                            </a>
-                            <a href="#">
-                                <p class="comment-summary">
-                                    <i class="fal fa-comment"></i>
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم ...
-                                </p>
-                                <p class="comment-user">
-                                    <i class="fas fa-user"></i>
-                                    Username
-                                </p>
-                            </a>
-                            <a href="#">
-                                <p class="comment-summary">
-                                    <i class="fal fa-comment"></i>
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم ...
-                                </p>
-                                <p class="comment-user">
-                                    <i class="fas fa-user"></i>
-                                    Username
-                                </p>
-                            </a> -->
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 social-network">
@@ -118,11 +85,11 @@
                     for (var item of json.comments)
                     {
                         jQuery.each(item , function(key, val) {
-                            var summaryval = val.substring(0, 50);
+                            var summaryval = val.substring(0, 70);
                             $(".last-comments").append('' +
                             '<p class="comment-summary">' +
                                 '<i class="fal fa-comment"></i>' +
-                                    val + '...' +
+                                summaryval + '...' +
                             '</p>' +
                             '<p class="comment-user">' +
                                 '<i class="fas fa-user"></i>' +

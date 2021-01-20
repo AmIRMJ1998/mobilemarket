@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
+from django.forms.models import model_to_dict
 from django.contrib.postgres.fields import ArrayField
 import jdatetime
 import threading
@@ -61,116 +62,206 @@ def index(request):
 # def products(request):
 #     return render(request, 'market/products.html')
 def mobileFilter(request):
-            try:
-                available = request.POST['available']
-            except MultiValueDictKeyError:
-                available = ''
-                
-            try:
-                brands = request.POST.getlist('brands[]')
-            except MultiValueDictKeyError:
-                brands = ''
-                
-            try:
-                Max = request.POST['max']
-            except MultiValueDictKeyError:
-                Max = ''
-                
-            try:
-                Min = request.POST['min']
-            except MultiValueDictKeyError:
-                Min = ''
-                
-            try:
-                colors = request.POST['colors']
-            except MultiValueDictKeyError:
-                colors = ''
-                
-            try:
-                simcard = request.POST['simcard']
-            except MultiValueDictKeyError:
-                simcard = ''
-                
-            try:
-                internalMemory = request.POST['internalMemory']
-            except MultiValueDictKeyError:
-                internalMemory = ''
-                
-            try:
-                ram = request.POST['ram']
-            except MultiValueDictKeyError:
-                ram = ''
-                
-            try:
-                os = request.POST['os']
-            except MultiValueDictKeyError:
-                os = ''
-                
-            Mobiles = Mobile.objects.filter(publish = True)
+    response = {}
+    try:
+        available = request.POST['available']
+    except MultiValueDictKeyError:
+        available = ''
+        
+    try:
+        brands = request.POST.getlist('brands[]')
+    except MultiValueDictKeyError:
+        brands = ''
+        
+    try:
+        Max = request.POST['max']
+    except MultiValueDictKeyError:
+        Max = ''
+        
+    try:
+        Min = request.POST['min']
+    except MultiValueDictKeyError:
+        Min = ''
+        
+    try:
+        colors = request.POST.getlist('colors[]')
+    except MultiValueDictKeyError:
+        colors = ''
+        
+    try:
+        simcard = request.POST['simcard']
+    except MultiValueDictKeyError:
+        simcard = ''
+        
+    try:
+        internalMemory = request.POST.getlist('internalMemory[]')
+    except MultiValueDictKeyError:
+        internalMemory = ''
+        
+    try:
+        ram = request.POST.getlist('ram[]')
+    except MultiValueDictKeyError:
+        ram = ''
+        
+    try:
+        os = request.POST['os']
+    except MultiValueDictKeyError:
+        os = ''
 
-            if available == '1':
-                Mobiles = Mobiles.filter(inventory__gt = 0)
-            #     for item in Mobiles:
-            #         if item.inventory > 0 :
-            #             mobiles.append(item)
-            # else:
-            #     for item in Mobiles:
-            #         mobiles.append(item)
-            
-            if len(brands) != 0:
-                Mobiles = Mobiles.filter(brand__in = brands)
-                # for brand in brands:
-                #     for item in mobiles:
-                #         if item.brand == brand:
-                #             mobiles.append(item)
-            mobileList = list(Mobiles)
-           
-        #    for item in mobileList:
-        #         if len(colors) != 0:
-        #             for single_color in colors:
-        #                 for item in mobiles:
-        #                     for color, _ in item.colors[0].items():
-        #                         if single_color == color:
-        #                             mobiles.append(item)
+    Mobiles = Mobile.objects.filter(publish = True)
 
-        #     if simcard == '1':
-        #         for item in mobiles:
-        #             for key, value in item.technical_details[0].items():
-        #                 if key == 'طراحی':
-        #                     for k, v in value:
-        #                         if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'تک سیم کارت' or v == 'تک سیمکارت' or v == 'یک سیمکارت' or v == 'یک سیم کارت'):
-        #                             mobiles.append(item)
-                                    
-        #     elif simcard == '2':
-        #         for item in mobiles:
-        #             for key, value in item.technical_details[0].items():
-        #                 if key == 'طراحی':
-        #                     for k, v in value:
-        #                         if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'دو سیم کارت' or v == 'دو سیمکارت'):
-        #                             mobiles.append(item)
+    if available == '1':
+        Mobiles = Mobiles.filter(inventory__gt = 0)
+    #     for item in Mobiles:
+    #         if item.inventory > 0 :
+    #             mobiles.append(item)
+    # else:
+    #     for item in Mobiles:
+    #         mobiles.append(item)
+    
+    if len(brands) != 0:
+        Mobiles = Mobiles.filter(brand__in = brands)
+        # for brand in brands:
+        #     for item in mobiles:
+        #         if item.brand == brand:
+        #             mobiles.append(item)
 
-        #     if internalMemory != '':
-        #         for item in mobiles:
-        #             for key, value in item.technical_details[0].items():
-        #                 if key == 'حافظه':
-        #                     for k, v in value:
-        #                         if k == 'حافظه داخلی' and v == internalMemory:
-        #                             mobiles.append(item)
+    mobileList = list(Mobiles)
+    removes = []
+    if len(colors) != 0:
+        for item in mobileList:
+            find = False
+            for single_color in colors:
+                if item.colors is not None:
+                    for color, _ in item.colors[0].items():
+                        if single_color == color:
+                            find = True
+                else:
+                    removes.append(item)
+            if find == False:
+                removes.append(item)
 
-        #     if Max != '' or Min != '':
-        #         Mobiles = Mobiles.filter(price__gt = Min, price__lt = Max)
-        #         # for item in mobiles:
-        #         #     if item.price > Min and item.price < Max:
-        #         #         mobiles.append(item)
-            mobilePaginator = Paginator (Mobiles, 20)
-            page = request.GET.get('page')
-            Mobiles = mobilePaginator.get_page(page)
+    for item in removes:
+        mobileList.remove(item)
 
-            context = {
-                'Mobiles': Mobiles
-            }
-            
-            return render(request, 'market/products-mobile.html', context)
+    removes = []
+    if simcard == '1':
+        for item in mobileList:
+            for key, value in item.technical_details[1].items():
+                if key == 'طراحی':
+                    for k, v in value.items():
+                        if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'دو سیم کارت' or v == 'دو سیمکارت'):
+                            removes.append(item)
+                            
+    elif simcard == '2':
+        for item in mobileList:
+            for key, value in item.technical_details[1].items():
+                if key == 'طراحی':
+                    for k, v in value.items():
+                        if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'یک سیم کارت' or v == 'یک سیمکارت' or v == 'تک سیمکارت' or v == 'تک سیم کارت'):
+                            removes.append(item)
+    
+    for item in removes:
+        mobileList.remove(item)
+
+    removes = []
+    if len(internalMemory) != 0:
+        for item in mobileList:
+            find = False
+            for key, value in item.technical_details[3].items():
+                if key == 'حافظه':
+                    for k, v in value.items():
+                        for imem in internalMemory:
+                            if k == 'حافظه داخلی' and v == imem:
+                                find = True
+                    if find == False:
+                        removes.append(item)
+    for item in removes:
+        mobileList.remove(item)
+
+    removes = []
+    if len(ram) != 0:
+        for item in mobileList:
+            find = False
+            for key, value in item.technical_details[3].items():
+                if key == 'حافظه':
+                    for k, v in value.items():
+                        for imem in ram:
+                            if k == 'مقدار RAM' and v == imem:
+                                find = True
+                    if find == False:        
+                        removes.append(item)
+
+    for item in removes:
+        mobileList.remove(item)
+
+
+    if simcard == '1':
+        for item in mobileList:
+            for key, value in item.technical_details[1].items():
+                if key == 'طراحی':
+                    for k, v in value.items():
+                        if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'دو سیم کارت' or v == 'دو سیمکارت'):
+                            removes.append(item)
+                            
+    elif simcard == '2':
+        for item in mobileList:
+            for key, value in item.technical_details[1].items():
+                if key == 'طراحی':
+                    for k, v in value.items():
+                        if (k == 'تعداد سیمکارت' or k == 'تعداد سیم کارت') and (v == 'یک سیم کارت' or v == 'یک سیمکارت' or v == 'تک سیمکارت' or v == 'تک سیم کارت'):
+                            removes.append(item)
+    removes = []
+    if os == '1':
+        for item in mobileList:
+            for key, value in item.technical_details[8].items():
+                if key == 'امکانات نرم افزاری':
+                    for k, v in value.items():
+                        if k == 'سیستم عامل' and (v == 'ios' or v == 'IOS'):
+                            removes.append(item)
+
+    if os == '2':
+        for item in mobileList:
+            for key, value in item.technical_details[8].items():
+                if key == 'امکانات نرم افزاری':
+                    for k, v in value.items():
+                        if k == 'سیستم عامل' and (v == 'Android' or v == 'android' or v == 'اندروید'):
+                            removes.append(item)
+    
+
+    for item in removes:
+        mobileList.remove(item)
+
+    removes = []
+    for item in mobileList:
+        if item.price > Max or item.price < Min:
+            removes.append(item)
+
+    for item in removes:
+        mobileList.remove(item)
+
+
+    mobiles = []
+    for item in mobileList:
+        mobile = {}
+        mobile['image'] = item.index_image.url
+        mobile['title'] = item.title
+        mobile['slug'] = item.slug
+        mobile['point'] = item.points
+        mobile['discount'] = item.discount
+        mobile['price'] = item.price
+        mobile['inventory'] = item.inventory
+        mobiles.append(mobile)
+        # mobiles.append(model_to_dict(item))
+
+    response['status'] = True
+    response['mobiles'] = mobiles
+    # if Max != '' or Min != '':
+    #     Mobiles = Mobiles.filter(price__gt = Min, price__lt = Max)
+        # for item in mobiles:
+        #     if item.price > Min and item.price < Max:
+        #         mobiles.append(item)
+    return JsonResponse(response)
 
 def mobile(request):
     if request.method == 'POST':
@@ -201,6 +292,26 @@ def mobile(request):
     else:
         Mobiles = Mobile.objects.filter(publish = True)
 
+        class Items:
+            def __init__(self, thisMobile, thisPoint):
+                self.mobile = thisMobile
+                self.point = thisPoint
+
+        ItemsList = []
+
+        for item in Mobiles:
+            totalPoint = 0
+            if item.points is not None:
+                for point in item.points:
+                    totalPoint += float(point['productRate'])
+                item = Items(item, totalPoint)
+                ItemsList.append(item)
+
+
+        def GetPoint(item):
+            return int(item.point)
+        
+        ItemsList.sort(reverse = True, key = GetPoint)
 
         MobilesBrands = []
         for item in Mobiles:
@@ -217,17 +328,21 @@ def mobile(request):
         minPrice = min(priceList)
         maxPrice = max(priceList)
 
+        yas =''
         MobilesColors = []
         for item in Mobiles:
             find = False
-            for key, value in item.colors[0].items():
-                if len(MobilesColors) != 0:
-                    for ky, _ in MobilesColors[0].items():
-                        if key == ky:
-                            find = True
-                if find == False:        
-                    for k, _ in value.items():
-                        MobilesColors.append({key:k})
+            if item.colors is not None:
+                for key, value in item.colors[0].items():
+                    if len(MobilesColors) != 0:
+                        for ky, _ in MobilesColors[0].items():
+                            if key == ky:
+                                find = True
+                    if find == False:        
+                        for k, _ in value.items():
+                            if key != yas:
+                                yas = key
+                                MobilesColors.append({key:k})
 
 
         MobileMemories = []
@@ -259,6 +374,7 @@ def mobile(request):
             'MobileBrands': MobilesBrands,
             'MobilesColors': MobilesColors,
             'MobileMemories': MobileMemories,
+            'MobileRamMemories': MobileRamMemories,
             'minPrice': minPrice,
             'maxPrice': maxPrice
         }
@@ -504,6 +620,109 @@ def card(request):
 def register(request):
     return render(request, 'market/register-login/register.html')
 
+def registerRequest(request):
+    response_data = {}
+        # get data
+    firstname = request.POST.get("firstname")
+    lastname = request.POST.get("lastname")
+    username = request.POST.get("username")
+    # content = request.POST.get("content")
+    password = request.POST.get("password")
+    email = request.POST.get("email")
+    nationalcode = request.POST.get("nationalcode")
+    repeat_password = request.POST.get("repeat_password")
+
+    try:
+        birthday = request.POST.get('birthday')
+    except MultiValueDictKeyError:
+        birthday = ''
+
+    try:
+        mobile = request.POST.get('mobile')
+    except MultiValueDictKeyError:
+        mobile = ''
+
+    try:
+        phone = request.POST.get('phone')
+    except MultiValueDictKeyError:
+        phone = ''
+
+    try:
+        citypercode = request.POST.get('citypercode')
+    except MultiValueDictKeyError:
+        citypercode = ''
+
+    try:
+        state = request.POST.get('state')
+    except MultiValueDictKeyError:
+        state = ''
+
+    try:
+        city = request.POST.get('city')
+    except MultiValueDictKeyError:
+        city = ''
+
+    try:
+        address = request.POST.get('address')
+    except MultiValueDictKeyError:
+        address = ''
+
+    try:
+        zipcode = request.POST.get('zipcode')
+    except MultiValueDictKeyError:
+        zipcode = ''
+
+    
+    # uvc = request.POST.get("verification_code") # user verification code
+    # check user verification code
+    # if Validation.objects.filter(value = content, valid_code = uvc, status = False).exists():
+        # check password and repeat password
+    if password == repeat_password:
+            # change user verification code status 
+            # this_uvc = Validation.objects.get(value = content, valid_code = uvc, status = False)
+            # this_uvc.status = True
+            # this_uvc.save()
+            # create new user
+            
+        try:
+            this_user = User.objects.create_user(username = username, password = password, email = email, nationalcode = nationalcode)
+            # set other data
+            this_user.first_name = firstname
+            this_user.last_name = lastname
+            this_user.mobile = mobile
+            # this_user.email = email
+            # this_user.nationalcode = nationalcode
+            this_user.user_address(this_state = state, this_city = city, this_zipcode = zipcode, this_address = address)
+            this_user.citypercode = citypercode
+            this_user.phone = phone
+            this_user.birthday = birthday
+            this_user.save()
+            
+            # if this_uvc.value_type:
+            #     this_user.mobile = content
+            # else:
+            #     this_user.email = content
+            # this_user.save()
+            # login user
+            login(request, this_user)
+
+            response_data['status'] = True
+            response_data['message'] = 'ثبت نام با موفقیت انجام شد'
+            return JsonResponse(response_data)
+        except Exception as e:
+            response_data['status'] = False
+            response_data['message'] = str(e)
+            return JsonResponse(response_data)
+
+    else:
+        response_data['status'] = False
+        response_data['message'] = 'رمز عبور و تکرار آن بایستی با یکدیگر تطابق داشته باشند'
+        return JsonResponse(response_data)
+        # else:
+        #     response_data['status'] = True
+        #     response_data['message'] = '403'
+        #     return JsonResponse(response_data)
+
 def loginPage(request):
     return render(request, 'market/register-login/login.html')
 
@@ -513,11 +732,34 @@ def dashboard(request):
 
 @login_required(login_url="login")
 def orders(request):
-    return render(request, 'account/orders.html')
+    factors = Factor.objects.filter(FK_User = request.user)
+
+    for factor in factors:
+        for item in factor.items['items']:
+            mobileID = item['id']
+            thisMobile = Mobile.objects.get(id = mobileID)
+            item['id'] = thisMobile
+
+    context = {
+        'factors': factors
+    }
+
+    return render(request, 'account/orders.html', context)
 
 @login_required(login_url="login")
-def order(request):
-    return render(request, 'account/order.html')
+def order(request, id):
+    thisfactor = Factor.objects.get(id = id)
+
+    for item in thisfactor.items['items']:
+        mobileID = item['id']
+        thisMobile = Mobile.objects.get(id = mobileID)
+        item['id'] = thisMobile
+
+    context = {
+        'factor': thisfactor,
+    }
+
+    return render(request, 'account/order.html', context)
 
 @login_required(login_url="login")
 def information(request):
@@ -603,7 +845,7 @@ def changeInformation(request):
                 except MultiValueDictKeyError:
                     PostalCode = ''
 
-                if (FirstName != '') and (LastName != '') and (Email != ''):
+                if (FirstName != '') and (LastName != '') and (Email != '') and (MobileNumber != ''):
                     this_user = request.user
 
                     # BirthDay = birthday_year + '-' + birthday_month + '-' + birthday_day

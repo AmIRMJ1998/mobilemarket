@@ -31,19 +31,19 @@
                     <div class="orders-by-status">
                         <ul class="nav nav-tabs" id="orders-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">همه <span>(2)</span></a>
+                                <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">همه <span>({{factors|length}})</span></a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">در انتظار پرداخت <span>(1)</span></a>
+                                <a class="nav-link" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">در انتظار پرداخت</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="false">در حال پردازش <span>(0)</span></a>
+                                <a class="nav-link" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="false">در حال پردازش</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab" aria-controls="delivered" aria-selected="false">تحویل داده شده <span>(1)</span></a>
+                                <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab" aria-controls="delivered" aria-selected="false">تحویل داده شده</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="declined" aria-selected="false">لغو شده <span>(0)</span></a>
+                                <a class="nav-link" id="declined-tab" data-toggle="tab" href="#declined" role="tab" aria-controls="declined" aria-selected="false">لغو شده</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="orders-tab-panel">
@@ -52,149 +52,82 @@
                                     همه
                                 </h5>
                                 <div class="orders-list">
-                                    <!-- if there is -->
-                                    <div class="single-order">
-                                        <div class="row align-items-center">
-                                            <div class="col-xl-10 col-lg-9 col-12">
-                                                <div class="row">
-                                                    <div class="col-12 d-flex">
-                                                        <div class="order-des order-id">
-                                                            DKC-301863866
+                                    {% if factors|length > 0 %}
+                                        {% for factor in factors %}
+                                            <div class="single-order">
+                                                <div class="row align-items-center">
+                                                    <div class="col-xl-10 col-lg-9 col-12">
+                                                        <div class="row">
+                                                            <div class="col-12 d-flex">
+                                                                <div class="order-des order-id">
+                                                                    شماره فاکتور :
+                                                                    <span> {{factor.number}} </span>
+                                                                </div>
+                                                                <div class="order-des order-date">
+                                                                    {{factor.get_orderdate_to_jalali}}
+                                                                </div>
+                                                                <div class="order-des order-price">
+                                                                    <span>
+                                                                        مبلغ کل :
+                                                                    </span>
+                                                                    <span class="split-number">
+                                                                        {{factor.total_price}}
+                                                                    </span>
+                                                                    <span>
+                                                                        تومان
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="order-des order-date">
-                                                            25 فروردین 1399
-                                                        </div>
-                                                        <div class="order-des order-price">
-                                                            مبلغ کل : 239,000 تومان
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-2 col-lg-3 col-12 text-center">
-                                                <div class="btn btn-success">
-                                                    تحویل داده شده
-                                                </div>
-                                                <div class="order-detail-link">
-                                                    <a href="{% url 'market:order' %}">
-                                                        جزئیات سفارش
-                                                        <i class="far fa-angle-left"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="single-order">
-                                        <div class="row align-items-center">
-                                            <div class="col-xl-10 col-lg-9 col-12">
-                                                <div class="row">
-                                                    <div class="col-12 d-flex">
-                                                        <div class="order-des order-id">
-                                                            DKC-301863866
-                                                        </div>
-                                                        <div class="order-des order-date">
-                                                            25 فروردین 1399
-                                                        </div>
-                                                        <div class="order-des order-price">
-                                                            مبلغ کل : 239,000 تومان
+                                                        <div class="row">
+                                                            {% for item in factor.items.items %}
+                                                                <div class="col-md-2 col-3">
+                                                                    <div class="product-img">
+                                                                        <a href="{% url 'market:product' item.id.slug %}">
+                                                                            <img src="{{item.id.index_image.url}}" alt="عکس محصول">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 col-3">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
+                                                    <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                        {% if factor.status == 0 %}
+                                                            <div class="btn btn-warning">
+                                                                در انتظار پرداخت
+                                                            </div>
+                                                        {% elif factor.status == 1%}
+                                                            <div class="btn btn-info">
+                                                                در حال پردازش
+                                                            </div>
+                                                        {% elif factor.status == 3%}
+                                                            <div class="btn btn-success">
+                                                                تحویل داده شده
+                                                            </div>
+                                                        {% elif factor.status == 4%}
+                                                            <div class="btn btn-danger">
+                                                                لغو شده
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="order-detail-link">
+                                                            <a href="{% url 'market:order' factor.id %}">
+                                                                جزئیات سفارش
+                                                                <i class="far fa-angle-left"></i>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-2 col-lg-3 col-12 text-center">
-                                                <div class="btn btn-info">
-                                                    در انتظار پرداخت
-                                                </div>
-                                                <div class="order-detail-link">
-                                                    <a href="{% url 'market:order' %}">
-                                                        جزئیات سفارش
-                                                        <i class="far fa-angle-left"></i>
-                                                    </a>
-                                                </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="no-order">
+                                            <div class="warning-message">
+                                                <p>
+                                                    سفارش فعالی در این بخش وجود ندارد!
+                                                </p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- else -->
-                                    <!-- <div class="no-order">
-                                        <div class="warning-message">
-                                            <p>
-                                                سفارش فعالی در این بخش وجود ندارد!
-                                            </p>
-                                        </div>
-                                    </div> -->
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="pending" role="tabpanel" aria-labelledby="pending-tab">
@@ -202,135 +135,262 @@
                                     در انتظار پرداخت
                                 </h5>
                                 <div class="orders-list">
-                                    <!-- if there is -->
-                                    <div class="single-order">
-                                        <div class="row align-items-center">
-                                            <div class="col-10">
-                                                <div class="row">
-                                                    <div class="col-12 d-flex">
-                                                        <div class="order-des order-id">
-                                                            DKC-301863866
+                                    {% if factors|length > 0 %}
+                                        {% for factor in factors %}
+                                            {% if factor.status == 0 %}
+                                                <div class="single-order">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-xl-10 col-lg-9 col-12">
+                                                            <div class="row">
+                                                                <div class="col-12 d-flex">
+                                                                    <div class="order-des order-id">
+                                                                        شماره فاکتور :
+                                                                        <span> {{factor.number}} </span>
+                                                                    </div>
+                                                                    <div class="order-des order-date">
+                                                                        {{factor.get_orderdate_to_jalali}}
+                                                                    </div>
+                                                                    <div class="order-des order-price">
+                                                                        <span>
+                                                                            مبلغ کل :
+                                                                        </span>
+                                                                        <span class="split-number">
+                                                                            {{factor.total_price}}
+                                                                        </span>
+                                                                        <span>
+                                                                            تومان
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                {% for item in factor.items.items %}
+                                                                    <div class="col-md-2 col-3">
+                                                                        <div class="product-img">
+                                                                            <a href="{% url 'market:product' item.id.slug %}">
+                                                                                <img src="{{item.id.index_image.url}}" alt="عکس محصول">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
                                                         </div>
-                                                        <div class="order-des order-date">
-                                                            25 فروردین 1399
-                                                        </div>
-                                                        <div class="order-des order-price">
-                                                            مبلغ کل : 239,000 تومان
+                                                        <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                            {% if factor.status == 0 %}
+                                                                <div class="btn btn-warning">
+                                                                    در انتظار پرداخت
+                                                                </div>
+                                                            {% elif factor.status == 1%}
+                                                                <div class="btn btn-info">
+                                                                    در حال پردازش
+                                                                </div>
+                                                            {% elif factor.status == 3%}
+                                                                <div class="btn btn-success">
+                                                                    تحویل داده شده
+                                                                </div>
+                                                            {% elif factor.status == 4%}
+                                                                <div class="btn btn-danger">
+                                                                    لغو شده
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="order-detail-link">
+                                                                <a href="{% url 'market:order' factor.id %}">
+                                                                    جزئیات سفارش
+                                                                    <i class="far fa-angle-left"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-2">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
+                                            {% elif forloop.counter == factors|length %}
+                                                <div class="no-order">
+                                                    <div class="warning-message">
+                                                        <p>
+                                                            سفارش فعالی در این بخش وجود ندارد!
+                                                        </p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-2 text-center">
-                                                <div class="btn btn-info">
-                                                    در انتظار پرداخت
-                                                </div>
-                                                <div class="order-detail-link">
-                                                    <a href="{% url 'market:order' %}">
-                                                        جزئیات سفارش
-                                                        <i class="far fa-angle-left"></i>
-                                                    </a>
-                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="no-order">
+                                            <div class="warning-message">
+                                                <p>
+                                                    سفارش فعالی در این بخش وجود ندارد!
+                                                </p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- else -->
-                                    <div class="no-order">
-                                        <div class="warning-message">
-                                            <p>
-                                                سفارش فعالی در این بخش وجود ندارد!
-                                            </p>
-                                        </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="progress" role="tabpanel" aria-labelledby="progress-tab">
                                 <h5>
                                     در حال پردازش
                                 </h5>
-                                {% if  %}
                                 <div class="orders-list">
-                                    <div class="no-order">
-                                        <div class="warning-message">
-                                            <p>
-                                                سفارش فعالی در این بخش وجود ندارد!
-                                            </p>
+                                    {% if factors|length > 0 %}
+                                        {% for factor in factors %}
+                                            {% if factor.status == 1 %}
+                                                <div class="single-order">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-xl-10 col-lg-9 col-12">
+                                                            <div class="row">
+                                                                <div class="col-12 d-flex">
+                                                                    <div class="order-des order-id">
+                                                                        شماره فاکتور :
+                                                                        <span> {{factor.number}} </span>
+                                                                    </div>
+                                                                    <div class="order-des order-date">
+                                                                        {{factor.get_orderdate_to_jalali}}
+                                                                    </div>
+                                                                    <div class="order-des order-price">
+                                                                        <span>
+                                                                            مبلغ کل :
+                                                                        </span>
+                                                                        <span class="split-number">
+                                                                            {{factor.total_price}}
+                                                                        </span>
+                                                                        <span>
+                                                                            تومان
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                {% for item in factor.items.items %}
+                                                                    <div class="col-md-2 col-3">
+                                                                        <div class="product-img">
+                                                                            <a href="{% url 'market:product' item.id.slug %}">
+                                                                                <img src="{{item.id.index_image.url}}" alt="عکس محصول">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                            {% if factor.status == 0 %}
+                                                                <div class="btn btn-warning">
+                                                                    در انتظار پرداخت
+                                                                </div>
+                                                            {% elif factor.status == 1%}
+                                                                <div class="btn btn-info">
+                                                                    در حال پردازش
+                                                                </div>
+                                                            {% elif factor.status == 3%}
+                                                                <div class="btn btn-success">
+                                                                    تحویل داده شده
+                                                                </div>
+                                                            {% elif factor.status == 4%}
+                                                                <div class="btn btn-danger">
+                                                                    لغو شده
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="order-detail-link">
+                                                                <a href="{% url 'market:order' factor.id %}">
+                                                                    جزئیات سفارش
+                                                                    <i class="far fa-angle-left"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="no-order">
+                                            <div class="warning-message">
+                                                <p>
+                                                    سفارش فعالی در این بخش وجود ندارد!
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
-                                {% endif %}
                             </div>
                             <div class="tab-pane fade show" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
                                 <h5>
                                     تحویل داده شده
                                 </h5>
                                 <div class="orders-list">
-                                    <div class="single-order">
-                                        <div class="row align-items-center">
-                                            <div class="col-10">
-                                                <div class="row">
-                                                    <div class="col-12 d-flex">
-                                                        <div class="order-des order-id">
-                                                            <span>
-                                                                نام فاکتور: 
-                                                            </span>
-                                                            <span>
-
-                                                            </span>
+                                    {% if factors|length > 0 %}
+                                        {% for factor in factors %}
+                                            {% if factor.status == 3 %}
+                                                <div class="single-order">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-xl-10 col-lg-9 col-12">
+                                                            <div class="row">
+                                                                <div class="col-12 d-flex">
+                                                                    <div class="order-des order-id">
+                                                                        شماره فاکتور :
+                                                                        <span> {{factor.number}} </span>
+                                                                    </div>
+                                                                    <div class="order-des order-date">
+                                                                        {{factor.get_orderdate_to_jalali}}
+                                                                    </div>
+                                                                    <div class="order-des order-price">
+                                                                        <span>
+                                                                            مبلغ کل :
+                                                                        </span>
+                                                                        <span class="split-number">
+                                                                            {{factor.total_price}}
+                                                                        </span>
+                                                                        <span>
+                                                                            تومان
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                {% for item in factor.items.items %}
+                                                                    <div class="col-md-2 col-3">
+                                                                        <div class="product-img">
+                                                                            <a href="{% url 'market:product' item.id.slug %}">
+                                                                                <img src="{{item.id.index_image.url}}" alt="عکس محصول">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
                                                         </div>
-                                                        <div class="order-des order-date">
-                                                            25 فروردین 1399
-                                                        </div>
-                                                        <div class="order-des order-price">
-                                                            مبلغ کل : 239,000 تومان
+                                                        <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                            {% if factor.status == 0 %}
+                                                                <div class="btn btn-warning">
+                                                                    در انتظار پرداخت
+                                                                </div>
+                                                            {% elif factor.status == 1%}
+                                                                <div class="btn btn-info">
+                                                                    در حال پردازش
+                                                                </div>
+                                                            {% elif factor.status == 3%}
+                                                                <div class="btn btn-success">
+                                                                    تحویل داده شده
+                                                                </div>
+                                                            {% elif factor.status == 4%}
+                                                                <div class="btn btn-danger">
+                                                                    لغو شده
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="order-detail-link">
+                                                                <a href="{% url 'market:order' factor.id %}">
+                                                                    جزئیات سفارش
+                                                                    <i class="far fa-angle-left"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-2">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <div class="product-img">
-                                                            <a href="#">
-                                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2 text-center">
-                                                <div class="btn btn-success">
-                                                    تحویل داده شده
-                                                </div>
-                                                <div class="order-detail-link">
-                                                    <a href="{% url 'market:order' %}">
-                                                        جزئیات سفارش
-                                                        <i class="far fa-angle-left"></i>
-                                                    </a>
-                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="no-order">
+                                            <div class="warning-message">
+                                                <p>
+                                                    سفارش فعالی در این بخش وجود ندارد!
+                                                </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="tab-pane fade show" id="declined" role="tabpanel" aria-labelledby="declined-tab">
@@ -338,13 +398,84 @@
                                     لغو شده
                                 </h5>
                                 <div class="orders-list">
-                                    <div class="no-order">
-                                        <div class="warning-message">
-                                            <p>
-                                                سفارش فعالی در این بخش وجود ندارد!
-                                            </p>
+                                    {% if factors|length > 0 %}
+                                        {% for factor in factors %}
+                                            {% if factor.status == 4 %}
+                                                <div class="single-order">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-xl-10 col-lg-9 col-12">
+                                                            <div class="row">
+                                                                <div class="col-12 d-flex">
+                                                                    <div class="order-des order-id">
+                                                                        شماره فاکتور :
+                                                                        <span> {{factor.number}} </span>
+                                                                    </div>
+                                                                    <div class="order-des order-date">
+                                                                        {{factor.get_orderdate_to_jalali}}
+                                                                    </div>
+                                                                    <div class="order-des order-price">
+                                                                        <span>
+                                                                            مبلغ کل :
+                                                                        </span>
+                                                                        <span class="split-number">
+                                                                            {{factor.total_price}}
+                                                                        </span>
+                                                                        <span>
+                                                                            تومان
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                {% for item in factor.items.items %}
+                                                                    <div class="col-md-2 col-3">
+                                                                        <div class="product-img">
+                                                                            <a href="{% url 'market:product' item.id.slug %}">
+                                                                                <img src="{{item.id.index_image.url}}" alt="عکس محصول">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-2 col-lg-3 col-12 text-center">
+                                                            {% if factor.status == 0 %}
+                                                                <div class="btn btn-warning">
+                                                                    در انتظار پرداخت
+                                                                </div>
+                                                            {% elif factor.status == 1%}
+                                                                <div class="btn btn-info">
+                                                                    در حال پردازش
+                                                                </div>
+                                                            {% elif factor.status == 3%}
+                                                                <div class="btn btn-success">
+                                                                    تحویل داده شده
+                                                                </div>
+                                                            {% elif factor.status == 4%}
+                                                                <div class="btn btn-danger">
+                                                                    لغو شده
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="order-detail-link">
+                                                                <a href="{% url 'market:order' factor.id %}">
+                                                                    جزئیات سفارش
+                                                                    <i class="far fa-angle-left"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="no-order">
+                                            <div class="warning-message">
+                                                <p>
+                                                    سفارش فعالی در این بخش وجود ندارد!
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

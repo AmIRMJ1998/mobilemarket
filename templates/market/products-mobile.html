@@ -109,11 +109,11 @@
                                 {% for item in MobilesColors%}
                                     {% for key, value in item.items %}
                                         <div>
+                                            <input val="{{key}}" id="color-{{forloop.parentloop.counter}}" type="checkbox" name="color-check">
                                             <label for="color-{{forloop.parentloop.counter}}">
                                                 {{key}}
                                                 <div class="color-square" style="background-color: {{value}};"></div>
                                             </label>
-                                            <input val="{{key}}" id="color-{{forloop.parentloop.counter}}" type="checkbox" name="color-check">
                                         </div>
                                     {% endfor %}
                                 {% endfor %}
@@ -280,7 +280,7 @@
                                 حافظه RAM
                             </h5>
                             <div class="filter-checkbox filter-ram">
-                                {% for item in MobileMemories%}
+                                {% for item in MobileRamMemories%}
                                     <div>
                                         <label for="ram-{{forloop.counter}}">
                                             {{item}}
@@ -396,7 +396,7 @@
                                                 {% endif %}
                                             </div>
                                             <div class="product-prices">
-                                                {% if mobile.inventory_by_color != 0 %}
+                                                {% if mobile.inventory != 0 %}
                                                     {% if mobile.discount != '0' %}
                                                         <div class="product-price-off">
                                                             <span class="split-number">
@@ -654,6 +654,107 @@
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                         action: 'post'
                     },
+                    success: function(json) {
+                        var baseURL = '{{BASE_URL | safe}}';
+                        console.log(baseURL)
+
+                        console.log(json.mobiles);
+                        
+                        
+                        
+                        var mobiles = '';
+                        for(var item of json.mobiles)
+                        {   
+                            var count = 0;
+                            var average = 0;
+                            var points = 0;
+                            if (item.point !== null)
+                            {
+                                for (var x of item.point)
+                                {
+                                    points += parseFloat(x.productRate);
+                                    count++;
+                                }
+                                average = points / count;
+                            }
+                            mobiles += '' +
+                            '<div class="col-xl-3 col-lg-3 col-sm-4 col-6">' +
+                                '<div class="product">' +
+                                    '<a href="http://localhost:8000/products/mobile/' + item.slug + '">' +
+                                        '<img src="' + item.image + '" alt="محصول">' +
+                                        '<div class="product-title">' +
+                                            item.title +
+                                        '</div>' +
+                                    '</a>' +
+                                    '<div class="product-rate">'
+                                if (average >= 4.5) {
+                                    mobiles += '<i class="fas fa-star active"></i>';
+                                }
+                                else {
+                                    mobiles += '<i class="fas fa-star"></i>';
+                                }
+                                if (average >= 3.5) {
+                                    mobiles += '<i class="fas fa-star active"></i>';
+                                }
+                                else {
+                                    mobiles += '<i class="fas fa-star"></i>';
+                                }
+                                if (average >= 2.5) {
+                                    mobiles += '<i class="fas fa-star active"></i>';
+                                }
+                                else {
+                                    mobiles += '<i class="fas fa-star"></i>';
+                                }
+                                if (average >= 1.5) {
+                                    mobiles += '<i class="fas fa-star active"></i>';
+                                }
+                                else {
+                                    mobiles += '<i class="fas fa-star"></i>';
+                                }
+                                if (average >= 0.5) {
+                                    mobiles += '<i class="fas fa-star active"></i>';
+                                }
+                                else {
+                                    mobiles += '<i class="fas fa-star"></i>';
+                                }
+                            mobiles += '</div>' +
+                            '<div class="product-prices">'
+                                if (item.inventory > 0)
+                                {
+                                    var realPrice = (parseInt(item.price) + parseInt(item.discount)).toString();
+                                    mobiles += '<div class="product-price-off">' +
+                                        '<span class="split-number">' +
+                                            realPrice +
+                                        '</span>' +
+                                        '<span>' +
+                                            ' تومان' +
+                                        '</span>' +
+                                    '</div>' +
+                                    '<div class="product-price">' +
+                                        '<span class="split-number">' +
+                                            item.price +
+                                        '</span>' +
+                                        '<span>' +
+                                            ' تومان' +
+                                        '</span>' +
+                                    '</div>'
+                                }
+                                else {
+                                    mobiles += '<div class="no-available">' +
+                                        'ناموجود' +
+                                    '</div>'
+                                }
+                            mobiles += '</div>' +
+                        '</div>' +
+                    '</div>'
+                        }
+                            console.log(mobiles);
+                            $(".mobiles-list").html(mobiles);
+                            $(".split-number").digits();
+                    },
+                    error: function (json) {
+                        console.log(json.status)
+                    }
                 }
             )
         })

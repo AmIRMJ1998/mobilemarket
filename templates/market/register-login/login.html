@@ -25,24 +25,37 @@
                         </div>
                     </div>
                 </div>
-                <form method="POST" action="{% url 'market:loginRequest' %}">
+                {% if error %}
+                <div class="alert-message error-message back">
+                    <div class="alert-message-content error-content">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="alert-message-text error-text">
+                            {{error}}
+                        </div>
+                    </div>
+                    <div class="close-message close-error-message">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                {% endif %}
+                <form id="login2" method="POST" action="{% url 'market:loginRequest' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <label for="username">نام کاربری</label>
-                            <input name="username" id="username" class="form-control" type="text" placeholder="نام کاربری">
+                            <label for="username2">نام کاربری</label>
+                            <input name="username" id="username2" class="form-control" type="text" placeholder="نام کاربری">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <label for="password">رمز عبور</label>
-                            <input name="password" id="password" class="form-control" type="password" placeholder="رمز عبور">
+                            <label for="password2">رمز عبور</label>
+                            <input name="password" id="password2" class="form-control" type="password" placeholder="رمز عبور">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="login-button mt-4 mb-3 text-center">
-                                <button type="submit" class="btn btn-primary w-100">ورود</button>
+                                <button type="submit" class="btn btn-primary w-100 login-btn2">ورود</button>
                             </div>
                         </div>
                     </div>
@@ -66,3 +79,13 @@
 {% block foot %}
 {% include "base/foot.html" %}
 {% endblock %}
+
+<script>
+    $(document).on('click', '.login-btn2', function (e) {
+        e.preventDefault();
+        if ($('#username2').val().length != 0 && $('#password2').val().length != 0)
+        {
+            $("form#login2").submit();
+        }
+    })
+</script>

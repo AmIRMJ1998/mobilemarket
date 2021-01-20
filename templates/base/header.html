@@ -9,7 +9,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST" action="{% url 'market:loginRequest' %}">
+        <form id="login" method="POST" action="{% url 'market:loginRequest' %}">
             {% csrf_token %}
             <div class="modal-body text-right">
                 <div class="row">
@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="mt-4 text-center">
-                            <button type="submit" class="btn btn-primary w-100">ورود</button>
+                            <button type="submit" class="btn btn-primary w-100 login-btn">ورود</button>
                         </div>
                     </div>
                 </div>
@@ -175,25 +175,11 @@
         )
     })
 
-    // $(".searchbtn").click(function (){
-    //     var searchText = $("#search-input").val();
-
-    //     $.ajax (
-    //         {
-    //             method: 'POST',
-    //             url: '{.% url "market:SSSSS" %.}',
-    //             data: {
-    //                 searchText: searchText,
-    //                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-    //                 action: 'post'
-    //             },
-    //             success: function(json) {
-    //                 console.log(json)
-    //             },
-    //             error: function(json) {
-    //                 console.log(json.error)
-    //             }
-    //         }
-    //     )
-    // })
+    $(document).on('click', '.login-btn', function (e) {
+        e.preventDefault();
+        if ($('#username').val().length != 0 && $('#password').val().length != 0)
+        {
+            $("form#login").submit();
+        }
+    })
 </script>

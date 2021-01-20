@@ -34,7 +34,7 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-5">
                                         <a href="{% url 'market:product' mobile.slug %}">
-                                            <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
+                                            <img src="{{mobile.index_image.url}}" alt="عکس محصول">
                                         </a>
                                     </div>
                                     <div class="col-lg-9 col-12">
@@ -43,14 +43,15 @@
                                                 {{mobile.title}}
                                             </div>
                                             <div class="d-flex justify-content-between">
-                                                {% if mobile.inventory_by_color != 0 %}
+                                                {% if mobile.inventory != 0 %}
                                                     <div class="product-detail product-price">
                                                         <span class="title">
                                                             قیمت: 
                                                         </span>
-                                                        <span>
-                                                            4,800,000 تومان
+                                                        <span class="split-number">
+                                                            {{mobile.price}}
                                                         </span>
+                                                             تومان
                                                     </div>
                                                 {% else %}
                                                     <div class="no-available">

@@ -44,7 +44,7 @@ header {
                         color: #fff;
 
                         &:hover {
-                            background-color: rgba(134, 134, 134, 0.7);;
+                            background-color: rgba(134, 134, 134, 0.7);
                         }
                     }
                 }
@@ -727,6 +727,10 @@ section.product-section {
             .comment-like {
 
                 margin-left: 20px;
+
+                &.nowliked {
+                    color: #4c83ff;
+                }
 
                 i {
                     &.active {

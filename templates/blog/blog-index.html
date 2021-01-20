@@ -82,6 +82,27 @@
                             </div>
                         </div>
                     {% endfor %}
+                    <div class="row justify-content-center mt-5">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if PostList.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page=1">اولی</a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{PostList.previous_page_number}}">قبلی</a></li>
+                                {% endif %}
+                                {% for num in PostList.paginator.page_range %}
+                                    {% if num == PostList.number %}
+                                        <li class="page-item"><a class="page-link" href="?page={{num}}"><strong>{{num}}</strong></a></li>
+                                    {% elif num > PostList.number|add:'-3' and num < PostList.number|add:'3' %}
+                                        <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if PostList.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{PostList.next_page_number}}">بعدی</a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{PostList.paginator.num_pages}}">آخری</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             
 

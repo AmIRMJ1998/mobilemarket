@@ -417,6 +417,11 @@ class Factor(models.Model):
             total_sum += item['total_price']
         return total_sum
 
+    def get_orderdate_to_jalali(self):
+        date_format = "%Y-%m-%d"
+        thisdate = datetime.strptime(str(self.orderdate.date()), date_format)
+        return str(jdatetime.date.fromgregorian(day = thisdate.day, month = thisdate.month, year = thisdate.year))
+
     class Meta:
         ordering = ('id', 'orderdate')
         verbose_name = "فاکتور"

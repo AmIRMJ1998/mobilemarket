@@ -32,6 +32,7 @@ def add_new_comment(request):
             this_post = Post.objects.get(slug = this_slug)
             # add comment
             this_post.comments.append(this_comment.id)
+            this_post.save()
 
             response_data['status'] = True
             return JsonResponse(response_data)
@@ -93,14 +94,14 @@ def like_or_dislike_comment(request):
         # get data
         this_id = request.POST.get("id")
         # get this comment
-        this_comment = Comment.objects.get(id = this_id, FK_User = request.user)
+        this_comment = Comment.objects.get(id = this_id)
         # check repete data
         if this_comment.likes is not None:
             if request.user.id in this_comment.likes:
                 # dislike
                 this_comment.likes.remove(request.user.id)
                 this_comment.save()
-
+                response_data['likeCount'] = this_comment.like_count()
                 response_data['status'] = True
                 response_data['remove'] = 1
                 return JsonResponse(response_data)
@@ -108,7 +109,7 @@ def like_or_dislike_comment(request):
                 # like
                 this_comment.likes.append(request.user.id)
                 this_comment.save()
-
+                response_data['likeCount'] = this_comment.like_count()
                 response_data['status'] = True
                 response_data['remove'] = 0
                 return JsonResponse(response_data)

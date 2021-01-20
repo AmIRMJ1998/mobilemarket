@@ -241,7 +241,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="information-item first">
                                     <label for="postal-code">کد پستی</label><code>*</code>
-                                    <input value="{{request.user.zipcode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی">
+                                    <input value="{{request.user.address.zipcode}}" id="postal-code" class="form-control" type="number" placeholder="کد پستی">
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12 text-left">
@@ -510,7 +510,7 @@
                 },
                 success: function (json) {
                     $(".card-product-detail-item[val='" + mobileID + "'][val2='" + color + "'][val3='" + guarantee + "']").remove();
-                    $(".total-factor-price").text(json.total_factor_price)
+                    $(".total-factor-price").text(json.total_factor_price).digits();
                     $("#total-price").text(json.total_factor_price).digits();
                      if (json.item_count == 0)
                      {

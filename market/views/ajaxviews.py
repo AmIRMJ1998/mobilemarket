@@ -26,6 +26,8 @@ def add_new_item_in_factor(request):
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
             this_factor.add_item(this_mobile, 1, this_color, this_color_value, this_guarantee)
+            this_factor.total_price = this_factor.get_total_price()
+            this_factor.save()
 
             response_data['status'] = True
             response_data['total_price'] = this_factor.get_total_price()
@@ -35,6 +37,8 @@ def add_new_item_in_factor(request):
             this_factor = Factor.objects.create(FK_User = request.user)
             this_mobile = Mobile.objects.get(id = this_mobile_id)
             this_factor.add_item(this_mobile, 1, this_color, this_color_value, this_guarantee)
+            this_factor.total_price = this_factor.get_total_price()
+            this_factor.save()
 
             response_data['total_price'] = this_factor.get_total_price()
             response_data['status'] = True
@@ -62,6 +66,7 @@ def add_single_item_count(request):
                 if (item['id'] == this_mobile.id) and (item['color'] == this_color) and (item['guarantee'] == this_guarantee) and (this_mobile.inventory > 0) and (int(item['count']) + 1 <= this_mobile.inventory):
                     item['count'] += 1
                     item['total_price'] = this_mobile.get_total_price(item['count'])
+                    this_factor.total_price = this_factor.get_total_price()
                     this_factor.save()
                     response_data['count'] = item['count']
                     response_data['total_price'] = item['total_price']
@@ -102,6 +107,7 @@ def remove_single_item_count(request):
                     if item['count'] - 1 != 0:
                         item['count'] -= 1
                         item['total_price'] = this_mobile.get_total_price(item['count'])
+                        this_factor.total_price = this_factor.get_total_price()
                         this_factor.save()
                         response_data['remove'] = False
                         response_data['count'] = item['count']
@@ -112,6 +118,8 @@ def remove_single_item_count(request):
                         this_factor.items['items'].remove(item)
                         response_data['total_factor_price'] = this_factor.get_total_price()
                         this_factor.save()
+                        if len(this_factor.items['items']) == 0:
+                            this_factor.delete()
 
                     response_data['status'] = True
                     return JsonResponse(response_data)
@@ -145,7 +153,10 @@ def remove_item_in_factor(request):
             for item in this_factor.items['items']:
                 if (item['id'] == this_mobile.id) and (item['color'] == this_color) and (item['guarantee'] == this_guarantee):
                     this_factor.items['items'].remove(item)
+                    this_factor.total_price = this_factor.get_total_price()
                     this_factor.save()
+                    if len(this_factor.items['items']) == 0:
+                            this_factor.delete()
 
                     response_data['status'] = True
                     response_data['total_factor_price'] = this_factor.get_total_price()
@@ -228,20 +239,26 @@ def payCard(request):
 
 def cardTotalPrice(request):
     response_data = {}
-    try:
-        if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
-            this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
+    if request.user.is_authenticated:
+        try:
+            if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
+                this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
 
-            response_data['total_price'] = this_factor.get_total_price()
-            response_data['status'] = True
-            return JsonResponse(response_data)
+                response_data['total_price'] = this_factor.get_total_price()
+                response_data['status'] = True
+                return JsonResponse(response_data)
 
-        else:
+            else:
+                response_data['status'] = True
+                response_data['total_price'] = 0
+                return JsonResponse(response_data)
+
+        except Exception as e:
             response_data['status'] = False
-            response_data['total_price'] = 0
+            response_data['error'] = str(e)
             return JsonResponse(response_data)
-
-    except Exception as e:
+    else:
         response_data['status'] = False
-        response_data['error'] = str(e)
+        response_data['error'] = 'کاربر لاگین نیست!'
         return JsonResponse(response_data)
+        

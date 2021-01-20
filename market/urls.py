@@ -28,10 +28,13 @@ urlpatterns = [
     
 
     path('card/', views.card, name="card"),
+
     path('register/', views.register, name="register"),
+    path('register-request/', views.registerRequest, name="register-request"),
+    
     path('dashboard/', views.dashboard, name="dashboard"),
     path('dashboard/orders', views.orders, name="orders"),
-    path('dashboard/orders/order', views.order, name="order"),
+    path('dashboard/orders/<int:id>', views.order, name="order"),
 
     path('dashboard/information', views.information, name="information"),
     path('dashboard/information/change', views.changeInformation, name="changeInformation"),
