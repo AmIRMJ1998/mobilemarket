@@ -32,14 +32,26 @@
                                 برند
                             </h5>
                             <div class="filter-checkbox filter-brand">
-                                {% for item in MobileBrands %}
-                                    <div class="single-brand-filter">
-                                        <label for="brand-{{forloop.counter}}">
-                                            {{item}}
-                                        </label>
-                                        <input val="{{item}}" id="brand-{{forloop.counter}}" type="checkbox" name="brand-check">
-                                    </div>
-                                {% endfor %}
+
+                                {% if inputBrand == '' %}
+                                    {% for item in MobileBrands %}
+                                        <div class="single-brand-filter">
+                                            <label for="brand-{{forloop.counter}}">
+                                                {{item}}
+                                            </label>
+                                            <input val="{{item}}" id="brand-{{forloop.counter}}" type="checkbox" name="brand-check">
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for item in MobileBrands %}
+                                        <div class="single-brand-filter">
+                                            <label for="brand-{{forloop.counter}}">
+                                                {{item}}
+                                            </label>
+                                            <input val="{{item}}" id="brand-{{forloop.counter}}" type="checkbox" name="brand-check" checked>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                                 <!-- <div>
                                     <input id="sony-brand" type="checkbox" name="brand-check">
                                     <label for="sony-brand">
@@ -353,12 +365,13 @@
                                 <div class="product-main-filter">
                                     <p>مرتب سازی بر اساس :</p>
                                     <div val="favorite" class="filter-item active">محبوب ترین</div>
-                                    <div val="mostsell" class="filter-item">جدیدترین</div>
+                                    <div val="newest" class="filter-item">جدیدترین</div>
                                     <div val="mostexpensive" class="filter-item">گران ترین</div>
                                     <div val="cheapest" class="filter-item">ارزان ترین</div>
                                 </div>
                             </div>
                             <div class="row mobiles-list">
+                                {% if Mobiles|length%}
                                 {% for mobile in Mobiles%}
                                     <div class="col-xl-3 col-lg-3 col-sm-4 col-6">
                                         <div class="product">
@@ -424,6 +437,21 @@
                                         </div>
                                     </div>
                                 {% endfor%}
+                                {% else %}
+                                <div class="col-12">
+                                    <div class="alert-message error-message back text-right mb-3">
+                                        <div class="alert-message-content error-content">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <div class="alert-message-text error-text">
+                                                هیچ موبایلی با این برند وجود ندارد!
+                                            </div>
+                                        </div>
+                                        <div class="close-message close-error-message">
+                                            <i class="fas fa-times"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="row justify-content-center mt-5">
                                 <nav aria-label="Page navigation example">
@@ -485,6 +513,15 @@
                 " - " + $( "#filter-price-range" ).slider( "values", 0 ).toLocaleString() +
                 " تومان");
             } );
+
+            var inputBrand = '{{inputBrand}}';
+            console.log(inputBrand, 'INPUTBRAND');
+            
+            if (inputBrand != '')
+            {
+                $(".filter-checkbox.filter-brand").parent().hide();
+            }
+            
         })
 
         // $(".product-main-filter .filter-item").click(function (){
@@ -503,8 +540,8 @@
         //                 action: 'post',
         //             },
         //             success: function (json) {
-                            // $(".filter-item").removeClass('active');
-                            // $(this).addClass('active');
+        //                     $(".filter-item").removeClass('active');
+        //                     $(this).addClass('active');
         //                 $(".mobiles-list").html('')
         //                 for (var item of json.mobiles) {
 
@@ -546,7 +583,7 @@
         //                                 // {.% endif %.}
         //                             '</div>' +
         //                             '<div class="product-prices">' +
-        //                                 // {.% if mobile.inventory_by_color != 0 %.}
+        //                                 // {.% if mobile.inventory != 0 %.}
         //                                     // {.% if mobile.discount != '0' %.}
         //                                         '<div class="product-price-off">' +
         //                                             '<span class="split-number">' +
@@ -582,8 +619,17 @@
         //         }
         //     )
         // })
-
         $("#do-filters-btn").click(function () {
+            mobileFilterFunction();
+        })
+
+        $(".product-main-filter .filter-item").click(function (){
+            $(".product-main-filter .filter-item").removeClass('active');
+            $(this).addClass('active');
+            mobileFilterFunction();
+        })
+
+        mobileFilterFunction = function () {
             var availableFilter = $("#available-filter-switch").prop('checked') ? '1' : '0';
             //Brands
             var brands = [];
@@ -637,6 +683,9 @@
                 os = '0';
             }
 
+            var mobileOrder = $('.filter-item.active').attr('val');
+            console.log(mobileOrder, 'MOBILE ORDER');
+
             $.ajax(
                 {
                     method:'POST',
@@ -651,16 +700,12 @@
                         internalMemory: internalMemory,
                         ram: ramMemory,
                         os: os,
+                        order: mobileOrder,
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                         action: 'post'
                     },
                     success: function(json) {
-                        var baseURL = '{{BASE_URL | safe}}';
-                        console.log(baseURL)
-
                         console.log(json.mobiles);
-                        
-                        
                         
                         var mobiles = '';
                         for(var item of json.mobiles)
@@ -757,5 +802,5 @@
                     }
                 }
             )
-        })
+        }
     </script>

@@ -28,27 +28,13 @@
                                                 <div class="product-gallery-item">
                                                     <img src="{{mobile.index_image.url}}" alt="عکس محصول">
                                                 </div>
-                                                <!-- <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                                </div>
-                                                <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-3.jpg" %}" alt="عکس محصول">
-                                                </div>
-                                                <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-4.jpg" %}" alt="عکس محصول">
-                                                </div>
-                                                <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                                </div>
-                                                <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                                </div>
-                                                <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-3.jpg" %}" alt="عکس محصول">
-                                                </div>
-                                                <div class="product-gallery-item">
-                                                    <img src="{% static "images/product-4.jpg" %}" alt="عکس محصول">
-                                                </div> -->
+                                                {% if mobile.gallery.all|length != 0 %}
+                                                    {% for image in mobile.gallery.all %}
+                                                    <div class="product-gallery-item">
+                                                            <img src="{{BASE_URL}}/media/{{image}}" alt="عکس محصول">
+                                                        </div>
+                                                    {% endfor%}
+                                                {% endif %}
                                             </div>
                                             {% if request.user.is_authenticated %}
                                                 {% if favorite %}
@@ -61,9 +47,6 @@
                                                     </div>
                                                 {% endif %}
                                             {% endif %}
-                                            <!-- <div class="product-icon add-to-compare">
-                                                <i class="fal fa-chart-pie"></i>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -75,27 +58,13 @@
                                             <div class="product-gallery-item thumbnail">
                                                 <img src="{{mobile.index_image.url}}" alt="عکس محصول">
                                             </div>
-                                            <!-- <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                            </div>
-                                            <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-3.jpg" %}" alt="عکس محصول">
-                                            </div>
-                                            <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-4.jpg" %}" alt="عکس محصول">
-                                            </div>
-                                            <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-1.jpg" %}" alt="عکس محصول">
-                                            </div>
-                                            <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-2.jpg" %}" alt="عکس محصول">
-                                            </div>
-                                            <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-3.jpg" %}" alt="عکس محصول">
-                                            </div>
-                                            <div class="product-gallery-item thumbnail">
-                                                <img src="{% static "images/product-4.jpg" %}" alt="عکس محصول">
-                                            </div> -->
+                                            {% if mobile.gallery.all|length != 0 %}
+                                                {% for image in mobile.gallery.all %}
+                                                <div class="product-gallery-item">
+                                                        <img src="{{BASE_URL}}/media/{{image}}" alt="عکس محصول">
+                                                    </div>
+                                                {% endfor%}
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -276,7 +245,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                {% if mobile.inventory_by_color != 0 %}
+                                {% if mobile.inventory != 0 %}
                                     <div class="row">
                                         <div class="col-12 product-detail-3rd">
                                             رنگ : 
@@ -329,7 +298,7 @@
                                 <div class="row">
                                     <div class="col-12 product-detail-4th">
                                         <div class="product-prices">
-                                            {% if mobile.inventory_by_color != 0 %}
+                                            {% if mobile.inventory != 0 %}
                                                 <div class="main-price">
                                                     <span class="split-number">
                                                         {{mobile.price}}
@@ -356,7 +325,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% if mobile.inventory_by_color != 0 %}
+                                {% if mobile.inventory != 0 %}
                                     <div class="row">
                                         <div class="col-12 product-detail-5th">
                                             <button class="btn btn-primary buy-button">
@@ -682,7 +651,17 @@
                                     location.reload();
                                 }, 2000)
                             }
-                            console.log(json.error)
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'ناموفق',
+                                    text: 'ثبت نظر شما با مشکل مواجه گردید',
+                                })
+                                setTimeout (function() {
+                                    location.reload();
+                                }, 2000)
+                                console.log(json.error)
+                            }
                         },
                         error: function (json) {
                             console.log(json.status)

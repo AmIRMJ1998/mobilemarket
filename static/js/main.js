@@ -265,7 +265,7 @@ $(document).on('click', '.close-message', function () {
 });
 
 
-  $(".product-color-selection-item").click(function () {
+$(".product-color-selection-item").click(function () {
     $(".product-color-selection-item").removeClass('active');
     $(this).addClass('active');
-    })
+})

@@ -693,14 +693,14 @@
                             price1 = 'ناموجود'
                         }
                         else {
-                            price1 = json.price1
+                            price1 = json.price1 + ' تومان'
                         }
                         if (json.inventory2 == 0)
                         {
                             price2 = 'ناموجود'
                         }
                         else {
-                            price2 = json.price2
+                            price2 = json.price2 + ' تومان'
                         }
                         
                         tableContent = '' +
@@ -726,8 +726,8 @@
                         '</tr>' +
                         '<tr>' +
                             '<td></td>' +
-                            '<td><span class="split-number">' + price1 + '</span>تومان</td>' +
-                            '<td><span class="split-number">' + price2 + '</span>تومان</td>' +
+                            '<td><span class="split-number">' + price1 +
+                            '<td><span class="split-number">' + price2 +
                         '</tr>'
 
 

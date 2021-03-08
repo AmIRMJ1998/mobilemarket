@@ -7,7 +7,8 @@ app_name = 'market'
 urlpatterns = [
     path('', views.index, name="index"),
     # path('products/', views.products, name="products"),
-    path('products/mobile', views.mobile, name="mobile"),
+    path('products/mobile/', views.mobile, name="mobile"),
+    path('products/mobile/brand/<str:inputBrand>', views.mobile, name="mobile"),
     path('products/mobilefilter', views.mobileFilter, name="mobileFilter"),
     # path('products/tablet', views.tablet, name="tablet"),
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('products/minus-card-item/mobile/', ajaxviews.remove_single_item_count, name="remove_single_item_count"),
     path('products/remove-card-item/mobile/', ajaxviews.remove_item_in_factor, name="remove_item_in_factor"),
     path('products/add-information-factor/mobile/', ajaxviews.add_information_in_factor, name="add_information_in_factor"),
+    path('products/check-inventory/mobile/', ajaxviews.checkInventory, name="check_inventory"),
     path('products/pay-card/mobile/', ajaxviews.payCard, name="pay-card"),
     path('header/factor/', ajaxviews.cardTotalPrice, name="cardTotalPrice"),
 
@@ -26,7 +28,7 @@ urlpatterns = [
     path('products/comment/like/mobile/', views.likeComment, name="likeComment"),
     path('products/comment/reply/mobile/', views.replyComment, name="replyComment"),
     
-    path('add/connesct-us/', ajaxviews.add_new_connectus , name = 'create_new_connectus'),
+    path('add/contact-us/', ajaxviews.add_new_contact_us , name = 'create_new_contact_us'),
 
     path('card/', views.card, name="card"),
 

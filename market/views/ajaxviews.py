@@ -208,24 +208,50 @@ def add_information_in_factor(request):
         response_data['error'] = str(e)
         return JsonResponse(response_data)
 
+@login_required(login_url="login")
+def checkInventory(request):
+    response = {}
+    try:
+        this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
+        if this_factor is not None:
+            situation = True
+            errorMobiles = []
+            for item in this_factor.items['items']:
+                thisMobile = Mobile.objects.get(id = item['id'])
+                print(thisMobile.inventory)
+                print(item['count'])
+                if thisMobile.inventory < item['count']:
+                    errorMobiles.append(thisMobile.title)
+                    situation = False
+            response['status'] = True
+            response['situation'] = situation
+            response['errorMobiles'] = errorMobiles
+            return JsonResponse(response)
 
-# check out factor
+    except Exception as e:
+        response['error'] = str(e)
+        response['status'] = False
+        return JsonResponse(response)
+
+
 @login_required(login_url="login")
 def payCard(request):
     response_data = {}
     try:
-        # get data
         this_post_price = request.POST.get("post_price")
-        # check data
         if Factor.objects.filter(FK_User = request.user, payment_status = False).exists():
             this_factor = Factor.objects.get(FK_User = request.user, payment_status = False)
-            # add date
             this_factor.post_price = this_post_price
             this_factor.total_price = this_factor.get_total_price() + int(this_post_price)
             this_factor.payment_status = True
             this_factor.orderdate = timezone.now()
             this_factor.status = 1
             this_factor.save()
+
+            for item in this_factor.items['items']:
+                thisMobile = Mobile.objects.get(id = item['id'])
+                thisMobile.inventory -= item['count']
+                thisMobile.save()
 
             response_data['status'] = True
             return JsonResponse(response_data)
@@ -262,3 +288,26 @@ def cardTotalPrice(request):
         response_data['error'] = 'کاربر لاگین نیست!'
         return JsonResponse(response_data)
         
+# add connect us
+def add_new_contact_us(request):
+    response_data = {}
+    try:
+        # get data
+        this_title = request.POST.get("this_title")
+        this_mobile = request.POST.get("this_mobile")
+        this_email = request.POST.get("this_email")
+        this_message = request.POST.get("this_message")
+        # check data
+        if (len(this_title) > 0) and ((len(this_mobile) > 0) or (len(this_email) > 0)) and (len(this_message) > 0):
+            # create new connect us
+            Contact.objects.create(mobilenumber = this_mobile, email = this_email, title = this_title, description = this_message)
+            response_data['status'] = True
+            return JsonResponse(response_data)
+        else:
+            response_data['status'] = False
+            response_data['message'] = 'نام، شماره موبایل، ایمیل و متن نمی تواند خالی باشد.'
+            return JsonResponse(response_data)
+    except Exception as e:
+        response_data['status'] = False
+        response_data['error'] = str(e)
+        return JsonResponse(response_data)

@@ -641,61 +641,99 @@
     $("#pay-btn").click(function () {
         var postPrice = $("#normal-post").prop('checked') ? 12000 : 29000;
 
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-            confirmButton: 'btn btn-success ml-3',
-            cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        })
-      
-      swalWithBootstrapButtons.fire({
-        title: 'وضعیت پرداخت',
-        text: "پرداخت موفقیت آمیز بود؟",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'بله',
-        cancelButtonText: 'خیر',
-        reverseButtons: false
-      }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax(
+        $.ajax (
             {
                 method: 'POST',
-                url: '{% url "market:pay-card" %}',
+                url: '{% url "market:check_inventory" %}',
                 data: {
-                    post_price: postPrice,
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                     action: 'post'
                 },
                 success: function (json) {
                     console.log(json.status)
-                    swalWithBootstrapButtons.fire({
-                        title: 'موفق',
-                        text: 'سفارش با موفقیت ثبت شد',
-                        icon: 'success',
-                        confirmButtonText: 'باشه',
-                    })
+                    if (json.status) {
+                        if (json.situation)
+                        {
+                            const swalWithBootstrapButtons = Swal.mixin({
+                                customClass: {
+                                    confirmButton: 'btn btn-success ml-3',
+                                    cancelButton: 'btn btn-danger'
+                                },
+                                buttonsStyling: false
+                            })
+                    
+                            swalWithBootstrapButtons.fire({
+                                title: 'وضعیت پرداخت',
+                                text: "پرداخت موفقیت آمیز بود؟",
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonText: 'بله',
+                                cancelButtonText: 'خیر',
+                                reverseButtons: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax(
+                                        {
+                                            method: 'POST',
+                                            url: '{% url "market:pay-card" %}',
+                                            data: {
+                                                post_price: postPrice,
+                                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                                                action: 'post'
+                                            },
+                                            success: function (json) {
+                                                console.log(json.status)
+                                                swalWithBootstrapButtons.fire({
+                                                    title: 'موفق',
+                                                    text: 'سفارش با موفقیت ثبت شد',
+                                                    icon: 'success',
+                                                    confirmButtonText: 'باشه',
+                                                })
+                                            },
+                                            error: function (json) {
+                                                console.log(json.error)
+                                            }
+                                        }
+                                    )
+                                    
+                                }
+                                else if (result.dismiss === Swal.DismissReason.cancel) {
+                                        swalWithBootstrapButtons.fire({
+                                            title: 'نا موفق',
+                                            text: 'پرداخت با مشکل مواجه شد!',
+                                            icon: 'error',
+                                            confirmButtonText: 'باشه',
+                                        })
+                                }
+                            })
+                        }
+                        else {
+                            console.log(json.errorMobiles)
+                            var mobiles = ''
+                            for (var item of json.errorMobiles)
+                            {
+                                mobiles += item.toString() + ', ';
+                            }
+                            mobiles = mobiles.substr(0,mobiles.length - 2)
+                            var error_text = 'موجودی موبایل های زیر کافی نمیباشد : ' + mobiles;
+                            
+
+                            Swal.fire({
+                                    icon: 'error',
+                                    title: 'ناموفق',
+                                    text: error_text,
+                                })
+                        }
+                    }
+                    else {
+                        console.log(json.error)
+                    }
                 },
                 error: function (json) {
                     console.log(json.error)
                 }
             }
         )
-          
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire({
-            title: 'نا موفق',
-            text: 'پرداخت با مشکل مواجه شد!',
-            icon: 'error',
-            confirmButtonText: 'باشه',
-            })
-        }
-      })
-        
     })
         
 </script>

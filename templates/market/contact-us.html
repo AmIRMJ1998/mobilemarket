@@ -78,11 +78,11 @@
 		var  thisuser_mobile = $('#input_mobile').val();
 		var  thisuser_email = $('#input_useremail').val();
 		var  thisuser_message = $('#input_message').val();
-
+    if (thisuser_title.length != 0 && thisuser_mobile.length != 0 && thisuser_email.length != 0 && thisuser_message.length != 0) {
         $.ajax(
             {
                 type: 'POST',
-                url: '{% url "market:create_new_connectus" %}',
+                url: '{% url "market:create_new_contact_us" %}',
                 data: {
                     this_title: thisuser_title,
                     this_mobile: thisuser_mobile,
@@ -91,10 +91,28 @@
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 },
                 success: function (json) {
-                    if (json.status == true) {
-                        alert('پیام شما ثبت شد.');
-                    }else{
-                        alert(json.message);
+                    if (json.status)
+                    {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'موفق',
+                            text: 'پیام شما با موفقیت ثبت گردید',
+                        })
+                        setTimeout (function() {
+                            location.reload();
+                        }, 2000)
+                    }
+                    else
+                    {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ناموفق',
+                            text: 'ثبت نظر شما با مشکل مواجه گردید',
+                        })
+                        setTimeout (function() {
+                            location.reload();
+                        }, 2000)
+                        console.log(json.message)
                     }
                 },
                 error: function (xhr) {
@@ -102,7 +120,8 @@
                     console.log(xhr.status + ": " + xhr.responseText);
                 }
             }
-        );  
+        );
+    }
 	})
 </script>
 

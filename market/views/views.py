@@ -11,10 +11,11 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.contrib.postgres.fields import ArrayField
+from datetime import datetime
 import jdatetime
 import threading
 
-from market.models import Slider, Mobile, User, Message, Comment, Factor
+from market.models import Slider, Mobile, Gallery, User, Message, Comment, Factor
 from blog.models import Post
 
 
@@ -38,7 +39,7 @@ def index(request):
         if item.points is not None:
             for point in item.points:
                 totalPoint += float(point['productRate'])
-            item = Items(item, totalPoint)
+            item = Items(item, totalPoint/len(item.points))
             ItemsList.append(item)
 
 
@@ -48,10 +49,7 @@ def index(request):
     ItemsList.sort(reverse = True, key = GetPoint)
 
     ItemsList = ItemsList[:15]
-    print(str(len(ItemsList)))
     
-    # mostRateMobiles = Mobile.objects.filter(publish = True, inventory__gt = 0).order_by('-id')[:15]
-
     context = {
         'Slides': slides,
         'OffMobiles': offMobiles,
@@ -108,6 +106,11 @@ def mobileFilter(request):
         os = request.POST['os']
     except MultiValueDictKeyError:
         os = ''
+        
+    try:
+        order = request.POST['order']
+    except MultiValueDictKeyError:
+        order = ''
 
     Mobiles = Mobile.objects.filter(publish = True)
 
@@ -241,9 +244,68 @@ def mobileFilter(request):
     for item in removes:
         mobileList.remove(item)
 
+        # def __init__(self, thisMobile, thisPoint, thisPrice, thisDate):
+    class Items:
+        def __init__(self, thisMobile, thisPoint, thisPrice, thisDate):
+            self.mobile = thisMobile
+            self.point = thisPoint
+            self.price = thisPrice
+            self.date = thisDate
+
+    ItemsList = []
+
+    for item in mobileList:
+        totalPoint = 0
+        if item.points is not None:
+            for point in item.points:
+                totalPoint += float(point['productRate'])
+            itemPoint = totalPoint/len(item.points)
+        else:
+            itemPoint = 0.0
+        itemPrice = item.price
+        itemDate = item.datecreate
+
+        item = Items(item, itemPoint, itemPrice, itemDate)
+        ItemsList.append(item)
+
+                
+                
+        #     item = Items(item, totalPoint/len(item.points))
+        #     ItemsList.append(item)
+        # else:
+        #     item = Items(item, 0.0)
+        #     ItemsList.append(item)
+
+
+    def GetPoint(item):
+        return int(item.point)
+
+    def GetPrice(item):
+        return int(item.price)
+
+    def GetDate(item):
+        return item.date
+    
+    if order == 'favorite':
+        ItemsList.sort(reverse = True, key = GetPoint)
+    elif order == 'mostexpensive':
+        ItemsList.sort(reverse = True, key = GetPrice)
+    elif order == 'cheapest':
+        ItemsList.sort(key = GetPrice)
+    elif order == 'newest':
+        ItemsList.sort(reverse = True, key = GetDate)
+
+    # print(ItemsList)
+
+    sortedMobileList = []
+    for item in ItemsList:
+        print(item.mobile)
+        print(item.point)
+        sortedMobileList.append(item.mobile)
+    print(sortedMobileList)
 
     mobiles = []
-    for item in mobileList:
+    for item in sortedMobileList:
         mobile = {}
         mobile['image'] = item.index_image.url
         mobile['title'] = item.title
@@ -264,7 +326,7 @@ def mobileFilter(request):
         #         mobiles.append(item)
     return JsonResponse(response)
 
-def mobile(request):
+def mobile(request, inputBrand = ''):
     if request.method == 'POST':
         try:
             words = request.POST["search"]
@@ -291,94 +353,120 @@ def mobile(request):
         return render(request, 'market/products-mobile.html', context)
 
     else:
-        Mobiles = Mobile.objects.filter(publish = True)
+
+        if inputBrand == '':
+            Mobiles = Mobile.objects.filter(publish = True)
+        elif inputBrand == 'samsung':
+            Mobiles = Mobile.objects.filter(publish = True, brand = 'سامسونگ')
+        elif inputBrand == 'sony':
+            Mobiles = Mobile.objects.filter(publish = True, brand = 'سونی')
+        elif inputBrand == 'lg':
+            Mobiles = Mobile.objects.filter(publish = True, brand = 'ال جی')
+        elif inputBrand == 'huawei':
+            Mobiles = Mobile.objects.filter(publish = True, brand = 'هواوی')
 
         class Items:
             def __init__(self, thisMobile, thisPoint):
                 self.mobile = thisMobile
                 self.point = thisPoint
+        if len(Mobiles) != 0:
+            ItemsList = []
 
-        ItemsList = []
+            for item in Mobiles:
+                totalPoint = 0
+                if item.points is not None:
+                    for point in item.points:
+                        totalPoint += float(point['productRate'])
+                    item = Items(item, totalPoint/len(item.points))
+                    ItemsList.append(item)
+                else:
+                    item = Items(item, 0.0)
+                    ItemsList.append(item)
 
-        for item in Mobiles:
-            totalPoint = 0
-            if item.points is not None:
-                for point in item.points:
-                    totalPoint += float(point['productRate'])
-                item = Items(item, totalPoint)
-                ItemsList.append(item)
 
+            def GetPoint(item):
+                return int(item.point)
+            
+            ItemsList.sort(reverse = True, key = GetPoint)
+            # print(ItemsList)
 
-        def GetPoint(item):
-            return int(item.point)
-        
-        ItemsList.sort(reverse = True, key = GetPoint)
+            sortedMobileList = []
+            for item in ItemsList:
+                print(item.mobile)
+                print(item.point)
+                sortedMobileList.append(item.mobile)
+            print(sortedMobileList)
 
-        MobilesBrands = []
-        for item in Mobiles:
-            if MobilesBrands is None:
-                MobilesBrands.append(item.brand)
-            else:
-                if item.brand not in MobilesBrands:
+            MobilesBrands = []
+            for item in Mobiles:
+                if MobilesBrands is None:
                     MobilesBrands.append(item.brand)
+                else:
+                    if item.brand not in MobilesBrands:
+                        MobilesBrands.append(item.brand)
 
-        priceList = []
-        for item in Mobiles:
-            priceList.append(item.price)
-        
-        minPrice = min(priceList)
-        maxPrice = max(priceList)
+            priceList = []
+            for item in Mobiles:
+                priceList.append(item.price)
+            
+            minPrice = min(priceList)
+            maxPrice = max(priceList)
 
-        yas =''
-        MobilesColors = []
-        for item in Mobiles:
-            find = False
-            if item.colors is not None:
-                for key, value in item.colors[0].items():
-                    if len(MobilesColors) != 0:
-                        for ky, _ in MobilesColors[0].items():
-                            if key == ky:
-                                find = True
-                    if find == False:        
-                        for k, _ in value.items():
-                            if key != yas:
-                                yas = key
-                                MobilesColors.append({key:k})
+            yas =''
+            MobilesColors = []
+            for item in Mobiles:
+                find = False
+                if item.colors is not None:
+                    for key, value in item.colors[0].items():
+                        if len(MobilesColors) != 0:
+                            for ky, _ in MobilesColors[0].items():
+                                if key == ky:
+                                    find = True
+                        if find == False:        
+                            for k, _ in value.items():
+                                if key != yas:
+                                    yas = key
+                                    MobilesColors.append({key:k})
 
 
-        MobileMemories = []
-        for item in Mobiles:
-            for a in item.technical_details:
-                for key, value in a.items():
-                    if key == 'حافظه':
-                        for k, v in value.items():
-                            if k == 'حافظه داخلی':
-                                if v not in MobileMemories:
-                                    MobileMemories.append(v)
-                                    
-        MobileRamMemories = []
-        for item in Mobiles:
-            for a in item.technical_details:
-                for key, value in a.items():
-                    if key == 'حافظه':
-                        for k, v in value.items():
-                            if k == 'مقدار RAM':
-                                if v not in MobileRamMemories:
-                                    MobileRamMemories.append(v)
+            MobileMemories = []
+            for item in Mobiles:
+                for a in item.technical_details:
+                    for key, value in a.items():
+                        if key == 'حافظه':
+                            for k, v in value.items():
+                                if k == 'حافظه داخلی':
+                                    if v not in MobileMemories:
+                                        MobileMemories.append(v)
+                                        
+            MobileRamMemories = []
+            for item in Mobiles:
+                for a in item.technical_details:
+                    for key, value in a.items():
+                        if key == 'حافظه':
+                            for k, v in value.items():
+                                if k == 'مقدار RAM':
+                                    if v not in MobileRamMemories:
+                                        MobileRamMemories.append(v)
 
-        mobilePaginator = Paginator (Mobiles, 20)
-        page = request.GET.get('page')
-        Mobiles = mobilePaginator.get_page(page)
+            mobilePaginator = Paginator (sortedMobileList, 20)
+            page = request.GET.get('page')
+            sortedMobileList = mobilePaginator.get_page(page)
 
-        context = {
-            'Mobiles': Mobiles,
-            'MobileBrands': MobilesBrands,
-            'MobilesColors': MobilesColors,
-            'MobileMemories': MobileMemories,
-            'MobileRamMemories': MobileRamMemories,
-            'minPrice': minPrice,
-            'maxPrice': maxPrice
-        }
+            context = {
+                'Mobiles': sortedMobileList,
+                'MobileBrands': MobilesBrands,
+                'MobilesColors': MobilesColors,
+                'MobileMemories': MobileMemories,
+                'MobileRamMemories': MobileRamMemories,
+                'minPrice': minPrice,
+                'maxPrice': maxPrice,
+                'inputBrand': inputBrand,
+            }
+        else:
+            context = {
+                'Empty': 'Empty',
+            }
         return render(request, 'market/products-mobile.html', context)
 
 # def tablet(request):
@@ -386,6 +474,7 @@ def mobile(request):
 
 def product(request, Slug):
     thisMobile = Mobile.objects.get(slug = Slug)
+    print(thisMobile.gallery.all())
     if request.user.is_authenticated:
         favorite = False
         favorites = request.user.favorite_list
@@ -1220,7 +1309,7 @@ def lastPosts(request):
     res = {}
     if request.method == 'POST':
         postsList = []
-        for item in Post.objects.order_by('-publishdate')[:3]:
+        for item in Post.objects.order_by('-publishdate')[:6]:
             postsJS = {}
             # url = str(item.get_url)
             url = item.get_url()

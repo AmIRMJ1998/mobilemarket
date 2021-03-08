@@ -21,9 +21,10 @@ def blogindex(request):
 
     for item in post_list:
         sum_points = 0.0
-        for this_point in item.points['list']:
-            sum_points += int(this_point['point'])
-        sum_points =  sum_points / len(item.points['list'])
+        if item.points is not None:
+            for this_point in item.points['list']:
+                sum_points += int(this_point['point'])
+            sum_points =  sum_points / len(item.points['list'])
 
         item = Items(item, sum_points)
         ItemsList.append(item)

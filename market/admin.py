@@ -62,7 +62,7 @@ class FactorAdmin(admin.ModelAdmin):
 # User Admin Section
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'mobile', 'email', 'active', 'superuser', 'staff', 'createdate')
+    list_display = ('id', 'username', 'first_name', 'last_name', 'mobile', 'email', 'active', 'superuser', 'staff', 'createdate')
     search_fields = ['username', 'first_name', 'last_name', 'mobile', 'email']
     list_filter = ('active', 'superuser', 'staff')
     ordering = ['id', 'createdate']

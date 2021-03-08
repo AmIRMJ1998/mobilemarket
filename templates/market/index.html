@@ -46,28 +46,28 @@
         <section class="main-brands">
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 mt-3">
-                    <a href="{% url 'market:mobile' %}">
+                    <a href="{% url 'market:mobile' 'sony' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/sony-logo.png" %}" alt="sony-logo">
                         </div>
                     </a>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 mt-3">
-                    <a href="{% url 'market:mobile' %}">
+                    <a href="{% url 'market:mobile' 'samsung' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/samsung-logo.png" %}" alt="samsung-logo">
                         </div>
                     </a>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 mt-3">
-                    <a href="{% url 'market:mobile' %}">
+                    <a href="{% url 'market:mobile' 'huawei' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/huawei-logo.png" %}" alt="huawei-logo">
                         </div>
                     </a>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 mt-3">
-                    <a href="{% url 'market:mobile' %}">
+                    <a href="{% url 'market:mobile' 'lg' %}">
                         <div class="main-brand">
                             <img src="{% static "/images/lg-logo.png" %}" alt="lg-logo">
                         </div>
@@ -200,7 +200,7 @@
                                 {% endif %}
                             </div>
                             <div class="product-prices">
-                                {% if mobile.inventory_by_color != 0%}
+                                {% if mobile.inventory != 0%}
                                     {% if mobile.discount != '0' %}
                                         <div class="product-price-off">
                                             <span class="split-number">
@@ -294,7 +294,7 @@
                                 {% endif %}
                             </div>
                             <div class="product-prices">
-                                {% if mobile.mobile.inventory_by_color != 0%}
+                                {% if mobile.mobile.inventory != 0%}
                                     {% if mobile.mobile.discount != '0' %}
                                         <div class="product-price-off">
                                             <span class="split-number">
