@@ -1,21 +1,17 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect
+from django.forms.models import model_to_dict
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.urls import reverse
-from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
-from django.forms.models import model_to_dict
-from django.contrib.postgres.fields import ArrayField
-from datetime import datetime
-import jdatetime
-import threading
-
-from market.models import Slider, Mobile, Gallery, User, Message, Comment, Factor
+# get models
+from market.models import User,Mobile,Slider,Comment,Factor
 from blog.models import Post
 
+# --------------------------------------------------------------------------------------------------------------------------------
 
 # Create your views here
 def index(request):
