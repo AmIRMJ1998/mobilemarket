@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.postgres.fields import ArrayField
 from django.utils.deconstruct import deconstructible
 from django.db.models import JSONField
@@ -80,7 +80,7 @@ class UserManager(BaseUserManager):
 # --------------------------------------------------------------------------------------------------------------------------------------
 
 # User (کاربر) Model
-class User (AbstractBaseUser):
+class User (AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(verbose_name = 'first name', max_length = 150)
     last_name = models.CharField(verbose_name = 'last name', max_length = 300)
     username = models.CharField(verbose_name = 'username', max_length = 255, unique = True)
