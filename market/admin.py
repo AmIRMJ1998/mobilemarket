@@ -57,9 +57,9 @@ admin.site.site_header = 'Mobile Market'
 # User Admin Section
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id','username','first_name','last_name','mobile','email','active','superuser','staff','create_date')
+    list_display = ('id','username','first_name','last_name','mobile','email','active','superuser','staff')
     search_fields = ['username','first_name','last_name','mobile','email']
     list_filter = ('active','superuser','staff')
-    ordering = ['id', 'create_date']
+    ordering = ['id']
 admin.site.register = (User, UserAdmin)
 admin.site.register = (UserManager)

@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dbmobilemarket',
         'USER': 'postgres',
-        'PASSWORD': 'moein@taheri',
+        'PASSWORD': '0000',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }
